@@ -37,12 +37,13 @@ public:
     std::vector<processInfo> processInfosCPU; //list of processes to operate with (CPU)
     std::vector<processInfo> processInfosRAM; //list of processes to operate with (RAM)
 
-    void setUserAcceptableCpuLoad(int load);
+    void setUserAcceptableCpuLoad(short load);
     void setUserAcceptableRamLoad(int load);
     void setCpuMonitoringActive(bool isActive);
     void setRamMonitoringActive(bool isActive);
     void setRamMonitoringType(bool type);
-    void setOutputType(int type);
+    void setOutputTypeMt(int type);
+    void setOutputTypeMtg(bool type);
     void setStopFromUiCpuProcess(bool isStop);
     void setStopFromUiRamProcess(bool isStop);
     void setStopFromUiCpuLoadOverall(bool isStop);
@@ -51,7 +52,7 @@ public:
     void setUserAcceptableRamLoadOverall(int load);
     void setIgnoreProcessesVectorElement(bool fromCpu, QString elem);
 
-    void createFile(int whichFile , QString fileName = "");
+    void createFile(int whichFile, bool global, QString fileName = "");
 
     int getProcesses(bool debFromCpu); //func that gets processes we are working with, they are stored in procesInfos    
 
@@ -94,7 +95,7 @@ private:
 
     int newVal = 0; //debug
 
-    int userAcceptableCpuLoad;
+    short userAcceptableCpuLoad;
     int userAcceptableRamLoad;
 
     float userAcceptableCpuLoadOverall;
@@ -103,7 +104,8 @@ private:
     bool cpuMonitoringActive;     //from ui->checkbox
     bool ramMonitoringActive;     //from ui->checkbox
 
-    int outputType;    //from ui->outputCombobox 0 - message, 1 - log
+    bool outputTypeIsLogMt;    //from ui->outputCombobox 0 - message, 1 - log
+    bool outputTypeIsLogMtg;    //from ui->outputCombobox 0 - message, 1 - log
 
     bool monitoringRamType; //true - workingset, false - private set
 
@@ -115,8 +117,10 @@ private:
 
     SIZE_T ramSaveArr[2];
 
-    QFile *fileCpu;
-    QFile *fileRam;
+    QFile *fileCpuMt;
+    QFile *fileRamMt;
+    QFile *fileCpuMtg;
+    QFile *fileRamMtg;
 
 signals:
     void emitMessage(QString infoStringForMsg, bool fromCpu, bool mtGloval);

@@ -7,7 +7,7 @@ CountingCenter::CountingCenter(){
     cpuMonitoringActive = false;
     ramMonitoringActive = false;
 
-    outputType = false;
+    outputTypeIsLogMt = false;
 
     ramSaveArr[0] = 0;
     ramSaveArr[1] = 0;
@@ -15,7 +15,7 @@ CountingCenter::CountingCenter(){
 
 CountingCenter::~CountingCenter(){}
 
-void CountingCenter::setUserAcceptableCpuLoad(int load){
+void CountingCenter::setUserAcceptableCpuLoad(short load){
     this->userAcceptableCpuLoad = load;
 }
 
@@ -35,8 +35,14 @@ void CountingCenter::setRamMonitoringType(bool type){
     monitoringRamType = type;
 }
 
-void CountingCenter::setOutputType(int type){
-    outputType = type;
+void CountingCenter::setOutputTypeMt(int type){
+    outputTypeIsLogMt = type;
+    qDebug() << outputTypeIsLogMt;
+    system("pause");
+}
+
+void CountingCenter::setOutputTypeMtg(bool type){
+    outputTypeIsLogMtg = type;
 }
 
 void CountingCenter::setStopFromUiCpuProcess(bool isStop){
@@ -73,13 +79,13 @@ void CountingCenter::setIgnoreProcessesVectorElement(bool fromCpu, QString elem)
     }
 }
 
-void CountingCenter::createFile(int whichFile, QString fileName){
+void CountingCenter::createFile(int whichFile, bool global, QString fileName){
     QString tempString;
     if(fileName == ""){
         auto nameTimer = std::chrono::system_clock::now();
         std::time_t end_time = std::chrono::system_clock::to_time_t(nameTimer);
         qDebug() << "end time " << ctime(&end_time);
-        system("pause");
+       // system("pause");
         tempString = ctime(&end_time);
 
         for(int i = 0; i < tempString.length(); i++){
@@ -96,15 +102,35 @@ void CountingCenter::createFile(int whichFile, QString fileName){
 
     if(whichFile == FOR_CPU_FILE){
         fileName.append("_CPU");
-        fileName.append(".txt");
 
-        fileCpu = new QFile(fileName);
+
+        if(!global){
+            fileName.append(".txt");
+            fileCpuMt = new QFile(fileName);
+        }
+        else{
+            fileName.append("_global");
+            fileName.append(".txt");
+            fileCpuMtg = new QFile(fileName);
+        }
+
     }
     else if(whichFile == FOR_RAM_FILE){
         fileName.append("_RAM");
-        fileName.append(".txt");
+        qDebug() << "FOR_RAM_FILE";
+        system("pause");
 
-        fileRam = new QFile(fileName);
+        if(!global){
+            fileName.append(".txt");
+            fileRamMt = new QFile(fileName);
+            qDebug() << "created";
+            system("pause");
+        }
+        else{
+            fileName.append("_global");
+            fileName.append(".txt");
+            fileRamMtg = new QFile(fileName);
+        }
     }
     else if(whichFile == BOTH_FILES){
         QString fileNameBuff = fileName;
@@ -112,11 +138,21 @@ void CountingCenter::createFile(int whichFile, QString fileName){
         fileName.append("_CPU");
         fileNameBuff.append("_RAM");
 
-        fileName.append(".txt");
-        fileNameBuff.append(".txt");
 
-        fileCpu = new QFile(fileName);
-        fileRam = new QFile(fileName);
+        if(!global){
+            fileName.append(".txt");
+            fileNameBuff.append(".txt");
+            fileCpuMt = new QFile(fileName);
+            fileRamMt = new QFile(fileNameBuff);
+        }
+        else{
+            fileName.append("_global");
+            fileNameBuff.append("_global");
+            fileName.append(".txt");
+            fileNameBuff.append(".txt");
+            fileCpuMtg = new QFile(fileName);
+            fileRamMtg = new QFile(fileNameBuff);
+        }
     }
 
 }
@@ -187,17 +223,17 @@ bool CountingCenter::processCPUProcLoadMonitoring(DWORD processID, const WCHAR* 
             QString currentLoadString = QString::number(currentLoad);
             infoString.append(currentLoadString);
 
-            if(outputType == 0){
+            if(outputTypeIsLogMt == 0){
                 emit emitMessage(infoString, true, false);      //emits signa to mainwindow, where message box being formed
                 return false;
             }
             else{
                 qDebug() << "log";
-                if (fileCpu->open(QFile::Append |QFile::Text))
+                if (fileCpuMt->open(QFile::Append |QFile::Text))
                 {
                     qDebug() << "i";
-                    fileCpu->write(infoString.toUtf8() + "\n");
-                    fileCpu->close();
+                    fileCpuMt->write(infoString.toUtf8() + "\n");
+                    fileCpuMt->close();
                 }
             }
 
@@ -208,11 +244,11 @@ bool CountingCenter::processCPUProcLoadMonitoring(DWORD processID, const WCHAR* 
         QString stoppingMsg = "Monitoring was stopped by a user at ";
         stoppingMsg.append(ctime(&end_time));
         emit emitMessage(stoppingMsg, true, false);
-        if(outputType == 1){
-            if (fileCpu->open(QFile::Append |QFile::Text))
+        if(outputTypeIsLogMt == 1){
+            if (fileCpuMt->open(QFile::Append |QFile::Text))
             {
-                fileCpu->write(stoppingMsg.toUtf8() + "\n");
-                fileCpu->close();
+                fileCpuMt->write(stoppingMsg.toUtf8() + "\n");
+                fileCpuMt->close();
             }
         }
         return false;
@@ -261,9 +297,20 @@ bool CountingCenter::processRAMProcLoadMonitoring(DWORD processID, const WCHAR* 
                     QString currentLoadString = QString::number(ramSaveArr[0]);
                     infoString.append(currentLoadString);
 
-                    emit emitMessage(infoString, false, false);
-                    CloseHandle(h);
-                    return false;
+                    if(outputTypeIsLogMt == 0){
+                         emit emitMessage(infoString, false, false);
+                         return false;
+                    }
+                    else{
+                        qDebug() << "log";
+                        if (fileRamMt->open(QFile::Append |QFile::Text))
+                        {
+                            qDebug() << "i";
+                            fileRamMt->write(infoString.toUtf8() + "\n");
+                            fileRamMt->close();
+                        }
+                    }
+                    CloseHandle(h);                   
                 }
             }
             else{   //type = private set
@@ -276,9 +323,20 @@ bool CountingCenter::processRAMProcLoadMonitoring(DWORD processID, const WCHAR* 
                     QString currentLoadString = QString::number(ramSaveArr[1]);
                     infoString.append(currentLoadString);
 
-                    emit emitMessage(infoString, false, false);
+                    if(outputTypeIsLogMt == 0){
+                        emit emitMessage(infoString, false, false);
+                        return false;
+                    }
+                    else{
+                        qDebug() << "log";
+                        if (fileRamMt->open(QFile::Append |QFile::Text))
+                        {
+                            qDebug() << "i";
+                            fileRamMt->write(infoString.toUtf8() + "\n");
+                            fileRamMt->close();
+                        }
+                    }
                     CloseHandle(h);
-                    return false;
                 }
             }
         }
@@ -290,11 +348,11 @@ bool CountingCenter::processRAMProcLoadMonitoring(DWORD processID, const WCHAR* 
         stoppingMsg.append(ctime(&end_time));
 
         emit emitMessage(stoppingMsg, false, false);
-        if(outputType == 1){
-            if (fileRam->open(QFile::Append |QFile::Text))
+        if(outputTypeIsLogMt == 1){
+            if (fileRamMt->open(QFile::Append |QFile::Text))
             {
-                fileRam->write(stoppingMsg.toUtf8() + "\n");
-                fileRam->close();
+                fileRamMt->write(stoppingMsg.toUtf8() + "\n");
+                fileRamMt->close();
             }
         }
         return false;
@@ -482,9 +540,20 @@ bool CountingCenter::overallRamLoadMonitoring(){
             QString currentLoadString = QString::number((int)(RAMLoad));
             infoString.append(currentLoadString);
 
-            emit emitMessage(infoString, false, true);
-
-            return false;
+            if(outputTypeIsLogMtg == 0){
+                emit emitMessage(infoString, false, true);
+                return false;
+            }
+            else{
+                qDebug() << "log";
+                if (fileRamMtg->open(QFile::Append |QFile::Text))
+                {
+                    qDebug() << "i";
+                    fileRamMtg->write(infoString.toUtf8() + "\n");
+                    fileRamMtg->close();
+                    return true;
+                }
+            }
         }
         else{
             qDebug() << "true";
@@ -495,9 +564,16 @@ bool CountingCenter::overallRamLoadMonitoring(){
         QString stoppingMsg = "Monitoring was stopped by a user at ";
         stoppingMsg.append(ctime(&end_time));
         emit emitMessage(stoppingMsg, false, true);
+
+        if (fileRamMtg->open(QFile::Append |QFile::Text))
+        {
+            fileRamMtg->write(stoppingMsg.toUtf8() + "\n");
+            fileRamMtg->close();
+        }
         return false;
-    }
+     }
 }
+
 
 DWORD WINAPI CountingCenter::StaticThreadStart_CPU_Overall(void* Param){
         CountingCenter* This = (CountingCenter*) Param;

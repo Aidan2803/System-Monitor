@@ -87,7 +87,7 @@ QTabWidget::pane { /* The tab widget frame */
      <enum>QTabWidget::North</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideNone</enum>
@@ -1402,7 +1402,7 @@ QLineEdit:disabled{
 </string>
       </property>
      </widget>
-     <widget class="QComboBox" name="outputTypeComboBox_Msg">
+     <widget class="QComboBox" name="outputTypeComboBox_Mtg">
       <property name="geometry">
        <rect>
         <x>110</x>

@@ -152,8 +152,8 @@ MainWindow::MainWindow(QWidget *parent)
      ui->cpuIsMonitoringLabel_Mtg->setText("");
      ui->ramIsMonitoringLabel_Mtg->setText("");
 
-     ui->outputTypeComboBox_Msg->addItem("Message");
-     ui->outputTypeComboBox_Msg->addItem("Log");
+     ui->outputTypeComboBox_Mtg->addItem("Message");
+     ui->outputTypeComboBox_Mtg->addItem("Log");
 
      ui->resetCPU_Mtg->setDisabled(true);
      ui->resetRAM_Mtg->setDisabled(true);
@@ -184,6 +184,48 @@ void MainWindow::initConnections(){
     connect(&cc, SIGNAL(emitMessage(QString, bool, bool)), this, SLOT(getMessage(QString, bool, bool)));
 }
 
+//slot
+void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){
+     qDebug() << "getMessage";
+    if(fromCpu){    /*CPU PART*/
+        if(!mtGlobal){  /*PROCESSES MONITORING*/
+            ui->cpuIsMonitoringLabel->setText("Stoped");
+            ui->cpuIsMonitoringLabel->setStyleSheet("color: red");
+            ui->resetCPU->setDisabled(false);
+            ui->stopCPU->setDisabled(true);
+       }
+        else{       /*GLOBAL MONITORING*/
+            ui->cpuIsMonitoringLabel_Mtg->setText("Stoped");
+            ui->cpuIsMonitoringLabel_Mtg->setStyleSheet("color: red");
+            ui->resetCPU_Mtg->setDisabled(false);
+            ui->stopCPU_Mtg->setDisabled(true);
+        }
+    }
+    else{       /*RAM PART*/
+        if(!mtGlobal){
+            ui->ramIsMonitoringLabel->setText("Stoped");
+            ui->ramIsMonitoringLabel->setStyleSheet("color: red");
+            ui->resetRAM->setDisabled(false);
+            ui->stopRAM->setDisabled(true);
+        }
+        else{       /*GLOBAL MONITORING*/
+            ui->ramIsMonitoringLabel_Mtg->setText("Stoped");
+            ui->ramIsMonitoringLabel_Mtg->setStyleSheet("color: red");
+            ui->resetRAM_Mtg->setDisabled(false);
+            ui->stopRAM_Mtg->setDisabled(true);
+        }
+    }
+
+    QMessageBox box;
+    box.setStyleSheet("background-color: rgb(54, 54, 54); color : white");
+    box.setText(infoString);
+    QPixmap ic(":/icon/icon32.png");
+    box.setIconPixmap(ic);
+
+    box.exec();
+
+};
+
 //*********************BEGING:MONITORING TOOLS**********************//
 
 
@@ -212,28 +254,33 @@ void MainWindow::on_applyButtonMt_clicked(){
         memoryRamAccaptableLoad = ui->acceptaleRamLoadTxtBox->text().toInt();
     }
 
+    cc.setOutputTypeMt(ui->outputTypeComboBox->currentIndex());
+    if(ui->outputTypeComboBox->currentIndex() == 1){
+        QString logName;
+
+        logName = ui->logNameBox->text();
+        if(ui->monitorCpuCheckBox && !ui->monitorRamCheckBox){
+            qDebug("to create file cpu");
+            system("pause");
+             cc.createFile(0, false, logName);
+        }
+        else if(!ui->monitorCpuCheckBox && ui->monitorRamCheckBox){
+
+             cc.createFile(1, false, logName);
+        }
+        else if(ui->monitorCpuCheckBox && ui->monitorRamCheckBox){
+             cc.createFile(2, false, logName);
+        }
+    }
+
+
     if(ui->monitorCpuCheckBox->isChecked()){
         qDebug() << "cpu monitoring";
         ui->cpuIsMonitoringLabel->setText("Monitoring...");        
         ui->cpuIsMonitoringLabel->setStyleSheet("color: rgb(43, 117, 34);");
         ui->resetCPU->setDisabled(true);
         ui->stopCPU->setDisabled(false);
-        cc.setUserAcceptableCpuLoad(memoryCpuAccaptableLoad);
-        cc.setOutputType(ui->outputTypeComboBox->currentIndex());
-        if(ui->outputTypeComboBox->currentIndex() == 1){
-            QString logName;
-
-            logName = ui->logNameBox->text();
-            if(ui->monitorCpuCheckBox && !ui->monitorRamCheckBox){
-                 cc.createFile(0, logName);
-            }
-            else if(!ui->monitorCpuCheckBox && ui->monitorRamCheckBox){
-                 cc.createFile(1, logName);
-            }
-            else if(ui->monitorCpuCheckBox && ui->monitorRamCheckBox){
-                 cc.createFile(2, logName);
-            }
-        }
+        cc.setUserAcceptableCpuLoad(memoryCpuAccaptableLoad);       
 
         //give processes to ignore
         if(ui->acceptableCpuProcessesList->count() != 0){
@@ -341,46 +388,6 @@ void MainWindow::on_hintButton_accProcRam_clicked()
 }
 
 //slot
-void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){
-     qDebug() << "getMessage";
-    if(fromCpu){    /*CPU PART*/
-        if(!mtGlobal){  /*PROCESSES MONITORING*/
-            ui->cpuIsMonitoringLabel->setText("Stoped");
-            ui->cpuIsMonitoringLabel->setStyleSheet("color: red");
-            ui->resetCPU->setDisabled(false);
-            ui->stopCPU->setDisabled(true);
-       }
-        else{       /*GLOBAL MONITORING*/
-            ui->cpuIsMonitoringLabel_Mtg->setText("Stoped");
-            ui->cpuIsMonitoringLabel_Mtg->setStyleSheet("color: red");
-            ui->resetCPU_Mtg->setDisabled(false);
-            ui->stopCPU_Mtg->setDisabled(true);
-        }
-    }
-    else{       /*RAM PART*/
-        if(!mtGlobal){
-            ui->ramIsMonitoringLabel->setText("Stoped");
-            ui->ramIsMonitoringLabel->setStyleSheet("color: red");
-            ui->resetRAM->setDisabled(false);
-            ui->stopRAM->setDisabled(true);
-        }
-        else{       /*GLOBAL MONITORING*/
-            ui->ramIsMonitoringLabel_Mtg->setText("Stoped");
-            ui->ramIsMonitoringLabel_Mtg->setStyleSheet("color: red");
-            ui->resetRAM_Mtg->setDisabled(false);
-            ui->stopRAM_Mtg->setDisabled(true);
-        }
-    }
-
-    QMessageBox box;
-    box.setStyleSheet("background-color: rgb(54, 54, 54); color : white");
-    box.setText(infoString);
-    QPixmap ic(":/icon/icon32.png");
-    box.setIconPixmap(ic);
-
-    box.exec();
-
-};
 
 void MainWindow::on_resetCPU_clicked()
 {
@@ -514,12 +521,30 @@ void MainWindow::on_applyButtonMtg_clicked(){
         box.exec();
     }
     else{
+        cc.setOutputTypeMtg(ui->outputTypeComboBox_Mtg->currentIndex());
+        if(ui->outputTypeComboBox_Mtg->currentIndex() == 1){
+            QString logName;
+
+            logName = ui->logNameBox->text();
+            if(ui->monitorCpuCheckBox_mtg && !ui->monitorRamCheckBox_mtg){
+                 cc.createFile(0, true, logName);
+            }
+            else if(!ui->monitorCpuCheckBox_mtg && ui->monitorRamCheckBox_mtg){
+
+                 cc.createFile(1, true, logName);
+            }
+            else if(ui->monitorCpuCheckBox_mtg && ui->monitorRamCheckBox_mtg){
+                 cc.createFile(2, true, logName);
+            }
+        }
+
         if(ui->monitorCpuCheckBox_mtg->isChecked()){
             cc.setUserAcceptableCpuLoadOverall(loadProc);
             qDebug() << "on_applyButtonMtg_clicked";
             ui->cpuIsMonitoringLabel_Mtg->setText("Monitoring...");
             ui->cpuIsMonitoringLabel_Mtg->setStyleSheet("color: rgb(43, 117, 34);");
             ui->stopCPU_Mtg->setDisabled(false);
+
             cc.monitoringCpuOverallStart();
         }
         if(ui->monitorRamCheckBox_mtg->isChecked()){
@@ -528,6 +553,7 @@ void MainWindow::on_applyButtonMtg_clicked(){
             ui->ramIsMonitoringLabel_Mtg->setText("Monitoring...");
             ui->ramIsMonitoringLabel_Mtg->setStyleSheet("color: rgb(43, 117, 34);");
             ui->stopRAM_Mtg->setDisabled(false);
+
             cc.monitoringRamOverallStart();
         }
     }
