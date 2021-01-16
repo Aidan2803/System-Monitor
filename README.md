@@ -193,10 +193,15 @@ Utility that allows to monitor system and hardware information, such as temperat
 
 <p align = "center">
 <img src = "readMeImages/monitoringtoolsglobal4.png"><br>
-  Рис. 3.4 Сообщение о превышении допустимой нагрузки
+  Рис. 3.4 Задаем допустимую нагрузку для ОЗУ
 </p>
 
 В итоге получаем сообщение о првышении ОС допустимой нагрузки. При логировании процесс будет таким же как во вкладке Monitoring tools
+
+<p align = "center">
+<img src = "readMeImages/monitoringtoolsglobal5.png"><br>
+  Рис. 3.5 Сообщение о превышении допустимой нагрузки
+</p>
 
 #### Вкладка External tools 
 
