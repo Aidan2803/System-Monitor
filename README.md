@@ -62,44 +62,62 @@ Utility that allows to monitor system and hardware information, such as temperat
 В верхней части окна расположены инструменты мониторинга ЦП:
 
 <p align = "center">
-<img src = "readMeImages/monitorintools1.png"><br>
+<img src = "readMeImages/monitoringtools1.png"><br>
   Рис. 2.1 Интерфейс вкладки Monitoring tools, инструменты мониторинга ЦП
 </p>
 
 Рассмотрим инструменты мониторинга ЦП. Для начала работы необходимо поставить галочку около Monitor processes(CPU Load) (Рис. 2.1), после чего станет активным поле ввода допустимой нагрузки, выбор файлов для игнорирования и подсказка.
 
 <p align = "center">
-<img src = "readMeImages/monitorintools2.png"><br>
+<img src = "readMeImages/monitoringtools2.png"><br>
   Рис. 2.2 Инструменты мониторинга ЦП в активном состоянии
 </p>
 
 Введем допустимую нагрузку в 40 процентов и запустим программа нажав кнопку <i>Apply<i/>
   
 <p align = "center">
-<img src = "readMeImages/monitorintools3.png"><br>
+<img src = "readMeImages/monitoringtools3.png"><br>
   Рис. 2.3 Запуск мониторинга ЦП
 </p>
 
 Теперь создадим нагрузку на ЦП сторонней программой и посмотрим на результат работы программы.
 
 <p align = "center">
-<img src = "readMeImages/monitorintools4.png"><br>
+<img src = "readMeImages/monitoringtools4.png"><br>
   Рис. 2.4 Результат мониторинга ЦП
 </p>
 
 Как видим программа сообщает пользователю о прекращении мониторинга сменив метку "Monitoring..." (Рис. 2.3) на "Stop". Так же видим сообщение с текстом сообщающим время, название процесса и нагрузку создаваемую процессом. Так же видим, что теперь активна кнопка <i>Reset</i>, нажав на нее получим исходный вид окна:
 
 <p align = "center">
-<img src = "readMeImages/monitorintools5.png"><br>
+<img src = "readMeImages/monitoringtools5.png"><br>
   Рис. 2.5 Окно после нажатия кнопки Reset
 </p>
 
 Теперь выберем другой тип вывода информации на лог, так же укажем имя файла как helloGitHub:
 
 <p align = "center">
-<img src = "readMeImages/monitorintools6.png"><br>
+<img src = "readMeImages/monitoringtools6.png"><br>
   Рис. 2.6 Тип вывода Log
 </p>
 
+После нажатия кнопки <i>Apply<i/> проверим папку с программой:
+  
+<p align = "center">
+<img src = "readMeImages/monitoringtools7.png"><br>
+  Рис. 2.7 Созданый файл с именем helloGitHub
+</p>
 
+Как видим был создан файл с именем helloGitHub_CPU (идентификатор CPU, говорит о том, что это лог мониторинга ЦП). Теперь остановим процесс мониторинга:
 
+<p align = "center">
+<img src = "readMeImages/monitoringtools8.png"><br>
+  Рис. 2.8 Остановка процесса мониторинга
+</p>
+
+Как видим имеем такую же смену метки "Monitoring" на мету "Stop", говорящую об остановке процесса мониторинга. Теперь проверим сам лог:
+
+<p align = "center">
+<img src = "readMeImages/monitoringtools9.png"><br>
+  Рис. 2.8 Созданый ранее лог
+</p>
