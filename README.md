@@ -10,7 +10,7 @@ Utility that allows to monitor system and hardware information, such as temperat
 3) Третья часть: дисплей IIC I2C для arduino, 4-контактный, 0.96 дюйм, дисплей 1602 с интерфейсной шиной IIC/I2C, Arduino Uno/Arduino Nano
 
 ### Основная программа System Monitor
-Основная программа состоит из 4-х владок:
+Основная программа состоит из 4-х вкладок:
 1) Overview
 2) Monitoring tools
 3) Monitoring tool global
