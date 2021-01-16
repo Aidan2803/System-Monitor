@@ -101,7 +101,7 @@ Utility that allows to monitor system and hardware information, such as temperat
   Рис. 2.6 Тип вывода Log
 </p>
 
-После нажатия кнопки <i>Apply<i/> проверим папку с программой:
+После нажатия кнопки <i>Apply</i> проверим папку с программой:
   
 <p align = "center">
 <img src = "readMeImages/monitoringtools7.png"><br>
