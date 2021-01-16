@@ -198,3 +198,6 @@ Utility that allows to monitor system and hardware information, such as temperat
 
 В итоге получаем сообщение о првышении ОС допустимой нагрузки. При логировании процесс будет таким же как во вкладке Monitoring tools
 
+#### Вкладка External tools 
+
+//пока в разработке
