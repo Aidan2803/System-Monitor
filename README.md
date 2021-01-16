@@ -119,5 +119,5 @@ Utility that allows to monitor system and hardware information, such as temperat
 
 <p align = "center">
 <img src = "readMeImages/monitoringtools9.png"><br>
-  Рис. 2.8 Созданый ранее лог
+  Рис. 2.9 Созданый ранее лог
 </p>
