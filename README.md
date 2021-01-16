@@ -84,7 +84,22 @@ Utility that allows to monitor system and hardware information, such as temperat
 
 <p align = "center">
 <img src = "readMeImages/monitorintools4.png"><br>
-  Рис. 2.4 Запуск мониторинга ЦП
+  Рис. 2.4 Результат мониторинга ЦП
 </p>
+
+Как видим программа сообщает пользователю о прекращении мониторинга сменив метку "Monitoring..." (Рис. 2.3) на "Stop". Так же видим сообщение с текстом сообщающим время, название процесса и нагрузку создаваемую процессом. Так же видим, что теперь активна кнопка <i>Reset</i>, нажав на нее получим исходный вид окна:
+
+<p align = "center">
+<img src = "readMeImages/monitorintools5.png"><br>
+  Рис. 2.5 Окно после нажатия кнопки Reset
+</p>
+
+Теперь выберем другой тип вывода информации на лог, так же укажем имя файла как helloGitHub:
+
+<p align = "center">
+<img src = "readMeImages/monitorintools6.png"><br>
+  Рис. 2.6 Тип вывода Log
+</p>
+
 
 
