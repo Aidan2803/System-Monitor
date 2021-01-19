@@ -13,6 +13,7 @@ CONFIG += c++11
 SOURCES += \
     countingcenter.cpp \
     cpuusage.cpp \
+    hardwareinformationcenter.cpp \
     main.cpp \
     mainwindow.cpp \
     smarthandle.cpp
@@ -20,6 +21,7 @@ SOURCES += \
 HEADERS += \
     countingcenter.h \
     cpuusage.h \
+    hardwareinformationcenter.h \
     mainwindow.h \
     smarthandle.h
 

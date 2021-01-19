@@ -7,7 +7,17 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
 
+#include <QObject>
+#include <QLabel>
+#include <QIcon>
+#include <QFileDialog>
+
+#include <iostream>
+#include <windows.h>
+#include <thread>
+
 #include "countingcenter.h"
+#include "hardwareinformationcenter.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,13 +29,20 @@ class MainWindow : public QMainWindow
 
 public:
     void initConnections();
-    MainWindow(/*CountingCenter *pCC,*/ QWidget *parent = nullptr);
+    void startUpTimeThread();
+
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
     bool typeHintButtonActivated = false;
     bool cpuHintButtonActivated = false;
     bool ramHintButtonActivated = false;
+
+    long upTime_hours;
+    long upTime_minutes;
+    long upTime_seconds;
+    long upTime_milliseconds;
 
 private slots:
 

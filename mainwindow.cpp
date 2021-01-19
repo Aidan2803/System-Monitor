@@ -1,19 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QObject>
-#include <QLabel>
-#include <QIcon>
-#include <QFileDialog>
-
-#include<iostream>
-#include <windows.h>
-
 CountingCenter cc;
+HardWareInformationCenter hc;
 
 /*GLOBAL VARS*/
-int memoryCpuAccaptableLoad = 50;
-int memoryRamAccaptableLoad = 10000;
+static int memoryCpuAccaptableLoad = 50;
+static int memoryRamAccaptableLoad = 10000;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -26,13 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     //--------BEGING:CHART SETTINGS-----------
     QLineSeries *series = new QLineSeries();
 
-    series->append(0,5);
-    series->append(0,6);
-    series->append(0,7);
-    series->append(0,15);
-    series->append(3,3);
-
-    *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
+    *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2) << QPointF(29, 32) << QPointF(29, 36);//functionality of the chart
 
     QChart *chart = new QChart();
     chart->legend()->hide();
@@ -178,6 +165,10 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::startUpTimeThread(){
+  // std::thread upTimeThread(hc.getUptime, upTime_hours, upTime_minutes, upTime_seconds, upTime_milliseconds);
 }
 
 void MainWindow::initConnections(){

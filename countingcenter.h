@@ -120,7 +120,7 @@ private:
     QFile *fileCpuMt;
     QFile *fileRamMt;
     QFile *fileCpuMtg;
-    QFile *fileRamMtg;
+    QFile *fileRamMtg;   
 
 signals:
     void emitMessage(QString infoStringForMsg, bool fromCpu, bool mtGloval);
