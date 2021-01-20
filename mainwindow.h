@@ -29,15 +29,23 @@ class MainWindow : public QMainWindow
 
 public:
     void initConnections();
+
     void startUpTimeThread();
+    void startPrintUpTimeThread();
+
+    void printUpTime();
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
+    void setIsPrintUpTimeRunning(bool isRunning){ this->isPrintUpTimeRunning = isRunning;}
+
     bool typeHintButtonActivated = false;
     bool cpuHintButtonActivated = false;
     bool ramHintButtonActivated = false;
+
+    bool isPrintUpTimeRunning = true;
 
     long upTime_hours;
     long upTime_minutes;

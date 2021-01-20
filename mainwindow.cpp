@@ -4,6 +4,7 @@
 static CountingCenter cc;
 static HardWareInformationCenter hc;
 static std::thread *upTimeThread;
+static std::thread *printUpTimeThread;
 
 /*GLOBAL VARS*/
 static int memoryCpuAccaptableLoad = 50;
@@ -62,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
     //--------END:LIST WIDGET SETTINGS-----------
 
     startUpTimeThread();
+    startPrintUpTimeThread();
     qDebug() << "after thread";
 
     //*********************END:OVERVIEW**********************//
@@ -171,6 +173,11 @@ MainWindow::~MainWindow()
     hc.setIsGetUpTimeLoopRunning(false);
     upTimeThread->join();
     delete upTimeThread;
+
+    this->setIsPrintUpTimeRunning(false);
+    printUpTimeThread->join();
+    delete printUpTimeThread;
+
     delete ui;
 }
 
@@ -178,6 +185,31 @@ void MainWindow::startUpTimeThread(){
     upTimeThread = new std::thread([&](){
         hc.getUptime(upTime_hours, upTime_minutes, upTime_seconds, upTime_milliseconds, hc);
     });
+}
+
+void MainWindow::startPrintUpTimeThread(){
+    printUpTimeThread = new std::thread([&](){
+        this->printUpTime();
+    });
+}
+
+void MainWindow::printUpTime(){
+    while(isPrintUpTimeRunning){
+        QString upTimeLabelString = "Up Time ";
+        upTimeLabelString += QString::number(upTime_hours);
+        upTimeLabelString += ":";
+        upTimeLabelString += QString::number(upTime_minutes);
+        upTimeLabelString += ":";
+        upTimeLabelString += QString::number(upTime_seconds);
+        upTimeLabelString += ":";
+        upTimeLabelString += QString::number(upTime_milliseconds);
+
+        qDebug() << upTimeLabelString;
+
+        ui->upTimeLabel->setText(upTimeLabelString);
+
+        Sleep(1000);
+    }
 }
 
 void MainWindow::initConnections(){

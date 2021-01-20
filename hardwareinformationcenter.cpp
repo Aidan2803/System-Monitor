@@ -28,6 +28,6 @@ void HardWareInformationCenter::getUptime(long &hours, long &minutes, long &seco
         seconds = sec;
         millies = buff;
 
-        Sleep(5000);
+        Sleep(1000);
     }
 }
