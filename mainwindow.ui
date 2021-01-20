@@ -347,7 +347,7 @@ QProgressBar::chunk {
         <x>0</x>
         <y>2</y>
         <width>481</width>
-        <height>1282</height>
+        <height>1309</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">

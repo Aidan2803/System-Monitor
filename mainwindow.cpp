@@ -3,6 +3,7 @@
 
 CountingCenter cc;
 HardWareInformationCenter hc;
+std::thread *upTimeThread;
 
 /*GLOBAL VARS*/
 static int memoryCpuAccaptableLoad = 50;
@@ -59,6 +60,9 @@ MainWindow::MainWindow(QWidget *parent)
         ui->processList->addItem(str);
     }
     //--------END:LIST WIDGET SETTINGS-----------
+
+    startUpTimeThread();
+    qDebug() << "after thread";
 
     //*********************END:OVERVIEW**********************//
 
@@ -168,7 +172,9 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::startUpTimeThread(){
-  // std::thread upTimeThread(hc.getUptime, upTime_hours, upTime_minutes, upTime_seconds, upTime_milliseconds);
+    upTimeThread = new std::thread([&](){
+        hc.getUptime(upTime_hours, upTime_minutes, upTime_seconds, upTime_milliseconds);
+    });
 }
 
 void MainWindow::initConnections(){

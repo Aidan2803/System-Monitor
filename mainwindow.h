@@ -110,6 +110,7 @@ private slots:
 
     void on_hintButton_accProcRam_clicked();
 
+
 public slots:
     void getMessage(QString infoString, bool fromCpu, bool mtGloval);
 
