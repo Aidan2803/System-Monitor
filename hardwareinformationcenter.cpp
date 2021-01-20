@@ -1,9 +1,11 @@
 #include "hardwareinformationcenter.h"
 
-HardWareInformationCenter::HardWareInformationCenter(){}
+HardWareInformationCenter::HardWareInformationCenter() : isGetUpTimeLoopRunning{true}
+{}
 
-void HardWareInformationCenter::getUptime(long &hours, long &minutes, long &seconds, long &millies){
-    while(true){
+void HardWareInformationCenter::getUptime(long &hours, long &minutes, long &seconds, long &millies, HardWareInformationCenter &hc){
+    qDebug() << " hc.isGetUpTimeLoopRunning " << hc.isGetUpTimeLoopRunning;
+    while(hc.isGetUpTimeLoopRunning){
         auto uptime = std::chrono::milliseconds(GetTickCount64());
 
         long buff = uptime.count();
@@ -19,7 +21,12 @@ void HardWareInformationCenter::getUptime(long &hours, long &minutes, long &seco
         long sec = buff / 1000;
         buff = buff - 1000 * sec;
 
-        qDebug() << hr << " " << min << " " << sec << " " << buff;
+        qDebug() << hr << " hours and " << min << " minutes and " << sec << " seconds and " << buff << " milliseconds." << endl;
+
+        hours = hr;
+        minutes = min;
+        seconds = sec;
+        millies = buff;
 
         Sleep(5000);
     }

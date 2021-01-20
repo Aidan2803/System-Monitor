@@ -14,9 +14,13 @@ class HardWareInformationCenter
 public:
     HardWareInformationCenter();
 
-    static void getUptime(long &hours, long &minutes, long &seconds, long &millies);
+    void setIsGetUpTimeLoopRunning(bool isRunning){this->isGetUpTimeLoopRunning = isRunning;}
+
+    static void getUptime(long &hours, long &minutes, long &seconds, long &millies, HardWareInformationCenter &hc);
     //get drivers;
     //get hardware names;
+private:
+    bool isGetUpTimeLoopRunning;
 };
 
 #endif // HARDWAREINFORMATIONCENTER_H

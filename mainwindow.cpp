@@ -1,9 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-CountingCenter cc;
-HardWareInformationCenter hc;
-std::thread *upTimeThread;
+static CountingCenter cc;
+static HardWareInformationCenter hc;
+static std::thread *upTimeThread;
 
 /*GLOBAL VARS*/
 static int memoryCpuAccaptableLoad = 50;
@@ -168,12 +168,15 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    hc.setIsGetUpTimeLoopRunning(false);
+    upTimeThread->join();
+    delete upTimeThread;
     delete ui;
 }
 
 void MainWindow::startUpTimeThread(){
     upTimeThread = new std::thread([&](){
-        hc.getUptime(upTime_hours, upTime_minutes, upTime_seconds, upTime_milliseconds);
+        hc.getUptime(upTime_hours, upTime_minutes, upTime_seconds, upTime_milliseconds, hc);
     });
 }
 
