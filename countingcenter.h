@@ -24,8 +24,7 @@ class CountingCenter : public QObject
 {
     Q_OBJECT;
 public:    
-    cpuUsage usage;		//to use getUsage for getting current usage of CPU by certain process6
-    void *pW = nullptr;
+    cpuUsage usage;		//to use getUsage for getting current usage of CPU by certain process6   
 
     struct processInfo {	//to store
         PROCESSENTRY32 pe;

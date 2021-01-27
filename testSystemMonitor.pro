@@ -2,6 +2,10 @@ QT       += core gui
 QT       += core gui charts
 QT       += widgets
 
+QMAKE_CXXFLAGS += -clr
+QMAKE_CXXFLAGS_STL_ON -= -EHsc
+QMAKE_CXXFLAGS_EXCEPTIONS_ON -= -EHsc
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11

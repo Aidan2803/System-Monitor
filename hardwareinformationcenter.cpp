@@ -31,3 +31,7 @@ void HardWareInformationCenter::getUptime(long &hours, long &minutes, long &seco
         Sleep(1000);
     }
 }
+
+void HardWareInformationCenter::hardNames(){
+    
+}

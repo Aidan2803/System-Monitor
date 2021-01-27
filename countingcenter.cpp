@@ -1,19 +1,30 @@
 #include "countingcenter.h"
 
-CountingCenter::CountingCenter(){
-    userAcceptableCpuLoad = 0;
-    userAcceptableRamLoad = 0;
-
-    cpuMonitoringActive = false;
-    ramMonitoringActive = false;
-
-    outputTypeIsLogMt = false;
+CountingCenter::CountingCenter()
+    : userAcceptableCpuLoad{0}, userAcceptableRamLoad{0}, cpuMonitoringActive{true},
+      ramMonitoringActive{true}, outputTypeIsLogMt{false},
+      fileCpuMt{nullptr}, fileCpuMtg{nullptr}, fileRamMt{nullptr}, fileRamMtg{nullptr}
+{
 
     ramSaveArr[0] = 0;
     ramSaveArr[1] = 0;
 }
 
-CountingCenter::~CountingCenter(){}
+CountingCenter::~CountingCenter(){
+    //delete files if exist
+    if(fileCpuMt != nullptr){
+        delete fileCpuMt;
+    }
+    else if(fileCpuMtg != nullptr){
+        delete fileCpuMtg;
+    }
+    else if(fileRamMt != nullptr){
+        delete fileRamMt;
+    }
+    else if(fileRamMtg != nullptr){
+        delete fileRamMtg;
+    }
+}
 
 void CountingCenter::setUserAcceptableCpuLoad(short load){
     this->userAcceptableCpuLoad = load;
