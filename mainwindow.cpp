@@ -13,7 +13,7 @@ static int memoryRamAccaptableLoad = 10000;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow){
+    , ui(new Ui::MainWindow), amountOfBars{0}{
 
     ui->setupUi(this);
 
@@ -78,8 +78,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->GPUNameTempLabel->setText("Graphics card: " + hc.getGPUInfo());
 
     //----GETTING RAM INFO----
+    amountOfBars = AMOUNT_OF_PHYSICAL_MEMORY_BARS;
 
-    hc.getRAMInfo();
+    //ramInfo = new QString[amountOfBars];
+
+    int amountOfBars{0};
+    ramInfo =  hc.getRAMInfo(&amountOfBars);
+
+
+    qDebug() << "ramInfo[0] = " << ramInfo[0];
+    qDebug() << "ramInfo[0] = " << ramInfo[1];
 
     //*********************END:OVERVIEW**********************//
 

@@ -396,6 +396,16 @@ QProgressBar::chunk {
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QComboBox" name="comboBox">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>130</y>
+        <width>361</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="monitoringTools">
      <attribute name="title">

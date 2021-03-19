@@ -1,7 +1,5 @@
 #include "hardwareinformationcenter.h"
 
-static const short AMOUNT_OF_PHYSICAL_MEMORY_BARS{4};
-
 HardWareInformationCenter::HardWareInformationCenter() : isGetUpTimeLoopRunning{true}, pSvc{nullptr}, pLoc{nullptr}
 {}
 
@@ -193,7 +191,7 @@ QString HardWareInformationCenter::getGPUInfo() const{
     return cpuInfo;
 }
 
-void HardWareInformationCenter::WMI_getRAMInfo(QString *pArrToWrite){
+int HardWareInformationCenter::WMI_getRAMInfo(QString *pArrToWrite, int *amountOfBars){
     IEnumWbemClassObject* pEnumerator = NULL;
     hres = pSvc->ExecQuery(
         bstr_t("WQL"),
@@ -321,17 +319,20 @@ void HardWareInformationCenter::WMI_getRAMInfo(QString *pArrToWrite){
         ++arrayIterator;
     }
 
+    *amountOfBars = arrayIterator;
+
+    qDebug() << "amountOfBars = " << *amountOfBars;
+
+    return arrayIterator;
+
     pEnumerator->Release();
     pclsObj->Release();
 
 }
 
-QString HardWareInformationCenter::getRAMInfo() {
-    QString ramInfo[AMOUNT_OF_PHYSICAL_MEMORY_BARS]; // empty str is ""
-
+QString* HardWareInformationCenter::getRAMInfo(int *amountOfBars) {
     initCOM();
-    WMI_getRAMInfo(ramInfo);
+    WMI_getRAMInfo(ramInfo, amountOfBars);
 
-    return "ss";
-
+    return ramInfo;
 }

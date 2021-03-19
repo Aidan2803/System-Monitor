@@ -52,6 +52,10 @@ private:
     long upTime_seconds;
     long upTime_milliseconds;
 
+    int amountOfBars;
+
+    QString *ramInfo;
+
 private slots:
 
     void on_onScreenCpuLoadCheckBox_clicked();

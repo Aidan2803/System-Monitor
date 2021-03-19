@@ -12,6 +12,8 @@
 #include <Wbemidl.h>
 #include <comutil.h>
 
+#include "globalVariables.h"
+
 #define _WIN32_DCOM
 
 #pragma comment(lib, "comsuppw.lib")
@@ -32,13 +34,14 @@ public:
 
     QString getCPUInfo() const;
     QString getGPUInfo() const;
-    QString getRAMInfo();
+    QString* getRAMInfo(int *amountOfBars);
 
 
     //get drivers;
     //get hardware names;
 private:
     bool isGetUpTimeLoopRunning;
+    QString ramInfo[AMOUNT_OF_PHYSICAL_MEMORY_BARS];
 
     HRESULT hres;
 
@@ -46,7 +49,7 @@ private:
     IWbemLocator *pLoc;
 
     void initCOM();
-    void WMI_getRAMInfo(QString *pArrToWrite);
+    int WMI_getRAMInfo(QString *pArrToWrite, int *amountOfBars);
     void cleanUpCOM();
 };
 

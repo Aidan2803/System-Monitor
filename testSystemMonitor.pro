@@ -24,6 +24,7 @@ SOURCES += \
 HEADERS += \
     countingcenter.h \
     cpuusage.h \
+    globalVariables.h \
     hardwareinformationcenter.h \
     mainwindow.h \
     smarthandle.h
