@@ -8,6 +8,16 @@
 #include <chrono>
 #include <string>
 
+#include <comdef.h>
+#include <Wbemidl.h>
+#include <comutil.h>
+
+#define _WIN32_DCOM
+
+#pragma comment(lib, "comsuppw.lib")
+#pragma comment(lib, "wbemuuid.lib")
+#pragma comment(lib,"user32.lib")
+
 using namespace std;
 
 class HardWareInformationCenter
@@ -18,11 +28,20 @@ public:
     void setIsGetUpTimeLoopRunning(bool isRunning){this->isGetUpTimeLoopRunning = isRunning;}
 
     static void getUptime(long &hours, long &minutes, long &seconds, long &millies, HardWareInformationCenter &hc);
-    void hardNames();
+
+    void initCOM();
+
+    QString getCPUInfo() const;
+    QString getGPUInfo() const;
+    QString getRAMInfo() const;
+
+
     //get drivers;
     //get hardware names;
 private:
     bool isGetUpTimeLoopRunning;
+
+    HRESULT hres;
 };
 
 #endif // HARDWAREINFORMATIONCENTER_H

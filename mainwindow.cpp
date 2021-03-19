@@ -3,6 +3,7 @@
 
 static CountingCenter cc;
 static HardWareInformationCenter hc;
+
 static std::thread *upTimeThread;
 static std::thread *printUpTimeThread;
 
@@ -62,9 +63,19 @@ MainWindow::MainWindow(QWidget *parent)
     }
     //--------END:LIST WIDGET SETTINGS-----------
 
+    //----GETTING UPTIME----
+
     startUpTimeThread();
     startPrintUpTimeThread();
     qDebug() << "after thread";
+
+     //----GETTING CPU INFO----
+
+    ui->cpuNameTempLabel->setText("CPU: " + hc.getCPUInfo());
+
+    //----GETTING GPU INFO----
+
+    ui->GPUNameTempLabel->setText("Graphics card: " + hc.getGPUInfo());
 
     //*********************END:OVERVIEW**********************//
 
@@ -203,8 +214,6 @@ void MainWindow::printUpTime(){
         upTimeLabelString += QString::number(upTime_seconds);
         upTimeLabelString += ":";
         upTimeLabelString += QString::number(upTime_milliseconds);
-
-        qDebug() << upTimeLabelString;
 
         ui->upTimeLabel->setText(upTimeLabelString);
 
