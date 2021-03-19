@@ -226,17 +226,98 @@ void HardWareInformationCenter::WMI_getRAMInfo(QString *pArrToWrite){
 
         VARIANT vtProp;
 
-            //get ram capacity
-        hr = pclsObj->Get(L"MemoryType", 0, &vtProp, 0, 0);
-        char *myCharArray = NULL;
-        myCharArray = _com_util::ConvertBSTRToString(vtProp.bstrVal);
-        string testStr(myCharArray);
-        pArrToWrite[arrayIterator] = pArrToWrite[arrayIterator].fromWCharArray(vtProp.bstrVal);
-
-        qDebug() << "pArrToWrite[arrayIterator]" << pArrToWrite[arrayIterator] << "index = " << arrayIterator;
-        cout << " MemoryType : " << vtProp.bstrVal << endl;
+        //-----------------------------------RAM MANUFACTURER-----------------------------------------
+        hr = pclsObj->Get(L"manufacturer", 0, &vtProp, 0, 0);
+        pArrToWrite[arrayIterator] = QString::fromWCharArray(vtProp.bstrVal);
 
         VariantClear(&vtProp);
+
+        //-----------------------------------RAM MEMORY TYPE-----------------------------------------
+        hr = pclsObj->Get(L"memorytype", 0, &vtProp, 0, 0);
+        pArrToWrite[arrayIterator] += " ";
+
+        switch (vtProp.intVal) {
+            case 0:{
+                pArrToWrite[arrayIterator] += "DDR4(?) UNKNOWN TYPE";
+                break;
+            }
+            case 20:{
+                pArrToWrite[arrayIterator] += "DDR";
+                break;
+            }
+            case 21:{
+                pArrToWrite[arrayIterator] += "DDR2";
+                break;
+            }
+            case 24:{
+                pArrToWrite[arrayIterator] += "DDR3";
+                break;
+            }
+            default:{
+                pArrToWrite[arrayIterator] += "UNKNOWN TYPE";
+                break;
+            }
+        }
+
+        qDebug() << "pArrToWrite[arrayIterator]" << pArrToWrite[arrayIterator] << "index = " << arrayIterator;
+        qDebug() << " manufacturer memtype: " << pArrToWrite[arrayIterator];
+
+        VariantClear(&vtProp);
+
+        //-----------------------------------RAM FORMFACTOR-----------------------------------------
+
+        hr = pclsObj->Get(L"formfactor", 0, &vtProp, 0, 0);
+        pArrToWrite[arrayIterator] += " ";
+
+        switch (vtProp.intVal) {
+            case 8:{
+                pArrToWrite[arrayIterator] += "DIMM";
+                break;
+            }
+            case 12:{
+                pArrToWrite[arrayIterator] += "SODIMM ";
+                break;
+            }
+            default:{
+                pArrToWrite[arrayIterator] += "UNKNOWN FORMFACTOR";
+                break;
+            }
+        }
+
+        VariantClear(&vtProp);
+
+        //-----------------------------------RAM CAPACITY-----------------------------------------
+
+        pArrToWrite[arrayIterator] += " ";
+
+        QString bufferForCapacity;
+        long long capacity;
+        hr = pclsObj->Get(L"capacity", 0, &vtProp, 0, 0);
+        bufferForCapacity = QString::fromWCharArray(vtProp.bstrVal);
+        capacity = bufferForCapacity.toLongLong();
+
+        capacity /= 1024;   //kb
+        capacity /= 1024;   //mb
+        capacity /= 1024;   //gb
+
+        pArrToWrite[arrayIterator] += QString::number(capacity);
+        pArrToWrite[arrayIterator] += " GB";
+
+        qDebug() << "pArrToWrite[arrayIterator]" << pArrToWrite[arrayIterator] << "index = " << arrayIterator;
+
+        VariantClear(&vtProp);
+
+        //-----------------------------------RAM SPEED-----------------------------------------
+
+        pArrToWrite[arrayIterator] += " ";
+
+        hr = pclsObj->Get(L"speed", 0, &vtProp, 0, 0);
+        pArrToWrite[arrayIterator] += QString::number(vtProp.intVal);
+
+        qDebug() << "pArrToWrite[arrayIterator]" << pArrToWrite[arrayIterator] << "index = " << arrayIterator;
+
+        VariantClear(&vtProp);
+
         ++arrayIterator;
     }
 
