@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setParent(ui->layoutWidget1);
+    chartView->setParent(ui->tabWidget);
     chartView->setGeometry(50, 375, 400, 200);
 
     chartView->setStyleSheet("background-color: rgb(49, 49, 49);");

@@ -99,6 +99,235 @@ QTabWidget::pane { /* The tab widget frame */
      <attribute name="title">
       <string>Overview</string>
      </attribute>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>0</y>
+        <width>511</width>
+        <height>571</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_8">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="motherBoardDriverLabel">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="cpuDriverLabel_2">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="gpuDriverLabel">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="ramDriverLabel">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="storageDriverLabel">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="audioDriverLabel">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="opticalDriverLabel">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="networkDriverLabel">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="processList">
+           <property name="styleSheet">
+            <string notr="true">font: 12pt &quot;ГОСТ тип А&quot;;
+color: rgb(214, 214, 214);
+background-color: rgb(54, 54, 54);
+border-color: rgb(255, 255, 255);
+border: none;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_18">
+           <property name="styleSheet">
+            <string notr="true">font: 12pt &quot;ГОСТ тип А&quot;;
+color: rgb(214, 214, 214);</string>
+           </property>
+           <property name="text">
+            <string>Total CPU Load</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="cpuProgressBar">
+           <property name="styleSheet">
+            <string notr="true">QProgressBar {
+   
+	color: rgb(255, 255, 255);
+	font: 75 11pt &quot;Consolas&quot;;
+	border-color: rgb(59, 59, 59);
+    border-radius: 5px;
+}
+
+QProgressBar::chunk {
+    background-color: rgb(39, 99, 13);
+    width: 20px;
+}</string>
+           </property>
+           <property name="value">
+            <number>100</number>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="textDirection">
+            <enum>QProgressBar::TopToBottom</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_17">
+           <property name="styleSheet">
+            <string notr="true">font: 12pt &quot;ГОСТ тип А&quot;;
+color: rgb(214, 214, 214);</string>
+           </property>
+           <property name="text">
+            <string>Total RAM Load</string>
+           </property>
+           <property name="margin">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="ramProgressBar">
+           <property name="styleSheet">
+            <string notr="true">QProgressBar {
+   
+	color: rgb(255, 255, 255);
+	font: 75 11pt &quot;Consolas&quot;;
+	border-color: rgb(59, 59, 59);
+    border-radius: 5px;
+}
+
+QProgressBar::chunk {
+    background-color: rgb(39, 99, 13);
+    width: 20px;
+}</string>
+           </property>
+           <property name="value">
+            <number>24</number>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
      <widget class="Line" name="line">
       <property name="geometry">
        <rect>
@@ -112,289 +341,151 @@ QTabWidget::pane { /* The tab widget frame */
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="upTimeLabel">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>281</width>
-        <height>21</height>
+        <x>0</x>
+        <y>2</y>
+        <width>481</width>
+        <height>1309</height>
        </rect>
       </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetDefaultConstraint</enum>
+           </property>
+           <property name="leftMargin">
+            <number>20</number>
+           </property>
+           <property name="topMargin">
+            <number>15</number>
+           </property>
+           <property name="rightMargin">
+            <number>100</number>
+           </property>
+           <property name="bottomMargin">
+            <number>1000</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="upTimeLabel">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(214, 214, 214);
 font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Up Time:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="motherBoardNameTempLabel">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>40</y>
-        <width>101</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
+             </property>
+             <property name="text">
+              <string>Up Time:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="motherBoardNameTempLabel">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(214, 214, 214);
 font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Motherboard:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="cpuNameTempLabel">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>70</y>
-        <width>461</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
+             </property>
+             <property name="text">
+              <string>Motherboard:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="cpuNameTempLabel">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(214, 214, 214);
 font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>CPU:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="GPUNameTempLabel">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>100</y>
-        <width>451</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
+             </property>
+             <property name="text">
+              <string>CPU:</string>
+             </property>
+             <property name="wordWrap">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="GPUNameTempLabel">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(214, 214, 214);
 font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Graphics card:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="RAMNameLabel">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>130</y>
-        <width>41</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
+             </property>
+             <property name="text">
+              <string>Graphics card:</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::AutoText</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="RAMNameLabel">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(214, 214, 214);
 font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>RAM:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="storageNameTempLabel">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>160</y>
-        <width>71</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
+             </property>
+             <property name="text">
+              <string>RAM:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="storageNameTempLabel">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(214, 214, 214);
 font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Storage:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="audioLabel">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>190</y>
-        <width>71</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
+             </property>
+             <property name="text">
+              <string>Storage:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="audioLabel">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(214, 214, 214);
 font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Audio:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="opticalDriveLabel">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>220</y>
-        <width>111</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
+             </property>
+             <property name="text">
+              <string>Audio:</string>
+             </property>
+             <property name="margin">
+              <number>0</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="opticalDriveLabel">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(214, 214, 214);
 font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Optical drive:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="networkContrlLabel">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>250</y>
-        <width>151</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
+             </property>
+             <property name="text">
+              <string>Optical drive:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="networkContrlLabel">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(214, 214, 214);
 font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Network controller:</string>
-      </property>
-     </widget>
-     <widget class="QListWidget" name="processList">
-      <property name="geometry">
-       <rect>
-        <x>490</x>
-        <y>270</y>
-        <width>501</width>
-        <height>231</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;ГОСТ тип А&quot;;
-color: rgb(214, 214, 214);
-background-color: rgb(54, 54, 54);
-border-color: rgb(255, 255, 255);
-border: none;</string>
-      </property>
-     </widget>
-     <widget class="QListWidget" name="processList_2">
-      <property name="geometry">
-       <rect>
-        <x>490</x>
-        <y>6</y>
-        <width>501</width>
-        <height>261</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;ГОСТ тип А&quot;;
-color: rgb(214, 214, 214);
-background-color: rgb(54, 54, 54);
-border-color: rgb(255, 255, 255);
-border: none;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_10">
-      <property name="geometry">
-       <rect>
-        <x>500</x>
-        <y>510</y>
-        <width>151</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
-font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Total CPU Load</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_11">
-      <property name="geometry">
-       <rect>
-        <x>500</x>
-        <y>540</y>
-        <width>151</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
-font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Total RAM Load</string>
-      </property>
-     </widget>
-     <widget class="QProgressBar" name="cpuProgressBar">
-      <property name="geometry">
-       <rect>
-        <x>630</x>
-        <y>510</y>
-        <width>361</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QProgressBar {
-   
-	color: rgb(255, 255, 255);
-	font: 75 11pt &quot;Consolas&quot;;
-	border-color: rgb(59, 59, 59);
-    border-radius: 5px;
-}
-
-QProgressBar::chunk {
-    background-color: rgb(39, 99, 13);
-    width: 20px;
-}</string>
-      </property>
-      <property name="value">
-       <number>100</number>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-      <property name="textDirection">
-       <enum>QProgressBar::TopToBottom</enum>
-      </property>
-     </widget>
-     <widget class="QProgressBar" name="ramProgressBar">
-      <property name="geometry">
-       <rect>
-        <x>630</x>
-        <y>540</y>
-        <width>361</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QProgressBar {
-   
-	color: rgb(255, 255, 255);
-	font: 75 11pt &quot;Consolas&quot;;
-	border-color: rgb(59, 59, 59);
-    border-radius: 5px;
-}
-
-QProgressBar::chunk {
-    background-color: rgb(39, 99, 13);
-    width: 20px;
-}</string>
-      </property>
-      <property name="value">
-       <number>24</number>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
+             </property>
+             <property name="text">
+              <string>Network controller:</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="monitoringTools">
