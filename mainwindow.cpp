@@ -77,6 +77,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->GPUNameTempLabel->setText("Graphics card: " + hc.getGPUInfo());
 
+    //----GETTING RAM INFO----
+
+    hc.getRAMInfo();
+
     //*********************END:OVERVIEW**********************//
 
 

@@ -29,11 +29,10 @@ public:
 
     static void getUptime(long &hours, long &minutes, long &seconds, long &millies, HardWareInformationCenter &hc);
 
-    void initCOM();
 
     QString getCPUInfo() const;
     QString getGPUInfo() const;
-    QString getRAMInfo() const;
+    QString getRAMInfo();
 
 
     //get drivers;
@@ -42,6 +41,13 @@ private:
     bool isGetUpTimeLoopRunning;
 
     HRESULT hres;
+
+    IWbemServices *pSvc;
+    IWbemLocator *pLoc;
+
+    void initCOM();
+    void WMI_getRAMInfo(QString *pArrToWrite);
+    void cleanUpCOM();
 };
 
 #endif // HARDWAREINFORMATIONCENTER_H

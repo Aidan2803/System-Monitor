@@ -1,6 +1,8 @@
 #include "hardwareinformationcenter.h"
 
-HardWareInformationCenter::HardWareInformationCenter() : isGetUpTimeLoopRunning{true}
+static const short AMOUNT_OF_PHYSICAL_MEMORY_BARS{4};
+
+HardWareInformationCenter::HardWareInformationCenter() : isGetUpTimeLoopRunning{true}, pSvc{nullptr}, pLoc{nullptr}
 {}
 
 void HardWareInformationCenter::initCOM(){
@@ -9,6 +11,99 @@ void HardWareInformationCenter::initCOM(){
         {
             cout << "Failed to initialize COM library. Error code = 0x" << hex << hres << endl; // Program has failed.
         }
+
+        hres = CoInitializeSecurity(
+                NULL,
+                -1,                          // COM authentication
+                NULL,                        // Authentication services
+                NULL,                        // Reserved
+                RPC_C_AUTHN_LEVEL_DEFAULT,   // Default authentication
+                RPC_C_IMP_LEVEL_IMPERSONATE, // Default Impersonation
+                NULL,                        // Authentication info
+                EOAC_NONE,                   // Additional capabilities
+                NULL                         // Reserved
+            );
+
+
+        if (FAILED(hres))
+        {
+            cout << "Failed to initialize security. Error code = 0x" << hex << hres << endl;
+            CoUninitialize();      // Program has failed.
+        }
+
+
+
+        hres = CoCreateInstance(
+                CLSID_WbemLocator,
+                0,
+                CLSCTX_INPROC_SERVER,
+                IID_IWbemLocator, (LPVOID *)&pLoc);
+
+        if (FAILED(hres))
+        {
+             cout << "Failed to create IWbemLocator object." << " Err code = 0x" << hex << hres << endl;
+                    CoUninitialize();   // Program has failed.
+        }
+
+                // Step 4: -----------------------------------------------------
+                // Connect to WMI through the IWbemLocator::ConnectServer method
+
+
+                // Connect to the root\cimv2 namespace with
+                // the current user and obtain pointer pSvc
+                // to make IWbemServices calls.
+         hres = pLoc->ConnectServer(
+             _bstr_t(L"ROOT\\CIMV2"), // Object path of WMI namespace
+             NULL,                    // User name. NULL = current user
+             NULL,                    // User password. NULL = current
+             0,                       // Locale. NULL indicates current
+             NULL,                    // Security flags.
+             0,                       // Authority (e.g. Kerberos)
+             0,                       // Context object
+             &pSvc                    // pointer to IWbemServices proxy
+             );
+
+         if (FAILED(hres))
+          {
+               cout << "Could not connect. Error code = 0x" << hex << hres << endl;
+               pLoc->Release();
+               CoUninitialize(); // Program has failed.
+          }
+
+          cout << "Connected to ROOT\\CIMV2 WMI namespace" << endl;
+
+                // Step 5: --------------------------------------------------
+                // Set security levels on the proxy -------------------------
+
+         hres = CoSetProxyBlanket(
+                    pSvc,                        // Indicates the proxy to set
+                    RPC_C_AUTHN_WINNT,           // RPC_C_AUTHN_xxx
+                    RPC_C_AUTHZ_NONE,            // RPC_C_AUTHZ_xxx
+                    NULL,                        // Server principal name
+                    RPC_C_AUTHN_LEVEL_CALL,      // RPC_C_AUTHN_LEVEL_xxx
+                    RPC_C_IMP_LEVEL_IMPERSONATE, // RPC_C_IMP_LEVEL_xxx
+                    NULL,                        // client identity
+                    EOAC_NONE                    // proxy capabilities
+          );
+
+         if (FAILED(hres))
+         {
+             cout << "Could not set proxy blanket. Error code = 0x" << hex << hres << endl;
+             pSvc->Release();
+             pLoc->Release();
+             CoUninitialize();             // Program has failed.
+         }
+}
+
+
+
+void HardWareInformationCenter::cleanUpCOM(){
+    // Cleanup
+    // ========
+
+    pSvc->Release();
+    pLoc->Release();
+    CoUninitialize();
 }
 
 void HardWareInformationCenter::getUptime(long &hours, long &minutes, long &seconds, long &millies, HardWareInformationCenter &hc){
@@ -81,7 +176,7 @@ QString HardWareInformationCenter::getCPUInfo() const{
 }
 
 QString HardWareInformationCenter::getGPUInfo() const{
-    QString test;
+    QString cpuInfo;
 
     for (int i = 0; ; i++)
         {
@@ -91,14 +186,71 @@ QString HardWareInformationCenter::getGPUInfo() const{
                 break;
 
             if(i == 0){
-                 test = QString::fromWCharArray(dd.DeviceString);
+                 cpuInfo = QString::fromWCharArray(dd.DeviceString);
             }
          }
 
-    return test;
+    return cpuInfo;
 }
 
-QString HardWareInformationCenter::getRAMInfo() const {
+void HardWareInformationCenter::WMI_getRAMInfo(QString *pArrToWrite){
+    IEnumWbemClassObject* pEnumerator = NULL;
+    hres = pSvc->ExecQuery(
+        bstr_t("WQL"),
+        bstr_t("SELECT * FROM Win32_PhysicalMemory"),
+        WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY,
+        NULL,
+        &pEnumerator);
 
+    if (FAILED(hres))
+    {
+        cout << "Query for operating system name failed." << " Error code = 0x" << hex << hres << endl;
+        pSvc->Release();
+        pLoc->Release();
+        CoUninitialize();     // Program has failed.
+    }
+
+    IWbemClassObject *pclsObj = nullptr;
+    ULONG uReturn = 0;
+
+    short arrayIterator{0};
+    while (pEnumerator)
+    {
+        HRESULT hr = pEnumerator->Next(WBEM_INFINITE, 1,
+                &pclsObj, &uReturn);
+
+        if (0 == uReturn)
+        {
+            break;
+        }
+
+        VARIANT vtProp;
+
+            //get ram capacity
+        hr = pclsObj->Get(L"MemoryType", 0, &vtProp, 0, 0);
+        char *myCharArray = NULL;
+        myCharArray = _com_util::ConvertBSTRToString(vtProp.bstrVal);
+        string testStr(myCharArray);
+        pArrToWrite[arrayIterator] = pArrToWrite[arrayIterator].fromWCharArray(vtProp.bstrVal);
+
+        qDebug() << "pArrToWrite[arrayIterator]" << pArrToWrite[arrayIterator] << "index = " << arrayIterator;
+        cout << " MemoryType : " << vtProp.bstrVal << endl;
+
+        VariantClear(&vtProp);
+        ++arrayIterator;
+    }
+
+    pEnumerator->Release();
+    pclsObj->Release();
+
+}
+
+QString HardWareInformationCenter::getRAMInfo() {
+    QString ramInfo[AMOUNT_OF_PHYSICAL_MEMORY_BARS]; // empty str is ""
+
+    initCOM();
+    WMI_getRAMInfo(ramInfo);
+
+    return "ss";
 
 }
