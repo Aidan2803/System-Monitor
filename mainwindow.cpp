@@ -80,14 +80,12 @@ MainWindow::MainWindow(QWidget *parent)
     //----GETTING RAM INFO----
     amountOfBars = AMOUNT_OF_PHYSICAL_MEMORY_BARS;
 
-    //ramInfo = new QString[amountOfBars];
-
     int amountOfBars{0};
     ramInfo =  hc.getRAMInfo(&amountOfBars);
 
-
-    qDebug() << "ramInfo[0] = " << ramInfo[0];
-    qDebug() << "ramInfo[0] = " << ramInfo[1];
+    for(int i{0}; i < amountOfBars; ++i){
+         ui->ramInfoComboBox->addItem(ramInfo[i]);
+    }
 
     //*********************END:OVERVIEW**********************//
 

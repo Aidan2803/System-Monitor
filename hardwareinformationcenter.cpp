@@ -29,8 +29,6 @@ void HardWareInformationCenter::initCOM(){
             CoUninitialize();      // Program has failed.
         }
 
-
-
         hres = CoCreateInstance(
                 CLSID_WbemLocator,
                 0,
@@ -93,11 +91,8 @@ void HardWareInformationCenter::initCOM(){
          }
 }
 
-
-
 void HardWareInformationCenter::cleanUpCOM(){
     // Cleanup
-    // ========
 
     pSvc->Release();
     pLoc->Release();
