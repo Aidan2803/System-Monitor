@@ -3,5 +3,6 @@
 
 const short AMOUNT_OF_PHYSICAL_MEMORY_BARS{4};
 const short AMOUNT_OF_PHYSICAL_DISKS{4};
+const short AMOUNT_OF_AUDIO_DEVICES{4};
 
 #endif // GLOBALVARIABLES_H

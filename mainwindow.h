@@ -54,6 +54,7 @@ private:
 
     QString *ramInfo;
     QString *storageInfo;
+    QString *audioInfo;
 
 private slots:
 

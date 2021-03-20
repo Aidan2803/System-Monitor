@@ -37,6 +37,7 @@ public:
     QString* getRAMInfo(int *amountOfBars);
     QString getBaseboardInfo();
     QString* getStorageInfo(int *amountOfDisks);
+    QString* getAudioDevicesInfo(int *amountOfDevices);
 
     //get drivers;
     //get hardware names;
@@ -44,6 +45,7 @@ private:
     bool isGetUpTimeLoopRunning;
     QString ramInfo[AMOUNT_OF_PHYSICAL_MEMORY_BARS];
     QString storageInfo[AMOUNT_OF_PHYSICAL_DISKS];
+    QString audioInfo[AMOUNT_OF_PHYSICAL_DISKS];
 
     HRESULT hres;
 
@@ -55,6 +57,7 @@ private:
     void WMI_getRAMInfo(QString *pArrToWrite, int *amountOfBars);
     QString WMI_getBaseboardInfo();
     void WMI_getStorageInfo(QString *pArrToWrite, int *amountOfDisks);
+    void WMI_getAudioDevicesInfo(QString *pArrToWrite, int *amountOfDevices);
 
     void cleanUpCOM();
 };

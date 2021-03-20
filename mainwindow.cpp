@@ -100,6 +100,15 @@ MainWindow::MainWindow(QWidget *parent)
         ui->storageInfoComboBox->addItem(storageInfo[i]);
     }
 
+    //----GETTING AUDIO INFO----
+
+    int amountOfAudioDevices{0};
+
+    audioInfo = hc.getAudioDevicesInfo(&amountOfAudioDevices);
+
+    for(int i{0}; i < amountOfAudioDevices; ++i){
+        ui->audioDevicesComboBox->addItem(audioInfo[i]);
+    }
 
     //*********************END:OVERVIEW**********************//
 

@@ -472,3 +472,64 @@ QString* HardWareInformationCenter::getStorageInfo(int *amountOfDisks){
 
     return storageInfo;
 }
+
+void HardWareInformationCenter::WMI_getAudioDevicesInfo(QString *pArrToWrite, int *amountOfDevices){
+    IEnumWbemClassObject* pEnumerator = NULL;
+    hres = pSvc->ExecQuery(
+        bstr_t("WQL"),
+        bstr_t("SELECT * FROM Win32_SoundDevice"),
+        WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY,
+        NULL,
+        &pEnumerator);
+
+    if (FAILED(hres))
+    {
+        cout << "Query for operating system name failed." << " Error code = 0x" << hex << hres << endl;
+        pSvc->Release();
+        pLoc->Release();
+        CoUninitialize();     // Program has failed.
+    }
+
+    IWbemClassObject *pclsObj = nullptr;
+    ULONG uReturn = 0;
+
+    short arrayIterator{0};
+    while (pEnumerator)
+    {
+        HRESULT hr = pEnumerator->Next(WBEM_INFINITE, 1,
+                &pclsObj, &uReturn);
+
+        if (0 == uReturn)
+        {
+            break;
+        }
+
+        VARIANT vtProp;
+
+        //-----------------------------------STORAGE CAPTION-----------------------------------------
+        hr = pclsObj->Get(L"caption", 0, &vtProp, 0, 0);
+        pArrToWrite[arrayIterator] = QString::fromWCharArray(vtProp.bstrVal);
+
+        VariantClear(&vtProp);
+
+        //-----------------------------------STORAGE CAPACITY-----------------------------------------
+
+        ++arrayIterator;
+    }
+
+    *amountOfDevices = arrayIterator;
+
+    qDebug() << "amountOfBars = " << *amountOfDevices;
+
+    pEnumerator->Release();
+    pclsObj->Release();
+
+}
+
+QString* HardWareInformationCenter::getAudioDevicesInfo(int *amountOfDevices){
+    initCOM();
+    WMI_getAudioDevicesInfo(audioInfo, amountOfDevices);
+    cleanUpCOM();
+
+    return audioInfo;
+}
