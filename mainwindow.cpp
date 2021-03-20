@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setParent(ui->tabWidget);
+    chartView->setParent(ui->overview);
     chartView->setGeometry(50, 375, 400, 200);
 
     chartView->setStyleSheet("background-color: rgb(49, 49, 49);");
@@ -71,11 +71,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     //----GETTING BASEBOARD INFO----
 
-    ui->motherBoardNameTempLabel->setText("Baseboard: " + hc.getBaseboardInfo());
+    ui->motherBoardNameTempLabel->setText(hc.getBaseboardInfo());
 
     //----GETTING CPU INFO----
 
-    ui->cpuNameTempLabel->setText("CPU: " + hc.getCPUInfo());
+    ui->cpuNameTempLabel->setText(hc.getCPUInfo());
 
     //----GETTING GPU INFO----
 
@@ -230,7 +230,7 @@ void MainWindow::startPrintUpTimeThread(){
 
 void MainWindow::printUpTime(){
     while(isPrintUpTimeRunning){
-        QString upTimeLabelString = "Up Time ";
+        QString upTimeLabelString;
         upTimeLabelString += QString::number(upTime_hours);
         upTimeLabelString += ":";
         upTimeLabelString += QString::number(upTime_minutes);
