@@ -143,7 +143,7 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
 font: 14pt &quot;ГОСТ тип А&quot;;</string>
       </property>
       <property name="text">
-       <string>Motherboard:</string>
+       <string>Baseboard:</string>
       </property>
      </widget>
      <widget class="QLabel" name="cpuNameTempLabel">
@@ -334,7 +334,7 @@ QProgressBar::chunk {
        <rect>
         <x>50</x>
         <y>130</y>
-        <width>471</width>
+        <width>511</width>
         <height>31</height>
        </rect>
       </property>
@@ -433,7 +433,7 @@ QProgressBar::chunk {
        <rect>
         <x>80</x>
         <y>170</y>
-        <width>441</width>
+        <width>481</width>
         <height>31</height>
        </rect>
       </property>

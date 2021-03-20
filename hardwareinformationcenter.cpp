@@ -328,6 +328,75 @@ int HardWareInformationCenter::WMI_getRAMInfo(QString *pArrToWrite, int *amountO
 QString* HardWareInformationCenter::getRAMInfo(int *amountOfBars) {
     initCOM();
     WMI_getRAMInfo(ramInfo, amountOfBars);
+    cleanUpCOM();
 
     return ramInfo;
+}
+
+QString HardWareInformationCenter::WMI_getBaseboardInfo(){
+    QString baseboardInfo;
+
+    IEnumWbemClassObject* pEnumerator = NULL;
+    hres = pSvc->ExecQuery(
+        bstr_t("WQL"),
+        bstr_t("SELECT * FROM Win32_BaseBoard"),
+        WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY,
+        NULL,
+        &pEnumerator);
+
+    if (FAILED(hres))
+    {
+        cout << "Query for operating system name failed." << " Error code = 0x" << hex << hres << endl;
+        pSvc->Release();
+        pLoc->Release();
+        CoUninitialize();     // Program has failed.
+    }
+
+    IWbemClassObject *pclsObj = nullptr;
+    ULONG uReturn = 0;
+
+    short arrayIterator{0};
+    while (pEnumerator)
+    {
+        HRESULT hr = pEnumerator->Next(WBEM_INFINITE, 1,
+                &pclsObj, &uReturn);
+
+        if (0 == uReturn)
+        {
+            break;
+        }
+
+        VARIANT vtProp;
+
+        //-----------------------------------RAM MANUFACTURER-----------------------------------------
+        hr = pclsObj->Get(L"manufacturer", 0, &vtProp, 0, 0);
+        baseboardInfo = QString::fromWCharArray(vtProp.bstrVal);
+
+        VariantClear(&vtProp);
+
+        baseboardInfo += " ";
+
+        hr = pclsObj->Get(L"product", 0, &vtProp, 0, 0);
+        baseboardInfo += QString::fromWCharArray(vtProp.bstrVal);
+
+        VariantClear(&vtProp);
+
+        qDebug() << "baseboardInfo = " << baseboardInfo;
+
+    }
+
+    return baseboardInfo;
+
+    pEnumerator->Release();
+    pclsObj->Release();
+}
+
+QString HardWareInformationCenter::getBaseboardInfo(){
+    QString buffer;
+    initCOM();
+    buffer = WMI_getBaseboardInfo();
+    cleanUpCOM();
+
+    return buffer;
+
 }

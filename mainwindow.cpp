@@ -69,7 +69,11 @@ MainWindow::MainWindow(QWidget *parent)
     startPrintUpTimeThread();
     qDebug() << "after thread";
 
-     //----GETTING CPU INFO----
+    //----GETTING BASEBOARD INFO----
+
+    ui->motherBoardNameTempLabel->setText("Baseboard: " + hc.getBaseboardInfo());
+
+    //----GETTING CPU INFO----
 
     ui->cpuNameTempLabel->setText("CPU: " + hc.getCPUInfo());
 

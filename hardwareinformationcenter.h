@@ -35,6 +35,7 @@ public:
     QString getCPUInfo() const;
     QString getGPUInfo() const;
     QString* getRAMInfo(int *amountOfBars);
+    QString getBaseboardInfo();
 
 
     //get drivers;
@@ -50,6 +51,7 @@ private:
 
     void initCOM();
     int WMI_getRAMInfo(QString *pArrToWrite, int *amountOfBars);
+    QString WMI_getBaseboardInfo();
     void cleanUpCOM();
 };
 
