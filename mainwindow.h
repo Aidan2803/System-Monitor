@@ -50,11 +50,10 @@ private:
     long upTime_hours;
     long upTime_minutes;
     long upTime_seconds;
-    long upTime_milliseconds;
-
-    int amountOfBars;
+    long upTime_milliseconds;   
 
     QString *ramInfo;
+    QString *storageInfo;
 
 private slots:
 

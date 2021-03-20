@@ -36,13 +36,14 @@ public:
     QString getGPUInfo() const;
     QString* getRAMInfo(int *amountOfBars);
     QString getBaseboardInfo();
-
+    QString* getStorageInfo(int *amountOfDisks);
 
     //get drivers;
     //get hardware names;
 private:
     bool isGetUpTimeLoopRunning;
     QString ramInfo[AMOUNT_OF_PHYSICAL_MEMORY_BARS];
+    QString storageInfo[AMOUNT_OF_PHYSICAL_DISKS];
 
     HRESULT hres;
 
@@ -50,8 +51,11 @@ private:
     IWbemLocator *pLoc;
 
     void initCOM();
-    int WMI_getRAMInfo(QString *pArrToWrite, int *amountOfBars);
+
+    void WMI_getRAMInfo(QString *pArrToWrite, int *amountOfBars);
     QString WMI_getBaseboardInfo();
+    void WMI_getStorageInfo(QString *pArrToWrite, int *amountOfDisks);
+
     void cleanUpCOM();
 };
 

@@ -186,7 +186,7 @@ QString HardWareInformationCenter::getGPUInfo() const{
     return cpuInfo;
 }
 
-int HardWareInformationCenter::WMI_getRAMInfo(QString *pArrToWrite, int *amountOfBars){
+void HardWareInformationCenter::WMI_getRAMInfo(QString *pArrToWrite, int *amountOfBars){
     IEnumWbemClassObject* pEnumerator = NULL;
     hres = pSvc->ExecQuery(
         bstr_t("WQL"),
@@ -252,9 +252,6 @@ int HardWareInformationCenter::WMI_getRAMInfo(QString *pArrToWrite, int *amountO
             }
         }
 
-        qDebug() << "pArrToWrite[arrayIterator]" << pArrToWrite[arrayIterator] << "index = " << arrayIterator;
-        qDebug() << " manufacturer memtype: " << pArrToWrite[arrayIterator];
-
         VariantClear(&vtProp);
 
         //-----------------------------------RAM FORMFACTOR-----------------------------------------
@@ -296,8 +293,6 @@ int HardWareInformationCenter::WMI_getRAMInfo(QString *pArrToWrite, int *amountO
         pArrToWrite[arrayIterator] += QString::number(capacity);
         pArrToWrite[arrayIterator] += " GB";
 
-        qDebug() << "pArrToWrite[arrayIterator]" << pArrToWrite[arrayIterator] << "index = " << arrayIterator;
-
         VariantClear(&vtProp);
 
         //-----------------------------------RAM SPEED-----------------------------------------
@@ -307,18 +302,12 @@ int HardWareInformationCenter::WMI_getRAMInfo(QString *pArrToWrite, int *amountO
         hr = pclsObj->Get(L"speed", 0, &vtProp, 0, 0);
         pArrToWrite[arrayIterator] += QString::number(vtProp.intVal);
 
-        qDebug() << "pArrToWrite[arrayIterator]" << pArrToWrite[arrayIterator] << "index = " << arrayIterator;
-
         VariantClear(&vtProp);
 
         ++arrayIterator;
     }
 
     *amountOfBars = arrayIterator;
-
-    qDebug() << "amountOfBars = " << *amountOfBars;
-
-    return arrayIterator;
 
     pEnumerator->Release();
     pclsObj->Release();
@@ -399,4 +388,87 @@ QString HardWareInformationCenter::getBaseboardInfo(){
 
     return buffer;
 
+}
+
+void HardWareInformationCenter::WMI_getStorageInfo(QString *pArrToWrite, int *amountOfDisks){
+    IEnumWbemClassObject* pEnumerator = NULL;
+    hres = pSvc->ExecQuery(
+        bstr_t("WQL"),
+        bstr_t("SELECT * FROM Win32_DiskDrive"),
+        WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY,
+        NULL,
+        &pEnumerator);
+
+    if (FAILED(hres))
+    {
+        cout << "Query for operating system name failed." << " Error code = 0x" << hex << hres << endl;
+        pSvc->Release();
+        pLoc->Release();
+        CoUninitialize();     // Program has failed.
+    }
+
+    IWbemClassObject *pclsObj = nullptr;
+    ULONG uReturn = 0;
+
+    short arrayIterator{0};
+    while (pEnumerator)
+    {
+        HRESULT hr = pEnumerator->Next(WBEM_INFINITE, 1,
+                &pclsObj, &uReturn);
+
+        if (0 == uReturn)
+        {
+            break;
+        }
+
+        VARIANT vtProp;
+
+        //-----------------------------------STORAGE CAPTION-----------------------------------------
+        hr = pclsObj->Get(L"caption", 0, &vtProp, 0, 0);
+        pArrToWrite[arrayIterator] = QString::fromWCharArray(vtProp.bstrVal);
+
+        VariantClear(&vtProp);
+
+        //-----------------------------------STORAGE CAPACITY-----------------------------------------
+
+        pArrToWrite[arrayIterator] += " ";
+
+        QString bufferForCapacity;
+        long long capacity;
+        hr = pclsObj->Get(L"size", 0, &vtProp, 0, 0);
+        bufferForCapacity = QString::fromWCharArray(vtProp.bstrVal);
+        capacity = bufferForCapacity.toLongLong();
+
+        qDebug() << "STORAGE: bufferForCapacity = " << bufferForCapacity;
+        qDebug() << "STORAGE: capacity = " << capacity;
+
+        capacity /= 1024;   //kb
+        capacity /= 1024;   //mb
+        capacity /= 1024;   //gb
+
+        pArrToWrite[arrayIterator] += QString::number(capacity);
+        pArrToWrite[arrayIterator] += " GB";
+
+        qDebug() << "pArrToWrite[arrayIterator]" << pArrToWrite[arrayIterator] << "index = " << arrayIterator;
+
+        VariantClear(&vtProp);
+
+        ++arrayIterator;
+    }
+
+    *amountOfDisks = arrayIterator;
+
+    qDebug() << "amountOfBars = " << *amountOfDisks;
+
+    pEnumerator->Release();
+    pclsObj->Release();
+
+}
+
+QString* HardWareInformationCenter::getStorageInfo(int *amountOfDisks){
+    initCOM();
+    WMI_getStorageInfo(storageInfo, amountOfDisks);
+    cleanUpCOM();
+
+    return storageInfo;
 }

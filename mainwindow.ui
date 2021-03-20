@@ -340,7 +340,7 @@ QProgressBar::chunk {
       </property>
       <property name="styleSheet">
        <string notr="true">QComboBox {
-	color: rgb(72, 184, 41);
+	color: white;
 	font: 14pt &quot;ГОСТ тип А&quot;;
 	background-color: rgb(63, 63, 63);
 	selection-background-color: rgb(63, 63, 63);
@@ -428,7 +428,7 @@ QProgressBar::chunk {
        <enum>QProgressBar::TopToBottom</enum>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="storageInfoComboBox">
       <property name="geometry">
        <rect>
         <x>80</x>
@@ -439,7 +439,7 @@ QProgressBar::chunk {
       </property>
       <property name="styleSheet">
        <string notr="true">QComboBox {
-	color: rgb(72, 184, 41);
+	color: white;
 	font: 14pt &quot;ГОСТ тип А&quot;;
 	background-color: rgb(63, 63, 63);
 	selection-background-color: rgb(63, 63, 63);

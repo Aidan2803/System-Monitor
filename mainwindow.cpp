@@ -13,7 +13,7 @@ static int memoryRamAccaptableLoad = 10000;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow), amountOfBars{0}{
+    , ui(new Ui::MainWindow){
 
     ui->setupUi(this);
 
@@ -81,8 +81,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->GPUNameTempLabel->setText("Graphics card: " + hc.getGPUInfo());
 
-    //----GETTING RAM INFO----
-    amountOfBars = AMOUNT_OF_PHYSICAL_MEMORY_BARS;
+    //----GETTING RAM INFO----   
 
     int amountOfBars{0};
     ramInfo =  hc.getRAMInfo(&amountOfBars);
@@ -90,6 +89,17 @@ MainWindow::MainWindow(QWidget *parent)
     for(int i{0}; i < amountOfBars; ++i){
          ui->ramInfoComboBox->addItem(ramInfo[i]);
     }
+
+    //----GETTING STORAGE INFO----
+
+    int amountOfDisks{0};
+
+    storageInfo = hc.getStorageInfo(&amountOfDisks);
+
+    for(int i{0}; i < amountOfDisks; ++i){
+        ui->storageInfoComboBox->addItem(storageInfo[i]);
+    }
+
 
     //*********************END:OVERVIEW**********************//
 
