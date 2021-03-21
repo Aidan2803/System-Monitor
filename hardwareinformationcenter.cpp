@@ -100,8 +100,7 @@ void HardWareInformationCenter::cleanUpCOM(){
 }
 
 void HardWareInformationCenter::getUptime(long &hours, long &minutes, long &seconds, long &millies, HardWareInformationCenter &hc){
-    qDebug() << " hc.isGetUpTimeLoopRunning " << hc.isGetUpTimeLoopRunning;
-    while(hc.isGetUpTimeLoopRunning){
+   while(hc.isGetUpTimeLoopRunning){
         auto uptime = std::chrono::milliseconds(GetTickCount64());
 
         long buff = uptime.count();
@@ -370,8 +369,6 @@ QString HardWareInformationCenter::WMI_getBaseboardInfo(){
 
         VariantClear(&vtProp);
 
-        qDebug() << "baseboardInfo = " << baseboardInfo;
-
     }
 
     return baseboardInfo;
@@ -439,9 +436,6 @@ void HardWareInformationCenter::WMI_getStorageInfo(QString *pArrToWrite, int *am
         bufferForCapacity = QString::fromWCharArray(vtProp.bstrVal);
         capacity = bufferForCapacity.toLongLong();
 
-        qDebug() << "STORAGE: bufferForCapacity = " << bufferForCapacity;
-        qDebug() << "STORAGE: capacity = " << capacity;
-
         capacity /= 1024;   //kb
         capacity /= 1024;   //mb
         capacity /= 1024;   //gb
@@ -449,16 +443,12 @@ void HardWareInformationCenter::WMI_getStorageInfo(QString *pArrToWrite, int *am
         pArrToWrite[arrayIterator] += QString::number(capacity);
         pArrToWrite[arrayIterator] += " GB";
 
-        qDebug() << "pArrToWrite[arrayIterator]" << pArrToWrite[arrayIterator] << "index = " << arrayIterator;
-
         VariantClear(&vtProp);
 
         ++arrayIterator;
     }
 
     *amountOfDisks = arrayIterator;
-
-    qDebug() << "amountOfBars = " << *amountOfDisks;
 
     pEnumerator->Release();
     pclsObj->Release();
@@ -519,11 +509,8 @@ void HardWareInformationCenter::WMI_getAudioDevicesInfo(QString *pArrToWrite, in
 
     *amountOfDevices = arrayIterator;
 
-    qDebug() << "amountOfBars = " << *amountOfDevices;
-
     pEnumerator->Release();
     pclsObj->Release();
-
 }
 
 QString* HardWareInformationCenter::getAudioDevicesInfo(int *amountOfDevices){
@@ -532,4 +519,62 @@ QString* HardWareInformationCenter::getAudioDevicesInfo(int *amountOfDevices){
     cleanUpCOM();
 
     return audioInfo;
+}
+
+void HardWareInformationCenter::WMI_getNetworkControllers(QString *pArrToWrite, int *amountOfControllers){
+    IEnumWbemClassObject* pEnumerator = NULL;
+    hres = pSvc->ExecQuery(
+        bstr_t("WQL"),
+        bstr_t("SELECT * FROM Win32_NetworkAdapter"),
+        WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY,
+        NULL,
+        &pEnumerator);
+
+    if (FAILED(hres))
+    {
+        cout << "Query for operating system name failed." << " Error code = 0x" << hex << hres << endl;
+        pSvc->Release();
+        pLoc->Release();
+        CoUninitialize();     // Program has failed.
+    }
+
+    IWbemClassObject *pclsObj = nullptr;
+    ULONG uReturn = 0;
+
+    short arrayIterator{0};
+    while (pEnumerator)
+    {
+        HRESULT hr = pEnumerator->Next(WBEM_INFINITE, 1,
+                &pclsObj, &uReturn);
+
+        if (0 == uReturn)
+        {
+            break;
+        }
+
+        VARIANT vtProp;
+
+        //-----------------------------------STORAGE CAPTION-----------------------------------------
+        hr = pclsObj->Get(L"caption", 0, &vtProp, 0, 0);
+        pArrToWrite[arrayIterator] = QString::fromWCharArray(vtProp.bstrVal);
+
+        VariantClear(&vtProp);
+
+        //-----------------------------------STORAGE CAPACITY-----------------------------------------
+
+        ++arrayIterator;
+    }
+
+    *amountOfControllers = arrayIterator;
+
+    pEnumerator->Release();
+    pclsObj->Release();
+}
+
+QString* HardWareInformationCenter::getNetworkControllers(int *amountOfControllers){
+    initCOM();
+    WMI_getNetworkControllers(networkControllersInfo, amountOfControllers);
+    cleanUpCOM();
+
+    return networkControllersInfo;
 }

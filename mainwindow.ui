@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
+    <width>1400</width>
     <height>650</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>1200</width>
+    <width>1400</width>
     <height>650</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1200</width>
+    <width>1400</width>
     <height>650</height>
    </size>
   </property>
@@ -102,8 +102,8 @@ QTabWidget::pane { /* The tab widget frame */
      <widget class="Line" name="line">
       <property name="geometry">
        <rect>
-        <x>630</x>
-        <y>0</y>
+        <x>830</x>
+        <y>-20</y>
         <width>21</width>
         <height>601</height>
        </rect>
@@ -134,7 +134,7 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <rect>
         <x>100</x>
         <y>40</y>
-        <width>461</width>
+        <width>631</width>
         <height>21</height>
        </rect>
       </property>
@@ -151,7 +151,7 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <rect>
         <x>50</x>
         <y>70</y>
-        <width>511</width>
+        <width>681</width>
         <height>21</height>
        </rect>
       </property>
@@ -168,7 +168,7 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <rect>
         <x>120</x>
         <y>100</y>
-        <width>441</width>
+        <width>621</width>
         <height>21</height>
        </rect>
       </property>
@@ -214,28 +214,11 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <string>Storage:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="opticalDriveLabel">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>250</y>
-        <width>441</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
-font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
      <widget class="QLabel" name="networkContrlLabel">
       <property name="geometry">
        <rect>
         <x>160</x>
-        <y>280</y>
+        <y>250</y>
         <width>401</width>
         <height>21</height>
        </rect>
@@ -248,76 +231,12 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="label_10">
-      <property name="geometry">
-       <rect>
-        <x>670</x>
-        <y>510</y>
-        <width>151</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
-font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Total CPU Load</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_11">
-      <property name="geometry">
-       <rect>
-        <x>670</x>
-        <y>540</y>
-        <width>151</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
-font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Total RAM Load</string>
-      </property>
-     </widget>
-     <widget class="QProgressBar" name="ramProgressBar">
-      <property name="geometry">
-       <rect>
-        <x>830</x>
-        <y>540</y>
-        <width>361</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QProgressBar {
-   
-	color: rgb(255, 255, 255);
-	font: 75 11pt &quot;Consolas&quot;;
-	border-color: rgb(59, 59, 59);
-    border-radius: 5px;
-}
-
-QProgressBar::chunk {
-    background-color: rgb(39, 99, 13);
-    width: 20px;
-}</string>
-      </property>
-      <property name="value">
-       <number>24</number>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
      <widget class="QComboBox" name="ramInfoComboBox">
       <property name="geometry">
        <rect>
         <x>50</x>
         <y>130</y>
-        <width>511</width>
+        <width>691</width>
         <height>31</height>
        </rect>
       </property>
@@ -344,79 +263,12 @@ font: 14pt;
 }</string>
       </property>
      </widget>
-     <widget class="QListWidget" name="processList_2">
-      <property name="geometry">
-       <rect>
-        <x>660</x>
-        <y>0</y>
-        <width>531</width>
-        <height>241</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;ГОСТ тип А&quot;;
-color: rgb(214, 214, 214);
-background-color: rgb(54, 54, 54);
-border-color: rgb(255, 255, 255);
-border: none;</string>
-      </property>
-     </widget>
-     <widget class="QListWidget" name="processList">
-      <property name="geometry">
-       <rect>
-        <x>660</x>
-        <y>250</y>
-        <width>531</width>
-        <height>251</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;ГОСТ тип А&quot;;
-color: rgb(214, 214, 214);
-background-color: rgb(54, 54, 54);
-border-color: rgb(255, 255, 255);
-border: none;</string>
-      </property>
-     </widget>
-     <widget class="QProgressBar" name="cpuProgressBar">
-      <property name="geometry">
-       <rect>
-        <x>830</x>
-        <y>510</y>
-        <width>361</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QProgressBar {
-   
-	color: rgb(255, 255, 255);
-	font: 75 11pt &quot;Consolas&quot;;
-	border-color: rgb(59, 59, 59);
-    border-radius: 5px;
-}
-
-QProgressBar::chunk {
-    background-color: rgb(39, 99, 13);
-    width: 20px;
-}</string>
-      </property>
-      <property name="value">
-       <number>100</number>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-      <property name="textDirection">
-       <enum>QProgressBar::TopToBottom</enum>
-      </property>
-     </widget>
      <widget class="QComboBox" name="storageInfoComboBox">
       <property name="geometry">
        <rect>
         <x>80</x>
         <y>170</y>
-        <width>481</width>
+        <width>661</width>
         <height>31</height>
        </rect>
       </property>
@@ -528,28 +380,11 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <string>Audio:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="opticalDriveLabel_2">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>250</y>
-        <width>101</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(72, 184, 41);
-font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Optical drive:</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="networkContrlLabel_2">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>280</y>
+        <y>250</y>
         <width>151</width>
         <height>21</height>
        </rect>
@@ -567,7 +402,39 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <rect>
         <x>60</x>
         <y>210</y>
-        <width>501</width>
+        <width>681</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QComboBox {
+	color: white;
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	background-color: rgb(63, 63, 63);
+	selection-background-color: rgb(63, 63, 63);
+}
+
+QComboBox:disabled{	
+	background-color: rgb(120,120, 120);
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	color:rgb(50, 163, 69);
+	border:none;
+}
+
+QComboBox QAbstractItemView
+{
+selection-background-color: green;
+color: rgb(72, 184, 41);
+font: 14pt;
+}</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="networkControllerComboBox">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>250</y>
+        <width>581</width>
         <height>31</height>
        </rect>
       </property>
@@ -2170,13 +2037,144 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
      </widget>
     </widget>
    </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>540</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Total CPU Load</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="ramProgressBar">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>570</y>
+      <width>361</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+   
+	color: rgb(255, 255, 255);
+	font: 75 11pt &quot;Consolas&quot;;
+	border-color: rgb(59, 59, 59);
+    border-radius: 5px;
+}
+
+QProgressBar::chunk {
+    background-color: rgb(39, 99, 13);
+    width: 20px;
+}</string>
+    </property>
+    <property name="value">
+     <number>24</number>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="processList">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>280</y>
+      <width>531</width>
+      <height>251</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;ГОСТ тип А&quot;;
+color: rgb(214, 214, 214);
+background-color: rgb(54, 54, 54);
+border-color: rgb(255, 255, 255);
+border: none;</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="processList_2">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>30</y>
+      <width>531</width>
+      <height>241</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;ГОСТ тип А&quot;;
+color: rgb(214, 214, 214);
+background-color: rgb(54, 54, 54);
+border-color: rgb(255, 255, 255);
+border: none;</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="cpuProgressBar">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>540</y>
+      <width>361</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+   
+	color: rgb(255, 255, 255);
+	font: 75 11pt &quot;Consolas&quot;;
+	border-color: rgb(59, 59, 59);
+    border-radius: 5px;
+}
+
+QProgressBar::chunk {
+    background-color: rgb(39, 99, 13);
+    width: 20px;
+}</string>
+    </property>
+    <property name="value">
+     <number>100</number>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="textDirection">
+     <enum>QProgressBar::TopToBottom</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>570</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Total RAM Load</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1200</width>
+     <width>1400</width>
      <height>20</height>
     </rect>
    </property>

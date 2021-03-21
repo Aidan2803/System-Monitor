@@ -38,6 +38,7 @@ public:
     QString getBaseboardInfo();
     QString* getStorageInfo(int *amountOfDisks);
     QString* getAudioDevicesInfo(int *amountOfDevices);
+    QString* getNetworkControllers(int *amountOfControllers);
 
     //get drivers;
     //get hardware names;
@@ -46,6 +47,7 @@ private:
     QString ramInfo[AMOUNT_OF_PHYSICAL_MEMORY_BARS];
     QString storageInfo[AMOUNT_OF_PHYSICAL_DISKS];
     QString audioInfo[AMOUNT_OF_PHYSICAL_DISKS];
+    QString networkControllersInfo[AMOUNT_OF_NETWORK_CONTROLLERS];
 
     HRESULT hres;
 
@@ -58,6 +60,7 @@ private:
     QString WMI_getBaseboardInfo();
     void WMI_getStorageInfo(QString *pArrToWrite, int *amountOfDisks);
     void WMI_getAudioDevicesInfo(QString *pArrToWrite, int *amountOfDevices);
+    void WMI_getNetworkControllers(QString *pArrToWrite, int *amountOfControllers);
 
     void cleanUpCOM();
 };

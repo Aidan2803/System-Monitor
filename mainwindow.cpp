@@ -17,6 +17,23 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+    initWindow();
+}
+
+MainWindow::~MainWindow()
+{
+    hc.setIsGetUpTimeLoopRunning(false);
+    upTimeThread->join();
+    delete upTimeThread;
+
+    this->setIsPrintUpTimeRunning(false);
+    printUpTimeThread->join();
+    delete printUpTimeThread;
+
+    delete ui;
+}
+
+void MainWindow::initWindow(){
     //*********************BEGING:OVERVIEW**********************//
 
     //--------BEGING:CHART SETTINGS-----------
@@ -26,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QChart *chart = new QChart();
     chart->legend()->hide();
-    chart->addSeries(series);   
+    chart->addSeries(series);
 
     // Customize series
     QPen pen(QColor(39, 99, 13));
@@ -47,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setParent(ui->overview);
-    chartView->setGeometry(50, 375, 400, 200);
+    chartView->setGeometry(50, 285, 650, 300);
 
     chartView->setStyleSheet("background-color: rgb(49, 49, 49);");
 
@@ -81,7 +98,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->GPUNameTempLabel->setText("Graphics card: " + hc.getGPUInfo());
 
-    //----GETTING RAM INFO----   
+    //----GETTING RAM INFO----
 
     int amountOfBars{0};
     ramInfo =  hc.getRAMInfo(&amountOfBars);
@@ -108,6 +125,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     for(int i{0}; i < amountOfAudioDevices; ++i){
         ui->audioDevicesComboBox->addItem(audioInfo[i]);
+    }
+
+    //----GETTING NETWORK ADAPTER INFO----
+
+    int amountOfetworkControllers{0};
+
+    networkControllerInfo = hc.getNetworkControllers(&amountOfetworkControllers);
+
+    for(int i{0}; i < amountOfetworkControllers; ++i){
+        ui->networkControllerComboBox->addItem(networkControllerInfo[i]);
     }
 
     //*********************END:OVERVIEW**********************//
@@ -149,21 +176,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stopRAM->setDisabled(true);
 
     if(!ui->monitorCpuCheckBox->isChecked()){
-        ui->acceptaleCpuLoadTxtBox->setDisabled(true);       
+        ui->acceptaleCpuLoadTxtBox->setDisabled(true);
         ui->cpuBrowseButton->setDisabled(true);
         ui->hintButton_accProcCpu->setDisabled(true);
     }
 
     if(!ui->monitorRamCheckBox->isChecked()){
-        ui->acceptaleRamLoadTxtBox->setDisabled(true);       
-        ui->ramBrowseButton->setDisabled(true);    
+        ui->acceptaleRamLoadTxtBox->setDisabled(true);
+        ui->ramBrowseButton->setDisabled(true);
         ui->monitoringTypeRam->setDisabled(true);
         ui->hintButton->setDisabled(true);
         ui->hintButton_accProcRam->setDisabled(true);
     }
 
     if(ui->acceptableCpuProcessesList->count() == 0){
-        ui->cpuDeleteButton->setDisabled(true);        
+        ui->cpuDeleteButton->setDisabled(true);
     }
 
     if(ui->acceptableRamProcessesList->count() == 0){
@@ -210,19 +237,6 @@ MainWindow::MainWindow(QWidget *parent)
 
   //*********************END:EXTERNAL DISPLAY TOOLS**********************//
 
-}
-
-MainWindow::~MainWindow()
-{
-    hc.setIsGetUpTimeLoopRunning(false);
-    upTimeThread->join();
-    delete upTimeThread;
-
-    this->setIsPrintUpTimeRunning(false);
-    printUpTimeThread->join();
-    delete printUpTimeThread;
-
-    delete ui;
 }
 
 void MainWindow::startUpTimeThread(){

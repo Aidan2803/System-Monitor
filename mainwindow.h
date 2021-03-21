@@ -55,6 +55,7 @@ private:
     QString *ramInfo;
     QString *storageInfo;
     QString *audioInfo;
+    QString *networkControllerInfo;
 
 private slots:
 
@@ -128,5 +129,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+
+    void initWindow();
 };
 #endif // MAINWINDOW_H
