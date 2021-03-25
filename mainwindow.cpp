@@ -7,6 +7,8 @@ static HardWareInformationCenter hc;
 static std::thread *upTimeThread;
 static std::thread *printUpTimeThread;
 
+static std::thread *getCPULoadThread;
+
 /*GLOBAL VARS*/
 static int memoryCpuAccaptableLoad = 50;
 static int memoryRamAccaptableLoad = 10000;
@@ -29,6 +31,10 @@ MainWindow::~MainWindow()
     this->setIsPrintUpTimeRunning(false);
     printUpTimeThread->join();
     delete printUpTimeThread;
+
+    this->setIsRunningGetCPULoad(false);
+    getCPULoadThread->join();
+    delete getCPULoadThread;
 
     delete ui;
 }
@@ -136,6 +142,8 @@ void MainWindow::initWindow(){
     for(int i{0}; i < amountOfetworkControllers; ++i){
         ui->networkControllerComboBox->addItem(networkControllerInfo[i]);
     }
+
+    startGetCPULoadThread();
 
     //*********************END:OVERVIEW**********************//
 
@@ -266,6 +274,17 @@ void MainWindow::printUpTime(){
 
         Sleep(1000);
     }
+}
+
+void MainWindow::startGetCPULoadThread(){
+    qDebug() << "startGetCPULoadThread";
+    getCPULoadThread = new std::thread([&](){
+        while(this->isRunningGetCPULoad){
+            qDebug() << "get usage thread = " << cc.getCPULoad();
+            Sleep(1000);
+        }
+
+    });
 }
 
 void MainWindow::initConnections(){

@@ -35,17 +35,21 @@ public:
 
     void printUpTime();
 
+    void startGetCPULoadThread();
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
     void setIsPrintUpTimeRunning(bool isRunning){ this->isPrintUpTimeRunning = isRunning;}
+    void setIsRunningGetCPULoad(bool isRunning){this->isRunningGetCPULoad = isRunning;}
 
     bool typeHintButtonActivated = false;
     bool cpuHintButtonActivated = false;
     bool ramHintButtonActivated = false;
 
     bool isPrintUpTimeRunning = true;
+    bool isRunningGetCPULoad = true;
 
     long upTime_hours;
     long upTime_minutes;

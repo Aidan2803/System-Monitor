@@ -585,7 +585,6 @@ bool CountingCenter::overallRamLoadMonitoring(){
      }
 }
 
-
 DWORD WINAPI CountingCenter::StaticThreadStart_CPU_Overall(void* Param){
         CountingCenter* This = (CountingCenter*) Param;
         return This->watchProcLoadThread();
