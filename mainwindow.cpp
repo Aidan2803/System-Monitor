@@ -285,13 +285,11 @@ void MainWindow::printUpTime(){
     }
 }
 
-void MainWindow::startGetCPULoadThread(){
-    qDebug() << "startGetCPULoadThread";
+void MainWindow::startGetCPULoadThread(){    
     int cpuLoadToShow{0};
     getCPULoadThread = new std::thread([&](){
         while(this->isRunningGetCPULoad){
-            cpuLoadToShow = cc.getCPULoad() * 100;
-            qDebug() << "cpuLoadToShow = " << cpuLoadToShow;
+            cpuLoadToShow = cc.getCPULoad() * 100;            
             emit emitCPULoadValue(cpuLoadToShow);
             Sleep(1000);
         }
@@ -300,14 +298,12 @@ void MainWindow::startGetCPULoadThread(){
 }
 
 void MainWindow::startGetRAMLoadThread(){
-    qDebug() << "startGetRAMLoadThread";
     int ramLoadToShow{0};
     getRAMLoadThread = new std::thread([&](){
         while(this->isRunningGetRAMLoad){
             ramLoadToShow = cc.getRAMLoad();
-            qDebug() << "ramLoadToShow = " << ramLoadToShow;
             emit emitRAMLoadValue(ramLoadToShow);
-            Sleep(1000);
+            Sleep(1010);
         }
     });
 }
@@ -323,8 +319,7 @@ void MainWindow::initMWConneciotns(){
 }
 
 //-------------------------------------BEGIN: SLOTS------------------------------
-void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){
-     qDebug() << "getMessage";
+void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){   
     if(fromCpu){    /*CPU PART*/
         if(!mtGlobal){  /*PROCESSES MONITORING*/
             ui->cpuIsMonitoringLabel->setText("Stoped");
@@ -364,18 +359,21 @@ void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){
 
 };
 
-void MainWindow::getCPULoadValue(int cpuLoadValue){
-    qDebug("getCPULoadValue");
+void MainWindow::getCPULoadValue(int cpuLoadValue){  
     ui->cpuProgressBar->setValue(cpuLoadValue);
 }
 
 void MainWindow::getRAMLoadValue(int ramLoadValue){
-    qDebug("getRAMLoadValue");
     ui->ramProgressBar->setValue(ramLoadValue);
-    qDebug("after");
 }
 
 //-------------------------------------END: SLOTS------------------------------
+
+void MainWindow::on_getProcessesButton_clicked()
+{
+
+}
+
 
 //*********************BEGING:MONITORING TOOLS**********************//
 
@@ -425,8 +423,7 @@ void MainWindow::on_applyButtonMt_clicked(){
     }
 
 
-    if(ui->monitorCpuCheckBox->isChecked()){
-        qDebug() << "cpu monitoring";
+    if(ui->monitorCpuCheckBox->isChecked()){        
         ui->cpuIsMonitoringLabel->setText("Monitoring...");        
         ui->cpuIsMonitoringLabel->setStyleSheet("color: rgb(43, 117, 34);");
         ui->resetCPU->setDisabled(true);
@@ -443,8 +440,7 @@ void MainWindow::on_applyButtonMt_clicked(){
         cc.monitoringCpuStart();
 
     }
-    if(ui->monitorRamCheckBox->isChecked()){
-        qDebug() << "ram monitoring";
+    if(ui->monitorRamCheckBox->isChecked()){      
         ui->ramIsMonitoringLabel->setText("Monitoring...");
         ui->ramIsMonitoringLabel->setStyleSheet("color: rgb(43, 117, 34);");
         ui->resetRAM->setDisabled(true);
@@ -690,8 +686,7 @@ void MainWindow::on_applyButtonMtg_clicked(){
         }
 
         if(ui->monitorCpuCheckBox_mtg->isChecked()){
-            cc.setUserAcceptableCpuLoadOverall(loadProc);
-            qDebug() << "on_applyButtonMtg_clicked";
+            cc.setUserAcceptableCpuLoadOverall(loadProc);           
             ui->cpuIsMonitoringLabel_Mtg->setText("Monitoring...");
             ui->cpuIsMonitoringLabel_Mtg->setStyleSheet("color: rgb(43, 117, 34);");
             ui->stopCPU_Mtg->setDisabled(false);
@@ -700,7 +695,6 @@ void MainWindow::on_applyButtonMtg_clicked(){
         }
         if(ui->monitorRamCheckBox_mtg->isChecked()){
             cc.setUserAcceptableRamLoadOverall(loadRam);
-            qDebug() << "on_applyButtonMtg_clicked";
             ui->ramIsMonitoringLabel_Mtg->setText("Monitoring...");
             ui->ramIsMonitoringLabel_Mtg->setStyleSheet("color: rgb(43, 117, 34);");
             ui->stopRAM_Mtg->setDisabled(false);
@@ -896,4 +890,3 @@ void MainWindow::on_onScreenUpTimeCheckBox_clicked()
 }
 
 //*********************END:EXTERNAL DISPLAY TOOLS**********************//
-

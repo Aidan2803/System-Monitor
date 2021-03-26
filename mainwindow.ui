@@ -497,7 +497,7 @@ QProgressBar::chunk {
         <x>860</x>
         <y>250</y>
         <width>531</width>
-        <height>251</height>
+        <height>221</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -590,6 +590,29 @@ QProgressBar::chunk {
       </property>
       <property name="textDirection">
        <enum>QProgressBar::TopToBottom</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="getProcessesButton">
+      <property name="geometry">
+       <rect>
+        <x>860</x>
+        <y>480</y>
+        <width>531</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> QPushButton#getProcessesButton {
+color: rgb(255, 255, 255);
+font: 14pt &quot;ГОСТ тип А&quot;;
+ }
+ QPushButton#getProcessesButton:pressed {
+     
+	color: rgb(72, 184, 41);
+ }</string>
+      </property>
+      <property name="text">
+       <string>Update processes</string>
       </property>
      </widget>
     </widget>

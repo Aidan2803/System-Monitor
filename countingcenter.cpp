@@ -488,7 +488,10 @@ float CountingCenter::getRAMLoad()
     DWORDLONG totalPhysMemory = memInfo.ullTotalPhys;
     DWORDLONG usedPhysMemory = totalPhysMemory - memInfo.ullAvailPhys;
 
-    qDebug() << ((float)usedPhysMemory/(float)totalPhysMemory) * 100;
+    for(int i = 1; i < 10000; i++)
+    {
+        i/(float)100;
+    }
 
     return ((float)usedPhysMemory/(float)totalPhysMemory) * 100;
 }

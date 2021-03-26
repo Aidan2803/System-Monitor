@@ -53,7 +53,7 @@ public:
 
     void createFile(int whichFile, bool global, QString fileName = "");
 
-    int getProcesses(bool debFromCpu); //func that gets processes we are working with, they are stored in procesInfos    
+    int getProcesses(bool debFromCpu); //func that gets procesess we are working with, they are stored in procesInfos
 
     bool processCPUProcLoadMonitoring(DWORD processID, const WCHAR* exeFile); // func that counts CPU load from certain process;
     bool processRAMProcLoadMonitoring(DWORD processID, const WCHAR* exeFile); // func that counts RAM load from certain process;
