@@ -29,6 +29,7 @@ class MainWindow : public QMainWindow
 
 public:
     void initConnections();
+    void initMWConneciotns();
 
     void startUpTimeThread();
     void startPrintUpTimeThread();
@@ -60,6 +61,10 @@ private:
     QString *storageInfo;
     QString *audioInfo;
     QString *networkControllerInfo;
+
+    Ui::MainWindow *ui;
+
+    void initWindow();
 
 private slots:
 
@@ -130,10 +135,10 @@ private slots:
 
 public slots:
     void getMessage(QString infoString, bool fromCpu, bool mtGloval);
+    void getCPULoadValue(int cpuLoadValue);
 
-private:
-    Ui::MainWindow *ui;
+signals:
+    void emitCPULoadValue(int cpuLoadValue);
 
-    void initWindow();
 };
 #endif // MAINWINDOW_H

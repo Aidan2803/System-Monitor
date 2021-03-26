@@ -143,6 +143,8 @@ void MainWindow::initWindow(){
         ui->networkControllerComboBox->addItem(networkControllerInfo[i]);
     }
 
+    initMWConneciotns();
+
     startGetCPULoadThread();
 
     //*********************END:OVERVIEW**********************//
@@ -238,6 +240,8 @@ void MainWindow::initWindow(){
      if(!ui->monitorRamCheckBox_mtg->isChecked()){
          ui->acceptaleRamLoadTxtBox_mtg->setDisabled(true);
      }
+
+
     //*********************END:MONITORING TOOLS GLOBAL**********************//
 
 
@@ -278,9 +282,12 @@ void MainWindow::printUpTime(){
 
 void MainWindow::startGetCPULoadThread(){
     qDebug() << "startGetCPULoadThread";
+    int cpuLoadToShow{0};
     getCPULoadThread = new std::thread([&](){
         while(this->isRunningGetCPULoad){
-            qDebug() << "get usage thread = " << cc.getCPULoad();
+            cpuLoadToShow = cc.getCPULoad() * 100;
+            qDebug() << "cpuLoadToShow = " << cpuLoadToShow;
+            emit emitCPULoadValue(cpuLoadToShow);
             Sleep(1000);
         }
 
@@ -289,6 +296,11 @@ void MainWindow::startGetCPULoadThread(){
 
 void MainWindow::initConnections(){
     connect(&cc, SIGNAL(emitMessage(QString, bool, bool)), this, SLOT(getMessage(QString, bool, bool)));
+
+}
+
+void MainWindow::initMWConneciotns(){
+    connect(this, &MainWindow::emitCPULoadValue, this, &MainWindow::getCPULoadValue);
 }
 
 //slot
@@ -333,6 +345,10 @@ void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){
 
 };
 
+void MainWindow::getCPULoadValue(int cpuLoadValue){
+    qDebug("getCPULoadValue");
+    ui->cpuProgressBar->setValue(cpuLoadValue);
+}
 //*********************BEGING:MONITORING TOOLS**********************//
 
 
