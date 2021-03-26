@@ -8,6 +8,7 @@ static std::thread *upTimeThread;
 static std::thread *printUpTimeThread;
 
 static std::thread *getCPULoadThread;
+static std::thread *getRAMLoadThread;
 
 /*GLOBAL VARS*/
 static int memoryCpuAccaptableLoad = 50;
@@ -35,6 +36,10 @@ MainWindow::~MainWindow()
     this->setIsRunningGetCPULoad(false);
     getCPULoadThread->join();
     delete getCPULoadThread;
+
+    this->setIsRunningGetRAMLoad(false);
+    getRAMLoadThread->join();
+    delete getRAMLoadThread;
 
     delete ui;
 }
@@ -144,8 +149,8 @@ void MainWindow::initWindow(){
     }
 
     initMWConneciotns();
-
     startGetCPULoadThread();
+    startGetRAMLoadThread();
 
     //*********************END:OVERVIEW**********************//
 
@@ -247,7 +252,7 @@ void MainWindow::initWindow(){
 
    //*********************BEGING:EXTERNAL DISPLAY TOOLS**********************//
 
-  //*********************END:EXTERNAL DISPLAY TOOLS**********************//
+   //*********************END:EXTERNAL DISPLAY TOOLS**********************//
 
 }
 
@@ -294,6 +299,19 @@ void MainWindow::startGetCPULoadThread(){
     });
 }
 
+void MainWindow::startGetRAMLoadThread(){
+    qDebug() << "startGetRAMLoadThread";
+    int ramLoadToShow{0};
+    getRAMLoadThread = new std::thread([&](){
+        while(this->isRunningGetRAMLoad){
+            ramLoadToShow = cc.getRAMLoad();
+            qDebug() << "ramLoadToShow = " << ramLoadToShow;
+            emit emitRAMLoadValue(ramLoadToShow);
+            Sleep(1000);
+        }
+    });
+}
+
 void MainWindow::initConnections(){
     connect(&cc, SIGNAL(emitMessage(QString, bool, bool)), this, SLOT(getMessage(QString, bool, bool)));
 
@@ -301,9 +319,10 @@ void MainWindow::initConnections(){
 
 void MainWindow::initMWConneciotns(){
     connect(this, &MainWindow::emitCPULoadValue, this, &MainWindow::getCPULoadValue);
+    connect(this, &MainWindow::emitRAMLoadValue, this, &MainWindow::getRAMLoadValue);
 }
 
-//slot
+//-------------------------------------BEGIN: SLOTS------------------------------
 void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){
      qDebug() << "getMessage";
     if(fromCpu){    /*CPU PART*/
@@ -349,6 +368,15 @@ void MainWindow::getCPULoadValue(int cpuLoadValue){
     qDebug("getCPULoadValue");
     ui->cpuProgressBar->setValue(cpuLoadValue);
 }
+
+void MainWindow::getRAMLoadValue(int ramLoadValue){
+    qDebug("getRAMLoadValue");
+    ui->ramProgressBar->setValue(ramLoadValue);
+    qDebug("after");
+}
+
+//-------------------------------------END: SLOTS------------------------------
+
 //*********************BEGING:MONITORING TOOLS**********************//
 
 

@@ -583,7 +583,7 @@ QProgressBar::chunk {
 }</string>
       </property>
       <property name="value">
-       <number>100</number>
+       <number>0</number>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -691,8 +691,8 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
      <widget class="QLabel" name="label_23">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>10</y>
+        <x>600</x>
+        <y>0</y>
         <width>261</width>
         <height>20</height>
        </rect>
@@ -708,8 +708,8 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
      <widget class="QListWidget" name="acceptableCpuProcessesList">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>30</y>
+        <x>600</x>
+        <y>20</y>
         <width>381</width>
         <height>91</height>
        </rect>
@@ -905,8 +905,8 @@ QPushButton#ramBrowseButton:disabled {
      <widget class="QListWidget" name="acceptableRamProcessesList">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>160</y>
+        <x>600</x>
+        <y>150</y>
         <width>381</width>
         <height>91</height>
        </rect>
@@ -921,8 +921,8 @@ border: none;</string>
      <widget class="QLabel" name="label_29">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>140</y>
+        <x>600</x>
+        <y>130</y>
         <width>251</width>
         <height>20</height>
        </rect>
@@ -1042,8 +1042,8 @@ font: 14pt;
      <widget class="QPushButton" name="applyButtonMt">
       <property name="geometry">
        <rect>
-        <x>820</x>
-        <y>480</y>
+        <x>1220</x>
+        <y>510</y>
         <width>141</width>
         <height>31</height>
        </rect>
@@ -1542,8 +1542,8 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
      <widget class="QPushButton" name="applyButtonMtg">
       <property name="geometry">
        <rect>
-        <x>830</x>
-        <y>510</y>
+        <x>1240</x>
+        <y>520</y>
         <width>141</width>
         <height>31</height>
        </rect>
@@ -1863,8 +1863,8 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
      <widget class="QPushButton" name="applyButtonExdt">
       <property name="geometry">
        <rect>
-        <x>820</x>
-        <y>480</y>
+        <x>1230</x>
+        <y>520</y>
         <width>141</width>
         <height>31</height>
        </rect>

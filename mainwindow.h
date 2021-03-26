@@ -37,6 +37,7 @@ public:
     void printUpTime();
 
     void startGetCPULoadThread();
+    void startGetRAMLoadThread();
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -44,6 +45,7 @@ public:
 private:
     void setIsPrintUpTimeRunning(bool isRunning){ this->isPrintUpTimeRunning = isRunning;}
     void setIsRunningGetCPULoad(bool isRunning){this->isRunningGetCPULoad = isRunning;}
+    void setIsRunningGetRAMLoad(bool isRunning){this->isRunningGetRAMLoad = isRunning;}
 
     bool typeHintButtonActivated = false;
     bool cpuHintButtonActivated = false;
@@ -51,6 +53,7 @@ private:
 
     bool isPrintUpTimeRunning = true;
     bool isRunningGetCPULoad = true;
+    bool isRunningGetRAMLoad = true;
 
     long upTime_hours;
     long upTime_minutes;
@@ -136,9 +139,11 @@ private slots:
 public slots:
     void getMessage(QString infoString, bool fromCpu, bool mtGloval);
     void getCPULoadValue(int cpuLoadValue);
+    void getRAMLoadValue(int ramLoadValue);
 
 signals:
     void emitCPULoadValue(int cpuLoadValue);
+    void emitRAMLoadValue(int ramLoadValue);
 
 };
 #endif // MAINWINDOW_H
