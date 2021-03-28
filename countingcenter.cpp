@@ -169,7 +169,7 @@ void CountingCenter::createFile(int whichFile, bool global, QString fileName){
 }
 
 //**GET LIST OF PROCESSES**
-int CountingCenter::getProcesses(bool debFromCpu){
+int CountingCenter::getProcesses(bool debFromCpu, std::vector<QString> *processesListVector){
     smartHandle processSnap(CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0));
     smartHandle threadSnap(CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0));
 
@@ -385,7 +385,7 @@ DWORD WINAPI CountingCenter::StaticThreadStart_RAM(void* Param)
     bool isThreadRunning = true;
     DWORD crutch;
     while (isThreadRunning) {
-        this->getProcesses(true);
+        this->getProcesses(true, nullptr);
 
         for (const auto &processInfo : this->processInfosCPU) {
             qDebug() << "procInfo loop";
@@ -421,7 +421,7 @@ DWORD CountingCenter::watchRamProcThread(void) {
 
    DWORD crutch;
 
-   this->getProcesses(false);
+   this->getProcesses(false, nullptr);
    while(isThreadRunning){
        for (const auto &processInfo : this->processInfosRAM) {
            if(ignoreProcessesVector_RAM.size() != 0){

@@ -19,7 +19,6 @@
 #include "smarthandle.h"	//for windows.h and TlHelp32.h
 #include "cpuusage.h"
 
-
 class CountingCenter : public QObject
 {
     Q_OBJECT;
@@ -53,7 +52,7 @@ public:
 
     void createFile(int whichFile, bool global, QString fileName = "");
 
-    int getProcesses(bool debFromCpu); //func that gets procesess we are working with, they are stored in procesInfos
+    int getProcesses(bool debFromCpu, std::vector<QString> *processesListVector); //func that gets procesess we are working with, they are stored in procesInfos
 
     bool processCPUProcLoadMonitoring(DWORD processID, const WCHAR* exeFile); // func that counts CPU load from certain process;
     bool processRAMProcLoadMonitoring(DWORD processID, const WCHAR* exeFile); // func that counts RAM load from certain process;

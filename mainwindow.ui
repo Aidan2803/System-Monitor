@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1400</width>
-    <height>650</height>
+    <height>680</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>1400</width>
-    <height>650</height>
+    <height>680</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>1400</width>
-    <height>650</height>
+    <height>680</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -37,6 +37,9 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(26, 26, 26);</string>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -87,7 +90,7 @@ QTabWidget::pane { /* The tab widget frame */
      <enum>QTabWidget::North</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideNone</enum>
@@ -464,8 +467,8 @@ font: 14pt;
      <widget class="QProgressBar" name="ramProgressBar">
       <property name="geometry">
        <rect>
-        <x>1030</x>
-        <y>540</y>
+        <x>1020</x>
+        <y>550</y>
         <width>361</width>
         <height>26</height>
        </rect>
@@ -485,7 +488,7 @@ QProgressBar::chunk {
 }</string>
       </property>
       <property name="value">
-       <number>24</number>
+       <number>0</number>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -511,8 +514,8 @@ border: none;</string>
      <widget class="QLabel" name="label_10">
       <property name="geometry">
        <rect>
-        <x>870</x>
-        <y>510</y>
+        <x>860</x>
+        <y>520</y>
         <width>151</width>
         <height>21</height>
        </rect>
@@ -545,8 +548,8 @@ border: none;</string>
      <widget class="QLabel" name="label_11">
       <property name="geometry">
        <rect>
-        <x>870</x>
-        <y>540</y>
+        <x>860</x>
+        <y>550</y>
         <width>151</width>
         <height>21</height>
        </rect>
@@ -562,8 +565,8 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
      <widget class="QProgressBar" name="cpuProgressBar">
       <property name="geometry">
        <rect>
-        <x>1030</x>
-        <y>510</y>
+        <x>1020</x>
+        <y>520</y>
         <width>361</width>
         <height>26</height>
        </rect>
@@ -598,17 +601,23 @@ QProgressBar::chunk {
         <x>860</x>
         <y>480</y>
         <width>531</width>
-        <height>21</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true"> QPushButton#getProcessesButton {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#getProcessesButton:pressed {
-     
+ QPushButton#getProcessesButton:pressed {     
 	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
  }</string>
       </property>
       <property name="text">
@@ -758,16 +767,24 @@ border: none;</string>
        <string notr="true"> QPushButton#cpuBrowseButton {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#cpuBrowseButton:pressed {
-     
+ QPushButton#cpuBrowseButton:pressed {     
 	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
  }
 
- QPushButton#cpuBrowseButton:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
- }</string>
+QPushButton#cpuBrowseButton:disabled{
+	
+	background-color: rgb(120, 120, 120);
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	border:none;
+}</string>
       </property>
       <property name="text">
        <string>...</string>
@@ -911,15 +928,24 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <string notr="true"> QPushButton#ramBrowseButton {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#ramBrowseButton:pressed {
-     
+ QPushButton#ramBrowseButton:pressed {     
 	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
  }
-QPushButton#ramBrowseButton:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
- }</string>
+
+QPushButton#ramBrowseButton:disabled{
+	
+	background-color: rgb(120, 120, 120);
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	border:none;
+}</string>
       </property>
       <property name="text">
        <string>...</string>
@@ -988,14 +1014,16 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <string notr="true"> QPushButton#ramDeleteButton {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#ramDeleteButton:pressed {
-     
+ QPushButton#ramDeleteButton:pressed {     
 	color: rgb(72, 184, 41);
- }
- QPushButton#ramDeleteButton:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
+	background-color: rgb(57, 57, 57);
  }</string>
       </property>
       <property name="text">
@@ -1015,16 +1043,17 @@ font: 14pt &quot;ГОСТ тип А&quot;;
        <string notr="true"> QPushButton#cpuDeleteButton {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#cpuDeleteButton:pressed {
-     
+ QPushButton#cpuDeleteButton:pressed {     
 	color: rgb(72, 184, 41);
- }
- QPushButton#cpuDeleteButton:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
- }
-</string>
+	background-color: rgb(57, 57, 57);
+ }</string>
       </property>
       <property name="text">
        <string>Delete</string>
@@ -1075,10 +1104,16 @@ font: 14pt;
        <string notr="true"> QPushButton#applyButtonMt {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#applyButtonMt:pressed {
-     
+ QPushButton#applyButtonMt:pressed {     
 	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
  }</string>
       </property>
       <property name="text">
@@ -1171,17 +1206,19 @@ QComboBox:disabled{
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true"> QPushButton#hintButton {
+       <string notr="true"> QPushButton#cpuBrowseButton {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#hintButton:pressed {
-     
+ QPushButton#cpuBrowseButton:pressed {     
 	color: rgb(72, 184, 41);
- }
- QPushButton#hintButton:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
+	background-color: rgb(57, 57, 57);
  }</string>
       </property>
       <property name="text">
@@ -1218,14 +1255,16 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <string notr="true"> QPushButton#resetRAM {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#resetRAM:pressed {
-     
+ QPushButton#resetRAM:pressed {     
 	color: rgb(72, 184, 41);
- }
- QPushButton#resetRAM:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
+	background-color: rgb(57, 57, 57);
  }</string>
       </property>
       <property name="text">
@@ -1245,14 +1284,16 @@ font: 14pt &quot;ГОСТ тип А&quot;;
        <string notr="true"> QPushButton#resetCPU {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#resetCPU:pressed {
-     
+ QPushButton#resetCPU:pressed {     
 	color: rgb(72, 184, 41);
- }
- QPushButton#resetCPU:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
+	background-color: rgb(57, 57, 57);
  }</string>
       </property>
       <property name="text">
@@ -1289,14 +1330,16 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <string notr="true"> QPushButton#stopCPU {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#stopCPU:pressed {
-     
+ QPushButton#stopCPU:pressed {     
 	color: rgb(72, 184, 41);
- }
- QPushButton#stopCPU:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
+	background-color: rgb(57, 57, 57);
  }</string>
       </property>
       <property name="text">
@@ -1316,14 +1359,16 @@ font: 14pt &quot;ГОСТ тип А&quot;;
        <string notr="true"> QPushButton#stopRAM {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#stopRAM:pressed {
-     
+ QPushButton#stopRAM:pressed {     
 	color: rgb(72, 184, 41);
- }
- QPushButton#stopRAM:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
+	background-color: rgb(57, 57, 57);
  }</string>
       </property>
       <property name="text">
@@ -1387,15 +1432,24 @@ QLineEdit:disabled{
        <string notr="true"> QPushButton#hintButton_accProcRam {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#hintButton_accProcRam:pressed {
-     
+ QPushButton#hintButton_accProcRam:pressed {     
 	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
  }
- QPushButton#hintButton_accProcRam:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
- }</string>
+
+QPushButton#hintButton_accProcRam:disabled{
+	
+	background-color: rgb(120, 120, 120);
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	border:none;
+}</string>
       </property>
       <property name="text">
        <string>?</string>
@@ -1414,15 +1468,24 @@ font: 14pt &quot;ГОСТ тип А&quot;;
        <string notr="true"> QPushButton#hintButton_accProcCpu {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#hintButton_accProcCpu:pressed {
-     
+ QPushButton#hintButton_accProcCpu:pressed {     
 	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
  }
- QPushButton#hintButton_accProcCpu:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
- }</string>
+
+QPushButton#hintButton_accProcCpu:disabled{
+	
+	background-color: rgb(120, 120, 120);
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	border:none;
+}</string>
       </property>
       <property name="text">
        <string>?</string>
@@ -1575,11 +1638,24 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <string notr="true"> QPushButton#applyButtonMtg {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#applyButtonMtg:pressed {
-     
+ QPushButton#applyButtonMtg:pressed {     
 	color: rgb(72, 184, 41);
- }</string>
+	background-color: rgb(57, 57, 57);
+ }
+
+QPushButton#applyButtonMtg:disabled{
+	
+	background-color: rgb(120, 120, 120);
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	border:none;
+}</string>
       </property>
       <property name="text">
        <string>Apply</string>
@@ -1766,15 +1842,24 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <string notr="true"> QPushButton#resetCPU_Mtg {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#resetCPU_Mtg:pressed {
-     
+ QPushButton#resetCPU_Mtg:pressed {     
 	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
  }
- QPushButton#resetCPU_Mtg:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
- }</string>
+
+QPushButton#resetCPU_Mtg:disabled{
+	
+	background-color: rgb(120, 120, 120);
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	border:none;
+}</string>
       </property>
       <property name="text">
        <string>Reset</string>
@@ -1793,15 +1878,24 @@ font: 14pt &quot;ГОСТ тип А&quot;;
        <string notr="true"> QPushButton#stopCPU_Mtg {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#stopCPU_Mtg:pressed {
-     
+ QPushButton#stopCPU_Mtg:pressed {     
 	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
  }
- QPushButton#stopCPU_Mtg:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
- }</string>
+
+QPushButton#stopCPU_Mtg:disabled{
+	
+	background-color: rgb(120, 120, 120);
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	border:none;
+}</string>
       </property>
       <property name="text">
        <string>Stop</string>
@@ -1820,15 +1914,24 @@ font: 14pt &quot;ГОСТ тип А&quot;;
        <string notr="true"> QPushButton#stopRAM_Mtg {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#stopRAM_Mtg:pressed {
-     
+ QPushButton#stopRAM_Mtg:pressed {     
 	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
  }
- QPushButton#stopRAM_Mtg:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
- }</string>
+
+QPushButton#stopRAM_Mtg:disabled{
+	
+	background-color: rgb(120, 120, 120);
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	border:none;
+}</string>
       </property>
       <property name="text">
        <string>Stop</string>
@@ -1847,15 +1950,24 @@ font: 14pt &quot;ГОСТ тип А&quot;;
        <string notr="true"> QPushButton#resetRAM_Mtg {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#resetRAM_Mtg:pressed {
-     
+ QPushButton#resetRAM_Mtg:pressed {     
 	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
  }
- QPushButton#resetRAM_Mtg:disabled {
-	background-color: rgb(129, 129, 129);
-	color: rgb(195, 195, 195);
- }</string>
+
+QPushButton#resetRAM_Mtg:disabled{
+	
+	background-color: rgb(120, 120, 120);
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	border:none;
+}</string>
       </property>
       <property name="text">
        <string>Reset</string>
@@ -1896,11 +2008,24 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <string notr="true"> QPushButton#applyButtonExdt {
 color: rgb(255, 255, 255);
 font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
  }
- QPushButton#applyButtonExdt:pressed {
-     
+ QPushButton#applyButtonExdt:pressed {     
 	color: rgb(72, 184, 41);
- }</string>
+	background-color: rgb(57, 57, 57);
+ }
+
+QPushButton#applyButtonExdt:disabled{
+	
+	background-color: rgb(120, 120, 120);
+	font: 14pt &quot;ГОСТ тип А&quot;;
+	border:none;
+}</string>
       </property>
       <property name="text">
        <string>Apply</string>

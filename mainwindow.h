@@ -136,6 +136,8 @@ private slots:
     void on_hintButton_accProcRam_clicked();
 
 
+    void on_getProcessesButton_clicked();
+
 public slots:
     void getMessage(QString infoString, bool fromCpu, bool mtGloval);
     void getCPULoadValue(int cpuLoadValue);
