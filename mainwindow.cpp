@@ -378,6 +378,11 @@ void MainWindow::on_getProcessesButton_clicked()
     for(int i{0}; i < processesList->size(); ++i){        
         ui->processList->addItem(processesList->at(i));
     }
+
+    QString str;
+    str = "Amount of processes: ";
+    str += QString::number(processesList->size());
+    ui->amountOfProcesses->setText(str);
 }
 
 void MainWindow::on_getDriversButton_clicked()
@@ -386,12 +391,14 @@ void MainWindow::on_getDriversButton_clicked()
     std::vector<QString> *driversVect = new std::vector<QString>;
     cc.getDriversList(driversVect);
 
-    qDebug() << driversVect->size();
-
     for(int i{0}; i < driversVect->size(); ++i){
        ui->driversList->addItem(driversVect->at(i));
     }
 
+    QString str;
+    str = "Amount of processes: ";
+    str += QString::number(driversVect->size());
+    ui->amountOfDrivers->setText(str);
 }
 
 

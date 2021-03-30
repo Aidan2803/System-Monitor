@@ -101,15 +101,12 @@ void CountingCenter::getDriversList(std::vector<QString> *driversVect){
 
             cDrivers = cbNeeded / sizeof(drivers[0]);
 
-            _tprintf(TEXT("There are %d drivers:\n"), cDrivers);
             for (i = 0; i < cDrivers; i++)
             {
                 if (GetDeviceDriverBaseName(drivers[i], szDriver, sizeof(szDriver) / sizeof(szDriver[0])))
                 {
                     _tprintf(TEXT("%d: %s\n"), i + 1, szDriver);
-                    qDebug() << "before trans";
                     QString str = QString::fromWCharArray(szDriver);
-                    qDebug() << "after trans = " << str;
                     driversVect->push_back(str);
                 }
             }
