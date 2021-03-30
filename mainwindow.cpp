@@ -83,6 +83,9 @@ void MainWindow::initWindow(){
 
     //--------BEGIN:LIST WIDGET SETTINGS-----------
     ui->processList->addItem("Use button below to get processes list");
+
+    ui->driversList->addItem("Use button below to get drivers list");
+
     //--------END:LIST WIDGET SETTINGS-----------
 
     //----GETTING UPTIME----
@@ -144,9 +147,7 @@ void MainWindow::initWindow(){
 
     initMWConneciotns();
     startGetCPULoadThread();
-    startGetRAMLoadThread();
-
-
+    startGetRAMLoadThread();    
 
     //*********************END:OVERVIEW**********************//
 
@@ -378,6 +379,21 @@ void MainWindow::on_getProcessesButton_clicked()
         ui->processList->addItem(processesList->at(i));
     }
 }
+
+void MainWindow::on_getDriversButton_clicked()
+{
+    ui->driversList->clear();
+    std::vector<QString> *driversVect = new std::vector<QString>;
+    cc.getDriversList(driversVect);
+
+    qDebug() << driversVect->size();
+
+    for(int i{0}; i < driversVect->size(); ++i){
+       ui->driversList->addItem(driversVect->at(i));
+    }
+
+}
+
 
 //*********************END:OVERVIEW**********************//
 
@@ -896,3 +912,4 @@ void MainWindow::on_onScreenUpTimeCheckBox_clicked()
 }
 
 //*********************END:EXTERNAL DISPLAY TOOLS**********************//
+

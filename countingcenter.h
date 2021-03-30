@@ -15,6 +15,7 @@
 #include <chrono>
 #include <ctime>
 #include <vector>
+#include <tchar.h>
 
 #include "smarthandle.h"	//for windows.h and TlHelp32.h
 #include "cpuusage.h"
@@ -49,6 +50,8 @@ public:
     void setUserAcceptableCpuLoadOverall(float load);
     void setUserAcceptableRamLoadOverall(int load);
     void setIgnoreProcessesVectorElement(bool fromCpu, QString elem);
+
+    void getDriversList(std::vector<QString> *driversVect);
 
     void createFile(int whichFile, bool global, QString fileName = "");
 

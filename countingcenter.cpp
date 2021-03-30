@@ -90,6 +90,37 @@ void CountingCenter::setIgnoreProcessesVectorElement(bool fromCpu, QString elem)
     }
 }
 
+void CountingCenter::getDriversList(std::vector<QString> *driversVect){
+    LPVOID drivers[ARRAY_SIZE_FOR_DRIVERS_NAME];
+    DWORD cbNeeded;
+    int cDrivers, i;
+
+    if (EnumDeviceDrivers(drivers, sizeof(drivers), &cbNeeded) && cbNeeded < sizeof(drivers))
+        {
+            TCHAR szDriver[ARRAY_SIZE_FOR_DRIVERS_NAME];
+
+            cDrivers = cbNeeded / sizeof(drivers[0]);
+
+            _tprintf(TEXT("There are %d drivers:\n"), cDrivers);
+            for (i = 0; i < cDrivers; i++)
+            {
+                if (GetDeviceDriverBaseName(drivers[i], szDriver, sizeof(szDriver) / sizeof(szDriver[0])))
+                {
+                    _tprintf(TEXT("%d: %s\n"), i + 1, szDriver);
+                    qDebug() << "before trans";
+                    QString str = QString::fromWCharArray(szDriver);
+                    qDebug() << "after trans = " << str;
+                    driversVect->push_back(str);
+                }
+            }
+        }
+     else
+        {
+            _tprintf(TEXT("EnumDeviceDrivers failed; array size needed is %d\n"), cbNeeded / sizeof(LPVOID));
+        }
+
+}
+
 void CountingCenter::createFile(int whichFile, bool global, QString fileName){
     QString tempString;
     if(fileName == ""){

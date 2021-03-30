@@ -138,6 +138,8 @@ private slots:
 
     void on_getProcessesButton_clicked();
 
+    void on_getDriversButton_clicked();
+
 public slots:
     void getMessage(QString infoString, bool fromCpu, bool mtGloval);
     void getCPULoadValue(int cpuLoadValue);

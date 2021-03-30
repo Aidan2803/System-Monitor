@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1400</width>
-    <height>680</height>
+    <height>730</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>1400</width>
-    <height>680</height>
+    <height>730</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>1400</width>
-    <height>680</height>
+    <height>730</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -464,41 +464,11 @@ font: 14pt;
 }</string>
       </property>
      </widget>
-     <widget class="QProgressBar" name="ramProgressBar">
-      <property name="geometry">
-       <rect>
-        <x>1020</x>
-        <y>550</y>
-        <width>361</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QProgressBar {
-   
-	color: rgb(255, 255, 255);
-	font: 75 11pt &quot;Consolas&quot;;
-	border-color: rgb(59, 59, 59);
-    border-radius: 5px;
-}
-
-QProgressBar::chunk {
-    background-color: rgb(39, 99, 13);
-    width: 20px;
-}</string>
-      </property>
-      <property name="value">
-       <number>0</number>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
      <widget class="QListWidget" name="processList">
       <property name="geometry">
        <rect>
         <x>860</x>
-        <y>250</y>
+        <y>290</y>
         <width>531</width>
         <height>221</height>
        </rect>
@@ -511,24 +481,7 @@ border-color: rgb(255, 255, 255);
 border: none;</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_10">
-      <property name="geometry">
-       <rect>
-        <x>860</x>
-        <y>520</y>
-        <width>151</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
-font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Total CPU Load</string>
-      </property>
-     </widget>
-     <widget class="QListWidget" name="processList_2">
+     <widget class="QListWidget" name="driversList">
       <property name="geometry">
        <rect>
         <x>860</x>
@@ -545,61 +498,11 @@ border-color: rgb(255, 255, 255);
 border: none;</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_11">
-      <property name="geometry">
-       <rect>
-        <x>860</x>
-        <y>550</y>
-        <width>151</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(214, 214, 214);
-font: 14pt &quot;ГОСТ тип А&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Total RAM Load</string>
-      </property>
-     </widget>
-     <widget class="QProgressBar" name="cpuProgressBar">
-      <property name="geometry">
-       <rect>
-        <x>1020</x>
-        <y>520</y>
-        <width>361</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QProgressBar {
-   
-	color: rgb(255, 255, 255);
-	font: 75 11pt &quot;Consolas&quot;;
-	border-color: rgb(59, 59, 59);
-    border-radius: 5px;
-}
-
-QProgressBar::chunk {
-    background-color: rgb(39, 99, 13);
-    width: 20px;
-}</string>
-      </property>
-      <property name="value">
-       <number>0</number>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-      <property name="textDirection">
-       <enum>QProgressBar::TopToBottom</enum>
-      </property>
-     </widget>
      <widget class="QPushButton" name="getProcessesButton">
       <property name="geometry">
        <rect>
         <x>860</x>
-        <y>480</y>
+        <y>520</y>
         <width>531</width>
         <height>31</height>
        </rect>
@@ -622,6 +525,35 @@ border-style: none;
       </property>
       <property name="text">
        <string>Update processes list</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="getDriversButton">
+      <property name="geometry">
+       <rect>
+        <x>860</x>
+        <y>250</y>
+        <width>531</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> QPushButton#getDriversButton {
+color: rgb(255, 255, 255);
+font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
+ }
+ QPushButton#getDriversButton:pressed {     
+	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
+ }</string>
+      </property>
+      <property name="text">
+       <string>Update drivers list</string>
       </property>
      </widget>
     </widget>
@@ -2315,6 +2247,103 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
       </layout>
      </widget>
     </widget>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>600</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Total CPU Load</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="cpuProgressBar">
+    <property name="geometry">
+     <rect>
+      <x>1020</x>
+      <y>600</y>
+      <width>361</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+   
+	color: rgb(255, 255, 255);
+	font: 75 11pt &quot;Consolas&quot;;
+	border-color: rgb(59, 59, 59);
+    border-radius: 5px;
+}
+
+QProgressBar::chunk {
+    background-color: rgb(39, 99, 13);
+    width: 20px;
+}</string>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="textDirection">
+     <enum>QProgressBar::TopToBottom</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>630</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(214, 214, 214);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Total RAM Load</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="ramProgressBar">
+    <property name="geometry">
+     <rect>
+      <x>1020</x>
+      <y>630</y>
+      <width>361</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+   
+	color: rgb(255, 255, 255);
+	font: 75 11pt &quot;Consolas&quot;;
+	border-color: rgb(59, 59, 59);
+    border-radius: 5px;
+}
+
+QProgressBar::chunk {
+    background-color: rgb(39, 99, 13);
+    width: 20px;
+}</string>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
