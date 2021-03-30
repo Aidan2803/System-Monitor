@@ -82,13 +82,7 @@ void MainWindow::initWindow(){
     //--------END:CHART SETTINGS-----------
 
     //--------BEGIN:LIST WIDGET SETTINGS-----------
-    for(int i = 0; i < 120; i++){
-        QString str;
-        QString s = QString::number(i);
-        str = "Process ";
-        str.append(s);
-        ui->processList->addItem(str);
-    }
+    ui->processList->addItem("Use button below to get processes list");
     //--------END:LIST WIDGET SETTINGS-----------
 
     //----GETTING UPTIME----
@@ -151,6 +145,8 @@ void MainWindow::initWindow(){
     initMWConneciotns();
     startGetCPULoadThread();
     startGetRAMLoadThread();
+
+
 
     //*********************END:OVERVIEW**********************//
 
@@ -369,11 +365,21 @@ void MainWindow::getRAMLoadValue(int ramLoadValue){
 
 //-------------------------------------END: SLOTS------------------------------
 
+//*********************BEGING:OVERVIEW**********************//
+
 void MainWindow::on_getProcessesButton_clicked()
 {
+    ui->processList->clear();
+    std::vector<QString> *processesList = new std::vector<QString>;
 
+    cc.getProcesses(false, processesList);
+
+    for(int i{0}; i < processesList->size(); ++i){        
+        ui->processList->addItem(processesList->at(i));
+    }
 }
 
+//*********************END:OVERVIEW**********************//
 
 //*********************BEGING:MONITORING TOOLS**********************//
 

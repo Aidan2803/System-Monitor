@@ -200,12 +200,21 @@ int CountingCenter::getProcesses(bool debFromCpu, std::vector<QString> *processe
                 subThreads.push_back(thread);              
             }
         }
-        if(debFromCpu){
-            processInfosCPU.push_back(processInfo{ pe, subThreads });
+        if(processesListVector == nullptr){
+            if(debFromCpu){
+                processInfosCPU.push_back(processInfo{ pe, subThreads });
+            }
+            else{
+                processInfosRAM.push_back(processInfo{ pe, subThreads });
+            }
         }
-        else{
-             processInfosRAM.push_back(processInfo{ pe, subThreads });
-        }      
+        else{           
+            QString nameBuff;
+            nameBuff = nameBuff.fromWCharArray(pe.szExeFile);            
+            processesListVector->push_back(nameBuff);            
+        }
+
+
     } while (Process32Next(processSnap, &pe));
 
     return 0;
