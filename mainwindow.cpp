@@ -94,6 +94,7 @@ void MainWindow::initWindow(){
     startPrintUpTimeThread();
     qDebug() << "after thread";
 
+
     //----GETTING BASEBOARD INFO----
 
     ui->motherBoardNameTempLabel->setText(hc.getBaseboardInfo());
@@ -147,7 +148,9 @@ void MainWindow::initWindow(){
 
     initMWConneciotns();
     startGetCPULoadThread();
-    startGetRAMLoadThread();    
+    startGetRAMLoadThread();
+
+    qDebug() << "after threads";
 
     //*********************END:OVERVIEW**********************//
 
@@ -282,25 +285,24 @@ void MainWindow::printUpTime(){
     }
 }
 
-void MainWindow::startGetCPULoadThread(){    
-    int cpuLoadToShow{0};
+void MainWindow::startGetCPULoadThread(){        
     getCPULoadThread = new std::thread([&](){
+        int cpuLoadToShow{0};
         while(this->isRunningGetCPULoad){
-            cpuLoadToShow = cc.getCPULoad() * 100;            
+            cpuLoadToShow = cc.getCPULoad() * 100;
             emit emitCPULoadValue(cpuLoadToShow);
             Sleep(1000);
         }
-
     });
 }
 
-void MainWindow::startGetRAMLoadThread(){
-    int ramLoadToShow{0};
+void MainWindow::startGetRAMLoadThread(){    
     getRAMLoadThread = new std::thread([&](){
+        int ramLoadToShow{0};
         while(this->isRunningGetRAMLoad){
             ramLoadToShow = cc.getRAMLoad();
-            emit emitRAMLoadValue(ramLoadToShow);
-            Sleep(1010);
+            emit emitRAMLoadValue(ramLoadToShow);            
+            Sleep(1000);
         }
     });
 }
@@ -311,7 +313,7 @@ void MainWindow::initConnections(){
 }
 
 void MainWindow::initMWConneciotns(){
-    connect(this, &MainWindow::emitCPULoadValue, this, &MainWindow::getCPULoadValue);
+    connect(this, &MainWindow::emitCPULoadValue, this, &MainWindow::getCPULoadValue);    
     connect(this, &MainWindow::emitRAMLoadValue, this, &MainWindow::getRAMLoadValue);
 }
 
@@ -356,7 +358,7 @@ void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){
 
 };
 
-void MainWindow::getCPULoadValue(int cpuLoadValue){  
+void MainWindow::getCPULoadValue(int cpuLoadValue){      
     ui->cpuProgressBar->setValue(cpuLoadValue);
 }
 
