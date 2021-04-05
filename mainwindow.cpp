@@ -398,7 +398,7 @@ void MainWindow::on_getDriversButton_clicked()
     }
 
     QString str;
-    str = "Amount of processes: ";
+    str = "Amount of drivers: ";
     str += QString::number(driversVect->size());
     ui->amountOfDrivers->setText(str);
 }
