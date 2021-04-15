@@ -38,6 +38,7 @@ public:
 
     void startGetCPULoadThread();
     void startGetRAMLoadThread();
+    void startGetTemperaturesThread();
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -46,6 +47,7 @@ private:
     void setIsPrintUpTimeRunning(bool isRunning){ this->isPrintUpTimeRunning = isRunning;}
     void setIsRunningGetCPULoad(bool isRunning){this->isRunningGetCPULoad = isRunning;}
     void setIsRunningGetRAMLoad(bool isRunning){this->isRunningGetRAMLoad = isRunning;}
+    void setIsRunningGetTemperature(bool isRunning){this->isRunningGetTemperature = isRunning;}
 
     bool typeHintButtonActivated = false;
     bool cpuHintButtonActivated = false;
@@ -54,6 +56,7 @@ private:
     bool isPrintUpTimeRunning = true;
     bool isRunningGetCPULoad = true;
     bool isRunningGetRAMLoad = true;
+    bool isRunningGetTemperature = true;
 
     long upTime_hours;
     long upTime_minutes;
@@ -134,7 +137,6 @@ private slots:
     void on_hintButton_accProcCpu_clicked();
 
     void on_hintButton_accProcRam_clicked();
-
 
     void on_getProcessesButton_clicked();
 

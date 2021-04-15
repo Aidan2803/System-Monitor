@@ -578,3 +578,58 @@ QString* HardWareInformationCenter::getNetworkControllers(int *amountOfControlle
 
     return networkControllersInfo;
 }
+
+void HardWareInformationCenter::startProcessOfTemperatures(){
+    STARTUPINFO cif;
+    ZeroMemory(&cif,sizeof(STARTUPINFO));
+    PROCESS_INFORMATION pi;
+
+    string s = QDir::currentPath().toStdString();
+    s += "/temperatureGetter.exe";
+
+    std::cout << "s = " << s;
+
+    std::wstring widestr = std::wstring(s.begin(), s.end());
+    const wchar_t* widecstr = widestr.c_str();
+
+    //
+    if (CreateProcess(widecstr, NULL, NULL,NULL,FALSE,NULL,NULL,NULL,&cif,&pi)==TRUE)
+    {
+    }
+    else{
+        qDebug() << "why";
+        qDebug() << GetLastError();
+    }
+
+    WaitForSingleObject(pi.hProcess, INFINITY);
+    CloseHandle(pi.hProcess);
+}
+
+string HardWareInformationCenter::readTemperaturesFromFile(){
+    std::string line;
+    std::string buff;
+
+    string s = QDir::currentPath().toStdString();
+    s += "/test.txt";
+
+    std::ifstream in(s);
+    if (in.is_open()){
+            while (getline(in, line))
+            {
+                std::cout << "temp = " << line << std::endl;
+                if(line[0] != ' '){
+                    buff = line;
+                }
+
+            }
+        }
+    else{
+        qDebug() << "tf";
+    }
+
+    std::cout << "buff = " << buff << std::endl;
+    in.close();
+
+
+    return buff;
+}

@@ -2,8 +2,10 @@
 #define HARDWAREINFORMATIONCENTER_H
 
 #include <QDebug>
+#include <QDir>
 
 #include <iostream>
+#include <fstream>
 #include <windows.h>
 #include <chrono>
 #include <string>
@@ -31,6 +33,8 @@ public:
 
     static void getUptime(long &hours, long &minutes, long &seconds, long &millies, HardWareInformationCenter &hc);
 
+    void startProcessOfTemperatures();
+    string readTemperaturesFromFile();
 
     QString getCPUInfo() const;
     QString getGPUInfo() const;
@@ -62,7 +66,7 @@ private:
     void WMI_getAudioDevicesInfo(QString *pArrToWrite, int *amountOfDevices);
     void WMI_getNetworkControllers(QString *pArrToWrite, int *amountOfControllers);
 
-    void cleanUpCOM();
+    void cleanUpCOM();   
 };
 
 #endif // HARDWAREINFORMATIONCENTER_H

@@ -10,6 +10,8 @@ static std::thread *printUpTimeThread;
 static std::thread *getCPULoadThread;
 static std::thread *getRAMLoadThread;
 
+static std::thread *getTemperaturesThread;
+
 /*GLOBAL VARS*/
 static int memoryCpuAccaptableLoad = 50;
 static int memoryRamAccaptableLoad = 10000;
@@ -152,6 +154,8 @@ void MainWindow::initWindow(){
 
     qDebug() << "after threads";
 
+    startGetTemperaturesThread();
+
     //*********************END:OVERVIEW**********************//
 
 
@@ -285,7 +289,7 @@ void MainWindow::printUpTime(){
     }
 }
 
-void MainWindow::startGetCPULoadThread(){        
+void MainWindow::startGetCPULoadThread(){
     getCPULoadThread = new std::thread([&](){
         int cpuLoadToShow{0};
         while(this->isRunningGetCPULoad){
@@ -296,13 +300,29 @@ void MainWindow::startGetCPULoadThread(){
     });
 }
 
-void MainWindow::startGetRAMLoadThread(){    
+void MainWindow::startGetRAMLoadThread(){
     getRAMLoadThread = new std::thread([&](){
         int ramLoadToShow{0};
         while(this->isRunningGetRAMLoad){
             ramLoadToShow = cc.getRAMLoad();
-            emit emitRAMLoadValue(ramLoadToShow);            
+            emit emitRAMLoadValue(ramLoadToShow);
             Sleep(1000);
+        }
+    });
+}
+
+void MainWindow::startGetTemperaturesThread(){
+    getTemperaturesThread = new std::thread([&](){
+        string temperatureForUi;
+        hc.startProcessOfTemperatures();
+        while(this->isRunningGetRAMLoad){
+            Sleep(150);
+            temperatureForUi = hc.readTemperaturesFromFile();
+            cout << "temp in ui = " << temperatureForUi << endl;
+            QString qTemperatureForUi = QString::fromStdString(temperatureForUi);
+            qTemperatureForUi += "°C";
+            ui->cpuTemp_Label->setText(qTemperatureForUi);
+            Sleep(2000);
         }
     });
 }
@@ -313,12 +333,12 @@ void MainWindow::initConnections(){
 }
 
 void MainWindow::initMWConneciotns(){
-    connect(this, &MainWindow::emitCPULoadValue, this, &MainWindow::getCPULoadValue);    
+    connect(this, &MainWindow::emitCPULoadValue, this, &MainWindow::getCPULoadValue);
     connect(this, &MainWindow::emitRAMLoadValue, this, &MainWindow::getRAMLoadValue);
 }
 
 //-------------------------------------BEGIN: SLOTS------------------------------
-void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){   
+void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){
     if(fromCpu){    /*CPU PART*/
         if(!mtGlobal){  /*PROCESSES MONITORING*/
             ui->cpuIsMonitoringLabel->setText("Stoped");
@@ -358,7 +378,7 @@ void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){
 
 };
 
-void MainWindow::getCPULoadValue(int cpuLoadValue){      
+void MainWindow::getCPULoadValue(int cpuLoadValue){
     ui->cpuProgressBar->setValue(cpuLoadValue);
 }
 
@@ -377,7 +397,7 @@ void MainWindow::on_getProcessesButton_clicked()
 
     cc.getProcesses(false, processesList);
 
-    for(int i{0}; i < processesList->size(); ++i){        
+    for(int i{0}; i < processesList->size(); ++i){
         ui->processList->addItem(processesList->at(i));
     }
 
@@ -412,13 +432,13 @@ void MainWindow::on_getDriversButton_clicked()
 //APPLY BUTTON
 void MainWindow::on_applyButtonMt_clicked(){
     bool isSelectedWorkingSet = true;;
-    initConnections();    
+    initConnections();
 
     cc.setStopFromUiCpuProcess(false);
     cc.setStopFromUiRamProcess(false);
 
     cc.setCpuMonitoringActive(ui->monitorCpuCheckBox->isChecked());
-    cc.setRamMonitoringActive(ui->monitorRamCheckBox->isChecked());   
+    cc.setRamMonitoringActive(ui->monitorRamCheckBox->isChecked());
 
     if(ui->monitoringTypeRam->currentText() == "Working Set"){
         isSelectedWorkingSet = true;
@@ -454,12 +474,12 @@ void MainWindow::on_applyButtonMt_clicked(){
     }
 
 
-    if(ui->monitorCpuCheckBox->isChecked()){        
-        ui->cpuIsMonitoringLabel->setText("Monitoring...");        
+    if(ui->monitorCpuCheckBox->isChecked()){
+        ui->cpuIsMonitoringLabel->setText("Monitoring...");
         ui->cpuIsMonitoringLabel->setStyleSheet("color: rgb(43, 117, 34);");
         ui->resetCPU->setDisabled(true);
         ui->stopCPU->setDisabled(false);
-        cc.setUserAcceptableCpuLoad(memoryCpuAccaptableLoad);       
+        cc.setUserAcceptableCpuLoad(memoryCpuAccaptableLoad);
 
         //give processes to ignore
         if(ui->acceptableCpuProcessesList->count() != 0){
@@ -471,7 +491,7 @@ void MainWindow::on_applyButtonMt_clicked(){
         cc.monitoringCpuStart();
 
     }
-    if(ui->monitorRamCheckBox->isChecked()){      
+    if(ui->monitorRamCheckBox->isChecked()){
         ui->ramIsMonitoringLabel->setText("Monitoring...");
         ui->ramIsMonitoringLabel->setStyleSheet("color: rgb(43, 117, 34);");
         ui->resetRAM->setDisabled(true);
@@ -493,12 +513,12 @@ void MainWindow::on_applyButtonMt_clicked(){
 void MainWindow::on_monitorCpuCheckBox_clicked()
 {
     if(ui->monitorCpuCheckBox->isChecked()){
-        ui->acceptaleCpuLoadTxtBox->setDisabled(false);    
+        ui->acceptaleCpuLoadTxtBox->setDisabled(false);
         ui->cpuBrowseButton->setDisabled(false);
         ui->hintButton_accProcCpu->setDisabled(false);
     }
     else{
-        ui->acceptaleCpuLoadTxtBox->setDisabled(true);   
+        ui->acceptaleCpuLoadTxtBox->setDisabled(true);
         ui->cpuBrowseButton->setDisabled(true);
         ui->hintButton_accProcCpu->setDisabled(true);
     }
@@ -509,14 +529,14 @@ void MainWindow::on_monitorRamCheckBox_clicked()
 {
     if(ui->monitorRamCheckBox->isChecked()){
         ui->acceptaleRamLoadTxtBox->setDisabled(false);
-        ui->ramBrowseButton->setDisabled(false);       
+        ui->ramBrowseButton->setDisabled(false);
         ui->monitoringTypeRam->setDisabled(false);
         ui->hintButton->setDisabled(false);
         ui->hintButton_accProcRam->setDisabled(false);
     }
     else{
-        ui->acceptaleRamLoadTxtBox->setDisabled(true);      
-        ui->ramBrowseButton->setDisabled(true); 
+        ui->acceptaleRamLoadTxtBox->setDisabled(true);
+        ui->ramBrowseButton->setDisabled(true);
         ui->monitoringTypeRam->setDisabled(true);
         ui->hintButton->setDisabled(true);
         ui->hintButton_accProcRam->setDisabled(true);
@@ -717,7 +737,7 @@ void MainWindow::on_applyButtonMtg_clicked(){
         }
 
         if(ui->monitorCpuCheckBox_mtg->isChecked()){
-            cc.setUserAcceptableCpuLoadOverall(loadProc);           
+            cc.setUserAcceptableCpuLoadOverall(loadProc);
             ui->cpuIsMonitoringLabel_Mtg->setText("Monitoring...");
             ui->cpuIsMonitoringLabel_Mtg->setStyleSheet("color: rgb(43, 117, 34);");
             ui->stopCPU_Mtg->setDisabled(false);
