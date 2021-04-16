@@ -17,10 +17,10 @@ namespace temperatureGetter
 
         static void Main(string[] args)
         {
-            
+
             computer.Open();
 
-            Thread myThread = new Thread(new ThreadStart(startGetCpuTemperatureFuncThread));
+            Thread myThread = new Thread(new ThreadStart(startGetBaseboardTemperature));
             myThread.Start();
 
         }
@@ -36,26 +36,36 @@ namespace temperatureGetter
             }
         }
 
+        private static void startGetGPUTemperature()
+        {
+            while (true)
+            {
+                float? toWrite = GetGPUTemperature();
+                Thread.Sleep(2000);
+            }
+        }
+
         private static float? GetCpuTemperature()
-        {           
+        {
 
             Program.computer.CPUEnabled = true;
             Program.computer.Accept(Program.visitor);
 
+
             Program.tempInfo = string.Empty;
-            
+
             int indexOfCpuTempSensor = 0;
             for (int i = 0; i < computer.Hardware.Length; i++)
             {
                 if (computer.Hardware[i].HardwareType == HardwareType.CPU)
-                {                    
+                {
                     for (int j = 0; j < computer.Hardware[i].Sensors.Length; j++)
                     {
                         if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Temperature)
                         {
-                            indexOfCpuTempSensor++;                            
+                            indexOfCpuTempSensor++;
                         }
-                    }                    
+                    }
                 }
             }
 
@@ -65,21 +75,21 @@ namespace temperatureGetter
             for (int i = 0; i < computer.Hardware.Length; ++i)
             {
                 if (computer.Hardware[i].HardwareType == HardwareType.CPU)
-                {                    
+                {
                     for (int j = 0; j < computer.Hardware[i].Sensors.Length; j++)
-                    {                        
+                    {
                         if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Temperature)
                         {
-                            temp[k] = computer.Hardware[i].Sensors[j].Value;                          
-                            k++;                                                
+                            temp[k] = computer.Hardware[i].Sensors[j].Value;
+                            k++;
                         }
                     }
                 }
             }
 
-            float? result = 0;            
+            float? result = 0;
             for (int i = 0; i < indexOfCpuTempSensor; i++) {
-                result += temp[i];                
+                result += temp[i];
             }
 
             result = result / (float)indexOfCpuTempSensor;
@@ -87,5 +97,32 @@ namespace temperatureGetter
             return result;
 
         }
+
+        private static float? GetGPUTemperature(){            
+            Program.computer.GPUEnabled = true;
+            Program.computer.Accept(Program.visitor);
+
+
+            Program.tempInfo = string.Empty;
+
+            int indexOfCpuTempSensor = 0;
+            for (int i = 0; i < computer.Hardware.Length; i++)
+            {                
+                if (computer.Hardware[i].HardwareType == HardwareType.GpuAti || computer.Hardware[i].HardwareType == HardwareType.GpuNvidia)
+                {
+                    Console.WriteLine("computer.Hardware[i].Sensors.Length = " + computer.Hardware[i].Sensors.Length);
+                    for (int j = 0; j < computer.Hardware[i].Sensors.Length; j++)
+                    {
+                        Console.WriteLine("j = " + j);
+                        if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Temperature)
+                        {
+                            Console.WriteLine("hghgygyg = " + computer.Hardware[i].Sensors[j].Name + computer.Hardware[i].Sensors[j].Value);
+                        }
+                    }
+                }
+            }
+
+            return 1f;
+            }
     }
 }
