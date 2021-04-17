@@ -20,8 +20,12 @@ namespace temperatureGetter
 
             computer.Open();
 
-            Thread myThread = new Thread(new ThreadStart(startGetBaseboardTemperature));
-            myThread.Start();
+            Thread cpuThread = new Thread(new ThreadStart(startGetCpuTemperatureFuncThread));
+            cpuThread.Start();
+            Thread gpuThread = new Thread(new ThreadStart(startGetGPUTemperatureFuncThread));
+            gpuThread.Start();
+            Thread hddThread = new Thread(new ThreadStart(startGetHDDTemperatureFuncThread));
+            hddThread.Start();
 
         }
 
@@ -30,17 +34,41 @@ namespace temperatureGetter
                 float? toWrite = GetCpuTemperature();
                 using (StreamWriter sw = new StreamWriter("test.txt", false, System.Text.Encoding.Default))
                 {
-                    sw.WriteLine(toWrite);
+                    sw.WriteLine("cpu = " + toWrite);
                 }
                 Thread.Sleep(2000);
             }
         }
 
-        private static void startGetGPUTemperature()
+        private static void startGetGPUTemperatureFuncThread()
         {
             while (true)
             {
                 float? toWrite = GetGPUTemperature();
+                Thread.Sleep(50);
+                using (StreamWriter sw = new StreamWriter("test.txt", true, System.Text.Encoding.Default))
+                {
+                    sw.WriteLine("gpu = " + toWrite);
+                }
+                Thread.Sleep(2000);
+            }
+        }
+
+        private static void startGetHDDTemperatureFuncThread()
+        {
+            while (true)
+            {
+                HDDtemperatures getRetrnedHDDTemps = new HDDtemperatures();
+                getRetrnedHDDTemps = GetHDDTemperature();
+                Thread.Sleep(100);
+                using (StreamWriter sw = new StreamWriter("test.txt", true, System.Text.Encoding.Default))
+                {
+                    for (int i = 0; i < 4; i++) {
+                        if (getRetrnedHDDTemps.HDDtemp[i] != 0) {
+                            sw.WriteLine("hdd = " + getRetrnedHDDTemps.HDDtemp[i] + " i = " + i);
+                        }
+                    }                    
+                }
                 Thread.Sleep(2000);
             }
         }
@@ -102,27 +130,61 @@ namespace temperatureGetter
             Program.computer.GPUEnabled = true;
             Program.computer.Accept(Program.visitor);
 
-
             Program.tempInfo = string.Empty;
 
-            int indexOfCpuTempSensor = 0;
+            float? result = 0;
+
             for (int i = 0; i < computer.Hardware.Length; i++)
             {                
                 if (computer.Hardware[i].HardwareType == HardwareType.GpuAti || computer.Hardware[i].HardwareType == HardwareType.GpuNvidia)
-                {
-                    Console.WriteLine("computer.Hardware[i].Sensors.Length = " + computer.Hardware[i].Sensors.Length);
+                {                    
                     for (int j = 0; j < computer.Hardware[i].Sensors.Length; j++)
-                    {
-                        Console.WriteLine("j = " + j);
+                    {                        
                         if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Temperature)
                         {
-                            Console.WriteLine("hghgygyg = " + computer.Hardware[i].Sensors[j].Name + computer.Hardware[i].Sensors[j].Value);
+                            result = computer.Hardware[i].Sensors[j].Value;
                         }
                     }
                 }
             }
+            return result;
+        }
 
-            return 1f;
+        private static HDDtemperatures GetHDDTemperature()
+        {
+            Program.computer.HDDEnabled = true;
+            Program.computer.Accept(Program.visitor);
+            
+            Program.tempInfo = string.Empty;            
+
+            HDDtemperatures returnHDDtemp = new HDDtemperatures();
+
+            int k = 0;
+            for (int i = 0; i < computer.Hardware.Length; i++)
+            {
+                if (computer.Hardware[i].HardwareType == HardwareType.HDD)
+                {                    
+                    for (int j = 0; j < computer.Hardware[i].Sensors.Length; j++)
+                    {                        
+                        if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Temperature)
+                        {                            
+                            returnHDDtemp.HDDtemp[k] = computer.Hardware[i].Sensors[j].Value;
+                            Console.WriteLine("returnHDDtemp.HDDtemp[k] " + returnHDDtemp.HDDtemp[k] + " k = " + k);
+                            k++;
+                        }
+                    }
+                }
             }
+            for (int i = k; i < 4; i++) {
+                returnHDDtemp.HDDtemp[i] = 0;
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                 Console.WriteLine("returnHDDtemp.HDDtemp[i] " + returnHDDtemp.HDDtemp[i] + "  i = " + i);
+            }
+
+            return returnHDDtemp;
+        }
     }
 }
