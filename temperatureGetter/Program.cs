@@ -32,9 +32,9 @@ namespace temperatureGetter
         private static void startGetCpuTemperatureFuncThread() {
             while (true) {
                 float? toWrite = GetCpuTemperature();
-                using (StreamWriter sw = new StreamWriter("test.txt", false, System.Text.Encoding.Default))
+                using (StreamWriter sw = new StreamWriter("temperatures.txt", false, System.Text.Encoding.Default))
                 {
-                    sw.WriteLine("cpu = " + toWrite);
+                    sw.WriteLine(toWrite);
                 }
                 Thread.Sleep(2000);
             }
@@ -46,9 +46,9 @@ namespace temperatureGetter
             {
                 float? toWrite = GetGPUTemperature();
                 Thread.Sleep(50);
-                using (StreamWriter sw = new StreamWriter("test.txt", true, System.Text.Encoding.Default))
+                using (StreamWriter sw = new StreamWriter("temperatures.txt", true, System.Text.Encoding.Default))
                 {
-                    sw.WriteLine("gpu = " + toWrite);
+                    sw.WriteLine(toWrite);
                 }
                 Thread.Sleep(2000);
             }
@@ -61,11 +61,11 @@ namespace temperatureGetter
                 HDDtemperatures getRetrnedHDDTemps = new HDDtemperatures();
                 getRetrnedHDDTemps = GetHDDTemperature();
                 Thread.Sleep(100);
-                using (StreamWriter sw = new StreamWriter("test.txt", true, System.Text.Encoding.Default))
+                using (StreamWriter sw = new StreamWriter("temperatures.txt", true, System.Text.Encoding.Default))
                 {
                     for (int i = 0; i < 4; i++) {
                         if (getRetrnedHDDTemps.HDDtemp[i] != 0) {
-                            sw.WriteLine("hdd = " + getRetrnedHDDTemps.HDDtemp[i] + " i = " + i);
+                            sw.WriteLine(getRetrnedHDDTemps.HDDtemp[i]);
                         }
                     }                    
                 }
@@ -168,8 +168,7 @@ namespace temperatureGetter
                     {                        
                         if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Temperature)
                         {                            
-                            returnHDDtemp.HDDtemp[k] = computer.Hardware[i].Sensors[j].Value;
-                            Console.WriteLine("returnHDDtemp.HDDtemp[k] " + returnHDDtemp.HDDtemp[k] + " k = " + k);
+                            returnHDDtemp.HDDtemp[k] = computer.Hardware[i].Sensors[j].Value;                            
                             k++;
                         }
                     }
@@ -178,11 +177,7 @@ namespace temperatureGetter
             for (int i = k; i < 4; i++) {
                 returnHDDtemp.HDDtemp[i] = 0;
             }
-
-            for (int i = 0; i < 4; i++)
-            {
-                 Console.WriteLine("returnHDDtemp.HDDtemp[i] " + returnHDDtemp.HDDtemp[i] + "  i = " + i);
-            }
+            Console.WriteLine("hdd written");
 
             return returnHDDtemp;
         }
