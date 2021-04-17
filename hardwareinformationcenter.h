@@ -34,7 +34,7 @@ public:
     static void getUptime(long &hours, long &minutes, long &seconds, long &millies, HardWareInformationCenter &hc);
 
     void startProcessOfTemperatures();
-    string readTemperaturesFromFile();
+    std::vector<string> readTemperaturesFromFile();
 
     QString getCPUInfo() const;
     QString getGPUInfo() const;

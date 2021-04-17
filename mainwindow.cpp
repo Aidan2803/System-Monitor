@@ -313,18 +313,44 @@ void MainWindow::startGetRAMLoadThread(){
 
 void MainWindow::startGetTemperaturesThread(){
     getTemperaturesThread = new std::thread([&](){
-        string temperatureForUi;
+        vector<string> temperaturesForUiVect;
         hc.startProcessOfTemperatures();
         while(this->isRunningGetRAMLoad){
             Sleep(150);
-            temperatureForUi = hc.readTemperaturesFromFile();
-            cout << "temp in ui = " << temperatureForUi << endl;
-            QString qTemperatureForUi = QString::fromStdString(temperatureForUi);
-            qTemperatureForUi += "°C";
-            ui->cpuTemp_Label->setText(qTemperatureForUi);
+            temperaturesForUiVect = hc.readTemperaturesFromFile();
+
+            QString qTemperatureForUiCpu = QString::fromStdString(temperaturesForUiVect.at(0));
+            qTemperatureForUiCpu += "°C";
+            ui->cpuTemp_Label->setText(qTemperatureForUiCpu);
+
+            QString qTemperatureForUiGpu = QString::fromStdString(temperaturesForUiVect.at(1));
+            qTemperatureForUiGpu += "°C";
+            ui->gpuTemp_Label->setText(qTemperatureForUiGpu);
+
+            QString giveHddTemps[MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD];
+
+            for(int i = INDEX_OF_FIRST_HDD, k = 0; i < temperaturesForUiVect.size(); ++i, ++k){
+                giveHddTemps[k] = QString::fromStdString(temperaturesForUiVect.at(i));
+            }
+
+            for(int i = 0; i < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; ++i){
+                qDebug() << "giveHddTemps = " << giveHddTemps[i];
+            }
+
+            setHddTemps(giveHddTemps);
+
             Sleep(2000);
         }
     });
+}
+
+void MainWindow::setHddTemps(QString *hddTemps){
+    for(int i = 0; i < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; ++i){
+        this->hddTempsFromFile[i] = hddTemps[i];
+    }
+    for(int i = 0; i < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; ++i){
+        qDebug() << this->hddTempsFromFile[i];
+    }
 }
 
 void MainWindow::initConnections(){
@@ -421,6 +447,11 @@ void MainWindow::on_getDriversButton_clicked()
     str = "Amount of drivers: ";
     str += QString::number(driversVect->size());
     ui->amountOfDrivers->setText(str);
+}
+
+void MainWindow::on_storageInfoComboBox_currentIndexChanged(int index)
+{
+    qDebug() << "CHAAAAAAAAAAAAAAAAAAAANGEEEEEEEEEEEEEEED";
 }
 
 
@@ -941,4 +972,3 @@ void MainWindow::on_onScreenUpTimeCheckBox_clicked()
 }
 
 //*********************END:EXTERNAL DISPLAY TOOLS**********************//
-

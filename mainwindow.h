@@ -40,6 +40,8 @@ public:
     void startGetRAMLoadThread();
     void startGetTemperaturesThread();
 
+    void setHddTemps(QString *hddTemps);
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -67,6 +69,8 @@ private:
     QString *storageInfo;
     QString *audioInfo;
     QString *networkControllerInfo;
+
+    QString hddTempsFromFile[MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD];
 
     Ui::MainWindow *ui;
 
@@ -141,6 +145,8 @@ private slots:
     void on_getProcessesButton_clicked();
 
     void on_getDriversButton_clicked();
+
+    void on_storageInfoComboBox_currentIndexChanged(int index);
 
 public slots:
     void getMessage(QString infoString, bool fromCpu, bool mtGloval);

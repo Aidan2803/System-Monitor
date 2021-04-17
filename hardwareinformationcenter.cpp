@@ -605,7 +605,7 @@ void HardWareInformationCenter::startProcessOfTemperatures(){
     CloseHandle(pi.hProcess);
 }
 
-string HardWareInformationCenter::readTemperaturesFromFile(){
+std::vector<string> HardWareInformationCenter::readTemperaturesFromFile(){
     std::string line;
     std::string buff;
 
@@ -640,5 +640,5 @@ string HardWareInformationCenter::readTemperaturesFromFile(){
     std::cout << "buff = " << buff << std::endl;
     in.close();
 
-    return buff;
+    return temperatureValues;
 }
