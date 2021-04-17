@@ -154,6 +154,8 @@ void MainWindow::initWindow(){
 
     qDebug() << "after threads";
 
+    activeIndexHdd = 0;
+
     startGetTemperaturesThread();
 
     //*********************END:OVERVIEW**********************//
@@ -316,7 +318,7 @@ void MainWindow::startGetTemperaturesThread(){
         vector<string> temperaturesForUiVect;
         hc.startProcessOfTemperatures();
         while(this->isRunningGetRAMLoad){
-            Sleep(150);
+            //Sleep(150);
             temperaturesForUiVect = hc.readTemperaturesFromFile();
 
             QString qTemperatureForUiCpu = QString::fromStdString(temperaturesForUiVect.at(0));
@@ -327,17 +329,16 @@ void MainWindow::startGetTemperaturesThread(){
             qTemperatureForUiGpu += "°C";
             ui->gpuTemp_Label->setText(qTemperatureForUiGpu);
 
+
             QString giveHddTemps[MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD];
 
             for(int i = INDEX_OF_FIRST_HDD, k = 0; i < temperaturesForUiVect.size(); ++i, ++k){
                 giveHddTemps[k] = QString::fromStdString(temperaturesForUiVect.at(i));
             }
 
-            for(int i = 0; i < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; ++i){
-                qDebug() << "giveHddTemps = " << giveHddTemps[i];
-            }
-
             setHddTemps(giveHddTemps);
+
+            ui->hddTemp_Label->setText(hddTempsFromFile[activeIndexHdd] + "°C");
 
             Sleep(2000);
         }
@@ -355,12 +356,12 @@ void MainWindow::setHddTemps(QString *hddTemps){
 
 void MainWindow::initConnections(){
     connect(&cc, SIGNAL(emitMessage(QString, bool, bool)), this, SLOT(getMessage(QString, bool, bool)));
-
 }
 
 void MainWindow::initMWConneciotns(){
     connect(this, &MainWindow::emitCPULoadValue, this, &MainWindow::getCPULoadValue);
     connect(this, &MainWindow::emitRAMLoadValue, this, &MainWindow::getRAMLoadValue);
+    connect(this, &MainWindow::emitChangeHDDTemperature, this, &MainWindow::changeHDDTemperatureLabel);
 }
 
 //-------------------------------------BEGIN: SLOTS------------------------------
@@ -412,6 +413,11 @@ void MainWindow::getRAMLoadValue(int ramLoadValue){
     ui->ramProgressBar->setValue(ramLoadValue);
 }
 
+void MainWindow::changeHDDTemperatureLabel(int index){
+    //qDebug() << "in slot " << index;
+    ui->hddTemp_Label->setText(this->hddTempsFromFile[index] + "°C");
+}
+
 //-------------------------------------END: SLOTS------------------------------
 
 //*********************BEGING:OVERVIEW**********************//
@@ -452,6 +458,8 @@ void MainWindow::on_getDriversButton_clicked()
 void MainWindow::on_storageInfoComboBox_currentIndexChanged(int index)
 {
     qDebug() << "CHAAAAAAAAAAAAAAAAAAAANGEEEEEEEEEEEEEEED";
+    activeIndexHdd = index;
+    emitChangeHDDTemperature(index);
 }
 
 

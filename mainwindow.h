@@ -65,6 +65,8 @@ private:
     long upTime_seconds;
     long upTime_milliseconds;   
 
+    short activeIndexHdd;
+
     QString *ramInfo;
     QString *storageInfo;
     QString *audioInfo;
@@ -152,10 +154,12 @@ public slots:
     void getMessage(QString infoString, bool fromCpu, bool mtGloval);
     void getCPULoadValue(int cpuLoadValue);
     void getRAMLoadValue(int ramLoadValue);
+    void changeHDDTemperatureLabel(int index);
 
 signals:
     void emitCPULoadValue(int cpuLoadValue);
     void emitRAMLoadValue(int ramLoadValue);
+    void emitChangeHDDTemperature(int index);
 
 };
 #endif // MAINWINDOW_H
