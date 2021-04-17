@@ -609,27 +609,36 @@ string HardWareInformationCenter::readTemperaturesFromFile(){
     std::string line;
     std::string buff;
 
-    string s = QDir::currentPath().toStdString();
-    s += "/test.txt";
+    std::vector<string> temperatureValues;
 
+    string s = QDir::currentPath().toStdString();
+    s += "/temperatures.txt";
+
+    int k{0};
     std::ifstream in(s);
-    if (in.is_open()){
+    if (in.is_open()){        
             while (getline(in, line))
             {
                 std::cout << "temp = " << line << std::endl;
                 if(line[0] != ' '){
                     buff = line;
+                    temperatureValues.push_back(line);
+                    ++k;
                 }
 
             }
+            qDebug() << "k = " << k;
         }
     else{
         qDebug() << "tf";
     }
 
+    for(int i = 0; i < k; ++i){
+        cout << "temperatureValues[i] = " << temperatureValues.at(i) << " i = " << i << endl;
+    }
+
     std::cout << "buff = " << buff << std::endl;
     in.close();
-
 
     return buff;
 }
