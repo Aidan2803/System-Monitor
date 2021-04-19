@@ -105,10 +105,10 @@ QTabWidget::pane { /* The tab widget frame */
      <widget class="Line" name="line">
       <property name="geometry">
        <rect>
-        <x>830</x>
+        <x>920</x>
         <y>-20</y>
         <width>21</width>
-        <height>601</height>
+        <height>761</height>
        </rect>
       </property>
       <property name="orientation">
@@ -467,9 +467,9 @@ font: 14pt;
      <widget class="QListWidget" name="processList">
       <property name="geometry">
        <rect>
-        <x>860</x>
+        <x>950</x>
         <y>330</y>
-        <width>531</width>
+        <width>441</width>
         <height>221</height>
        </rect>
       </property>
@@ -484,9 +484,9 @@ border: none;</string>
      <widget class="QListWidget" name="driversList">
       <property name="geometry">
        <rect>
-        <x>860</x>
+        <x>950</x>
         <y>20</y>
-        <width>531</width>
+        <width>441</width>
         <height>241</height>
        </rect>
       </property>
@@ -501,9 +501,9 @@ border: none;</string>
      <widget class="QPushButton" name="getProcessesButton">
       <property name="geometry">
        <rect>
-        <x>860</x>
+        <x>950</x>
         <y>560</y>
-        <width>531</width>
+        <width>441</width>
         <height>31</height>
        </rect>
       </property>
@@ -530,9 +530,9 @@ border-style: none;
      <widget class="QPushButton" name="getDriversButton">
       <property name="geometry">
        <rect>
-        <x>860</x>
+        <x>950</x>
         <y>270</y>
-        <width>531</width>
+        <width>441</width>
         <height>31</height>
        </rect>
       </property>
@@ -559,9 +559,9 @@ border-style: none;
      <widget class="QProgressBar" name="cpuProgressBar">
       <property name="geometry">
        <rect>
-        <x>1020</x>
+        <x>1080</x>
         <y>600</y>
-        <width>361</width>
+        <width>301</width>
         <height>26</height>
        </rect>
       </property>
@@ -592,9 +592,9 @@ QProgressBar::chunk {
      <widget class="QLabel" name="label_10">
       <property name="geometry">
        <rect>
-        <x>860</x>
+        <x>950</x>
         <y>600</y>
-        <width>151</width>
+        <width>121</width>
         <height>21</height>
        </rect>
       </property>
@@ -609,9 +609,9 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
      <widget class="QLabel" name="label_11">
       <property name="geometry">
        <rect>
-        <x>860</x>
+        <x>950</x>
         <y>630</y>
-        <width>151</width>
+        <width>121</width>
         <height>21</height>
        </rect>
       </property>
@@ -626,9 +626,9 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
      <widget class="QProgressBar" name="ramProgressBar">
       <property name="geometry">
        <rect>
-        <x>1020</x>
+        <x>1080</x>
         <y>630</y>
-        <width>361</width>
+        <width>301</width>
         <height>26</height>
        </rect>
       </property>
@@ -656,7 +656,7 @@ QProgressBar::chunk {
      <widget class="QLabel" name="amountOfProcesses">
       <property name="geometry">
        <rect>
-        <x>860</x>
+        <x>950</x>
         <y>310</y>
         <width>301</width>
         <height>16</height>
@@ -673,7 +673,7 @@ font: 12pt &quot;ГОСТ тип А&quot;;</string>
      <widget class="QLabel" name="amountOfDrivers">
       <property name="geometry">
        <rect>
-        <x>860</x>
+        <x>950</x>
         <y>0</y>
         <width>301</width>
         <height>16</height>

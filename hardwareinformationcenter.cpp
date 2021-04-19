@@ -585,17 +585,14 @@ int HardWareInformationCenter::startProcessOfTemperatures(){
     PROCESS_INFORMATION pi;
 
     string s = QDir::currentPath().toStdString();
-    s += "/temperatureGetter.exe";
-
-    std::cout << "s = " << s;
+    s += "/temperatureGetter.exe";   
 
     std::wstring widestr = std::wstring(s.begin(), s.end());
     const wchar_t* widecstr = widestr.c_str();
 
     //
     if (CreateProcess(widecstr, NULL, NULL,NULL,FALSE,NULL,NULL,NULL,&cif,&pi)==TRUE)
-    {
-         qDebug() << "proc id = " << pi.dwProcessId;
+    {         
     }
     else{
         qDebug() << "why";
@@ -622,26 +619,19 @@ std::vector<string> HardWareInformationCenter::readTemperaturesFromFile(){
     std::ifstream in(s);
     if (in.is_open()){        
             while (getline(in, line))
-            {
-                std::cout << "temp = " << line << std::endl;
+            {               
                 if(line[0] != ' '){
                     buff = line;
                     temperatureValues.push_back(line);
                     ++k;
                 }
 
-            }
-            qDebug() << "k = " << k;
+            }            
         }
     else{
         qDebug() << "tf";
     }
 
-    for(int i = 0; i < k; ++i){
-        cout << "temperatureValues[i] = " << temperatureValues.at(i) << " i = " << i << endl;
-    }
-
-    std::cout << "buff = " << buff << std::endl;
     in.close();
 
     return temperatureValues;

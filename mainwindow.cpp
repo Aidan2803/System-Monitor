@@ -329,7 +329,7 @@ void MainWindow::startGetTemperaturesThread(){
     getTemperaturesThread = new std::thread([&](){
         vector<string> temperaturesForUiVect;
         temperatureProcessPID = hc.startProcessOfTemperatures();
-        qDebug() << temperatureProcessPID;
+
         while(this->isRunningGetRAMLoad){            
             Sleep(2050);
             temperaturesForUiVect = hc.readTemperaturesFromFile();            
@@ -360,7 +360,6 @@ void MainWindow::startGetTemperaturesThread(){
 
             ui->hddTemp_Label->setText(hddTempsFromFile[activeIndexHdd] + "°C");
 
-            //Sleep(2000);
         }
     });
 }
@@ -368,10 +367,7 @@ void MainWindow::startGetTemperaturesThread(){
 void MainWindow::setHddTemps(QString *hddTemps){
     for(int i = 0; i < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; ++i){
         this->hddTempsFromFile[i] = hddTemps[i];
-    }
-    for(int i = 0; i < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; ++i){
-        qDebug() << this->hddTempsFromFile[i];
-    }
+    }    
 }
 
 void MainWindow::initConnections(){
