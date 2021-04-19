@@ -738,6 +738,93 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <string/>
       </property>
      </widget>
+     <widget class="QPushButton" name="chartButton_cpu">
+      <property name="geometry">
+       <rect>
+        <x>850</x>
+        <y>80</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> QPushButton#chartButton_cpu {
+color: rgb(255, 255, 255);
+font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
+ }
+ QPushButton#chartButton_cpu:pressed {     
+	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
+ }</string>
+      </property>
+      <property name="text">
+       <string>Chart</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="chartButton_gpu">
+      <property name="geometry">
+       <rect>
+        <x>850</x>
+        <y>110</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> QPushButton#chartButton_gpu {
+color: rgb(255, 255, 255);
+font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
+ }
+ QPushButton#chartButton_gpu:pressed {     
+	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
+ }</string>
+      </property>
+      <property name="text">
+       <string>Chart</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="chartButton_hdd">
+      <property name="geometry">
+       <rect>
+        <x>850</x>
+        <y>180</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> QPushButton#chartButton_hdd {
+color: rgb(255, 255, 255);
+font: 14pt &quot;ГОСТ тип А&quot;;
+background-color: rgb(72, 72, 72);
+
+border-style: none;
+     border-width: 1px;
+     border-radius: 5px;
+
+ }
+ QPushButton#chartButton_hdd:pressed {     
+	color: rgb(72, 184, 41);
+	background-color: rgb(57, 57, 57);
+ }</string>
+      </property>
+      <property name="text">
+       <string>Chart</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="monitoringTools">
      <attribute name="title">
