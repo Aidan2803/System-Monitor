@@ -323,7 +323,7 @@ void MainWindow::startGetTemperaturesThread(){
         hc.startProcessOfTemperatures();
         while(this->isRunningGetRAMLoad){
             qDebug() << "aaaaaaaaaaaaaaa";
-            Sleep(2400);
+            Sleep(2050);
             qDebug() << "bbbbbbbbbbbbbbb";
             temperaturesForUiVect = hc.readTemperaturesFromFile();
 

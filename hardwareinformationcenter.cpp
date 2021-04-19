@@ -579,7 +579,7 @@ QString* HardWareInformationCenter::getNetworkControllers(int *amountOfControlle
     return networkControllersInfo;
 }
 
-void HardWareInformationCenter::startProcessOfTemperatures(){
+int HardWareInformationCenter::startProcessOfTemperatures(){
     STARTUPINFO cif;
     ZeroMemory(&cif,sizeof(STARTUPINFO));
     PROCESS_INFORMATION pi;
@@ -595,14 +595,18 @@ void HardWareInformationCenter::startProcessOfTemperatures(){
     //
     if (CreateProcess(widecstr, NULL, NULL,NULL,FALSE,NULL,NULL,NULL,&cif,&pi)==TRUE)
     {
+         qDebug() << "proc id = " << pi.dwProcessId;
     }
     else{
         qDebug() << "why";
         qDebug() << GetLastError();
+
     }
 
     WaitForSingleObject(pi.hProcess, INFINITY);
     CloseHandle(pi.hProcess);
+
+    return pi.dwProcessId;
 }
 
 std::vector<string> HardWareInformationCenter::readTemperaturesFromFile(){

@@ -33,7 +33,7 @@ public:
 
     static void getUptime(long &hours, long &minutes, long &seconds, long &millies, HardWareInformationCenter &hc);
 
-    void startProcessOfTemperatures();
+    int startProcessOfTemperatures();
     std::vector<string> readTemperaturesFromFile();
 
     QString getCPUInfo() const;
