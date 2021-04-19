@@ -152,6 +152,10 @@ void MainWindow::initWindow(){
     startGetCPULoadThread();
     startGetRAMLoadThread();
 
+    ui->cpuTemp_Label->setText("Analyzing...");
+    ui->gpuTemp_Label->setText("Analyzing...");
+    ui->hddTemp_Label->setText("Analyzing...");
+
     qDebug() << "after threads";
 
     activeIndexHdd = 0;
@@ -318,29 +322,48 @@ void MainWindow::startGetTemperaturesThread(){
         vector<string> temperaturesForUiVect;
         hc.startProcessOfTemperatures();
         while(this->isRunningGetRAMLoad){
-            //Sleep(150);
+            qDebug() << "aaaaaaaaaaaaaaa";
+            Sleep(2400);
+            qDebug() << "bbbbbbbbbbbbbbb";
             temperaturesForUiVect = hc.readTemperaturesFromFile();
+
+            cout << "temperaturesForUiVect.size() = " << temperaturesForUiVect.size() << endl;
+            if(temperaturesForUiVect.size() > INDEX_OF_FIRST_HDD){
+                qDebug() << "ccccccccccccccccc";
+                gpuTempReserv = temperaturesForUiVect.at(INDEX_OF_FIRST_HDD - 1);
+                for(int i = INDEX_OF_FIRST_HDD, k = 0; i < temperaturesForUiVect.size(); ++i){
+                    qDebug() << "ddddddd";
+                    hddTempReserv[k] = temperaturesForUiVect.at(i);
+                    qDebug() << "eeeeeeee";
+                    k++;
+                }
+
+                cout << "gpuTempReserv = " << gpuTempReserv << endl;
+                for(int i = 0; i < 2; ++i){
+                    cout << "hdd temp reserved = " << hddTempReserv[i] << endl;
+                }
+            }
 
             QString qTemperatureForUiCpu = QString::fromStdString(temperaturesForUiVect.at(0));
             qTemperatureForUiCpu += "°C";
             ui->cpuTemp_Label->setText(qTemperatureForUiCpu);
 
-            QString qTemperatureForUiGpu = QString::fromStdString(temperaturesForUiVect.at(1));
+            QString qTemperatureForUiGpu = QString::fromStdString(gpuTempReserv);
             qTemperatureForUiGpu += "°C";
             ui->gpuTemp_Label->setText(qTemperatureForUiGpu);
 
 
             QString giveHddTemps[MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD];
 
-            for(int i = INDEX_OF_FIRST_HDD, k = 0; i < temperaturesForUiVect.size(); ++i, ++k){
-                giveHddTemps[k] = QString::fromStdString(temperaturesForUiVect.at(i));
+            for(int i = 0; i < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; ++i){
+                giveHddTemps[i] = QString::fromStdString(hddTempReserv[i]);
             }
 
             setHddTemps(giveHddTemps);
 
             ui->hddTemp_Label->setText(hddTempsFromFile[activeIndexHdd] + "°C");
 
-            Sleep(2000);
+            //Sleep(2000);
         }
     });
 }

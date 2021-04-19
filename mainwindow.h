@@ -67,6 +67,9 @@ private:
 
     short activeIndexHdd;
 
+    string gpuTempReserv;
+    string hddTempReserv[MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD];
+
     QString *ramInfo;
     QString *storageInfo;
     QString *audioInfo;
