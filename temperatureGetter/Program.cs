@@ -50,7 +50,7 @@ namespace temperatureGetter
                 {
                     sw.WriteLine(toWrite);
                 }
-                Thread.Sleep(2000);
+                Thread.Sleep(1950);
             }
         }
 
@@ -69,7 +69,7 @@ namespace temperatureGetter
                         }
                     }                    
                 }
-                Thread.Sleep(2000);
+                Thread.Sleep(1900);
             }
         }
 
@@ -177,7 +177,6 @@ namespace temperatureGetter
             for (int i = k; i < 4; i++) {
                 returnHDDtemp.HDDtemp[i] = 0;
             }
-            Console.WriteLine("hdd written");
 
             return returnHDDtemp;
         }

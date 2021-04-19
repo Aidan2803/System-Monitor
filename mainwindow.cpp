@@ -43,6 +43,14 @@ MainWindow::~MainWindow()
     getRAMLoadThread->join();
     delete getRAMLoadThread;
 
+    this->setIsRunningGetTemperature(false);
+    getTemperaturesThread->join();
+    delete getTemperaturesThread;
+
+    HANDLE handle = OpenProcess(PROCESS_TERMINATE, FALSE, temperatureProcessPID);
+    TerminateProcess(handle, -1);
+    CloseHandle(handle);
+
     delete ui;
 }
 
@@ -320,27 +328,16 @@ void MainWindow::startGetRAMLoadThread(){
 void MainWindow::startGetTemperaturesThread(){
     getTemperaturesThread = new std::thread([&](){
         vector<string> temperaturesForUiVect;
-        hc.startProcessOfTemperatures();
-        while(this->isRunningGetRAMLoad){
-            qDebug() << "aaaaaaaaaaaaaaa";
+        temperatureProcessPID = hc.startProcessOfTemperatures();
+        qDebug() << temperatureProcessPID;
+        while(this->isRunningGetRAMLoad){            
             Sleep(2050);
-            qDebug() << "bbbbbbbbbbbbbbb";
-            temperaturesForUiVect = hc.readTemperaturesFromFile();
-
-            cout << "temperaturesForUiVect.size() = " << temperaturesForUiVect.size() << endl;
-            if(temperaturesForUiVect.size() > INDEX_OF_FIRST_HDD){
-                qDebug() << "ccccccccccccccccc";
+            temperaturesForUiVect = hc.readTemperaturesFromFile();            
+            if(temperaturesForUiVect.size() > INDEX_OF_FIRST_HDD){                
                 gpuTempReserv = temperaturesForUiVect.at(INDEX_OF_FIRST_HDD - 1);
-                for(int i = INDEX_OF_FIRST_HDD, k = 0; i < temperaturesForUiVect.size(); ++i){
-                    qDebug() << "ddddddd";
-                    hddTempReserv[k] = temperaturesForUiVect.at(i);
-                    qDebug() << "eeeeeeee";
+                for(int i = INDEX_OF_FIRST_HDD, k = 0; i < temperaturesForUiVect.size(); ++i){                   
+                    hddTempReserv[k] = temperaturesForUiVect.at(i);                    
                     k++;
-                }
-
-                cout << "gpuTempReserv = " << gpuTempReserv << endl;
-                for(int i = 0; i < 2; ++i){
-                    cout << "hdd temp reserved = " << hddTempReserv[i] << endl;
                 }
             }
 

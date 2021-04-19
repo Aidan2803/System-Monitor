@@ -60,6 +60,8 @@ private:
     bool isRunningGetRAMLoad = true;
     bool isRunningGetTemperature = true;
 
+    int temperatureProcessPID;
+
     long upTime_hours;
     long upTime_minutes;
     long upTime_seconds;
