@@ -33,7 +33,7 @@ namespace temperatureGetter
             while (true) {
                 float? toWrite = GetCpuTemperature();
                 using (StreamWriter sw = new StreamWriter("temperatures.txt", false, System.Text.Encoding.Default))
-                {
+                {                    
                     sw.WriteLine(toWrite);
                 }
                 Thread.Sleep(2000);
@@ -45,7 +45,7 @@ namespace temperatureGetter
             while (true)
             {
                 float? toWrite = GetGPUTemperature();
-                Thread.Sleep(50);
+                Thread.Sleep(50);                
                 using (StreamWriter sw = new StreamWriter("temperatures.txt", true, System.Text.Encoding.Default))
                 {
                     sw.WriteLine(toWrite);
@@ -60,7 +60,7 @@ namespace temperatureGetter
             {
                 HDDtemperatures getRetrnedHDDTemps = new HDDtemperatures();
                 getRetrnedHDDTemps = GetHDDTemperature();
-                Thread.Sleep(100);
+                Thread.Sleep(100);                
                 using (StreamWriter sw = new StreamWriter("temperatures.txt", true, System.Text.Encoding.Default))
                 {
                     for (int i = 0; i < 4; i++) {
@@ -97,7 +97,7 @@ namespace temperatureGetter
                 }
             }
 
-            float?[] temp = new float?[indexOfCpuTempSensor];
+            int[] temp = new int[indexOfCpuTempSensor];
             int k = 0;
 
             for (int i = 0; i < computer.Hardware.Length; ++i)
@@ -108,19 +108,19 @@ namespace temperatureGetter
                     {
                         if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Temperature)
                         {
-                            temp[k] = computer.Hardware[i].Sensors[j].Value;
+                            temp[k] = (int)computer.Hardware[i].Sensors[j].Value;
                             k++;
                         }
                     }
                 }
             }
 
-            float? result = 0;
+            int result = 0;
             for (int i = 0; i < indexOfCpuTempSensor; i++) {
                 result += temp[i];
             }
 
-            result = result / (float)indexOfCpuTempSensor;
+            result = result / indexOfCpuTempSensor;
 
             return result;
 
