@@ -15,6 +15,7 @@
 #include <iostream>
 #include <windows.h>
 #include <thread>
+#include <deque>
 
 #include "countingcenter.h"
 #include "hardwareinformationcenter.h"
@@ -46,10 +47,20 @@ public:
     ~MainWindow();
 
 private:
+    QLineSeries *series;
+    QChart *chart;
+    QChartView *chartView;
+
+    std::deque<int> cpuTemperaturesDeque;
+    std::deque<int> gpuTemperaturesDeque;
+    std::vector<deque<int>> hddTemperaturesDequesVect;
+
     void setIsPrintUpTimeRunning(bool isRunning){ this->isPrintUpTimeRunning = isRunning;}
     void setIsRunningGetCPULoad(bool isRunning){this->isRunningGetCPULoad = isRunning;}
     void setIsRunningGetRAMLoad(bool isRunning){this->isRunningGetRAMLoad = isRunning;}
     void setIsRunningGetTemperature(bool isRunning){this->isRunningGetTemperature = isRunning;}
+
+    bool getTemperaturesThreadFirstRun = true;
 
     bool typeHintButtonActivated = false;
     bool cpuHintButtonActivated = false;
@@ -79,9 +90,11 @@ private:
 
     QString hddTempsFromFile[MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD];
 
-    Ui::MainWindow *ui;
-
     void initWindow();
+
+    void DEBUG_outDeques();
+
+    Ui::MainWindow *ui;
 
 private slots:
 
@@ -154,6 +167,8 @@ private slots:
     void on_getDriversButton_clicked();
 
     void on_storageInfoComboBox_currentIndexChanged(int index);
+
+    void on_chartButton_cpu_clicked();
 
 public slots:
     void getMessage(QString infoString, bool fromCpu, bool mtGloval);

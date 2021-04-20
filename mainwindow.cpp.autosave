@@ -1048,5 +1048,3 @@ void MainWindow::on_onScreenUpTimeCheckBox_clicked()
 }
 
 //*********************END:EXTERNAL DISPLAY TOOLS**********************//
-
-
