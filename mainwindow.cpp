@@ -60,7 +60,7 @@ void MainWindow::initWindow(){
     //--------BEGIN:CHART SETTINGS-----------
     series = new QLineSeries();
 
-    *series << QPointF(1, 50) << QPointF(2, 49) << QPointF(3, 45) << QPointF(4, 35)  << QPointF(5, 80)
+    *series << QPointF(1, 10) << QPointF(2, 30) << QPointF(3, 29) << QPointF(4, 15)  << QPointF(5, 30)
             << QPointF(6, 80) << QPointF(7, 80) << QPointF(8, 35) << QPointF(9, 40) << QPointF(10, 100) ;//functionality of the chart
 
     chart = new QChart();
@@ -421,24 +421,43 @@ void MainWindow::DEBUG_outDeques(){
 
     switch(indexOfHardware){
         case CPU:
-        for(int i = 0; i < cpuTemperaturesDeque.size(); i++){
-            bufferForChart.push_back(cpuTemperaturesDeque.at(i));
-        }
+            for(int i = 0; i < cpuTemperaturesDeque.size(); i++){
+                bufferForChart.push_back(cpuTemperaturesDeque.at(i));
+            }
+            break;
+        case GPU:
+            for(int i = 0; i < gpuTemperaturesDeque.size(); i++){
+                bufferForChart.push_back(gpuTemperaturesDeque.at(i));
+            }
+            break;
+        case HDD1:
+            for(int i = 0; i < hddTemperaturesDequesVect.at(0).size(); i++){
+                bufferForChart.push_back(hddTemperaturesDequesVect.at(0).at(i));
+                qDebug() << "hddTemperaturesDequesVect.at(0).at(i) = " << hddTemperaturesDequesVect.at(0).at(i);
+            }
+            break;
+        case HDD2:
+            for(int i = 0; i < hddTemperaturesDequesVect.at(1).size(); i++){
+                bufferForChart.push_back(hddTemperaturesDequesVect.at(1).at(i));
+            }
+            break;
+        case HDD3:
+            for(int i = 0; i < hddTemperaturesDequesVect.at(2).size(); i++){
+                bufferForChart.push_back(hddTemperaturesDequesVect.at(2).at(i));
+            }
+            break;
+        case HDD4:
+            for(int i = 0; i < hddTemperaturesDequesVect.at(3).size(); i++){
+                bufferForChart.push_back(hddTemperaturesDequesVect.at(3).at(i));
+            }
+            break;
+    }
 
-        series->clear();
-        qDebug() << "size = " << bufferForChart.size();
-        for(int i = bufferForChart.size() - 1; i > 0; i--){
-            qDebug() << "bufferForChart = " << bufferForChart.at(i) << "i = " << i;
-        }
+    series->clear();
 
-        for(int i = bufferForChart.size() - 1, j = 0; i > 0; i--, j++){
-            *series << QPointF(j, bufferForChart.at(i));
-        }
-
-        //chart->addSeries(series);
-
-
-        break;
+    for(int i = bufferForChart.size() - 1, j = 0; i > 0; i--, j++){
+        *series << QPointF(j, bufferForChart.at(i));
+        qDebug() << "QPointF, j = " << j << "bufferForChart.at(i) = " <<  bufferForChart.at(i);
     }
 
 }
