@@ -825,7 +825,7 @@ border-style: none;
        <string>Chart</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="maxLabel">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -842,7 +842,7 @@ font: 9pt &quot;ГОСТ тип А&quot;;</string>
        <string>Temp Max</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="minLabel">
       <property name="geometry">
        <rect>
         <x>0</x>

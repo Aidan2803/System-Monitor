@@ -405,50 +405,102 @@ void MainWindow::DEBUG_outDeques(){
         qDebug() << "cpu = " << cpuTemperaturesDeque.at(i);
     }
 
-    /*for(int i = 0; i < gpuTemperaturesDeque.size(); i++ ){
-        qDebug() << "gpu = " << gpuTemperaturesDeque.at(i);
-    }*/
-
-    /*for(int j = 0; j < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; j++){
-        for(int i = 0; i < hddTemperaturesDequesVect.at(j).size(); i++){
-            qDebug() << "hdd = " << hddTemperaturesDequesVect.at(j).at(i) << " j = " << j;
-        }
-    }*/
-
     qDebug() << "func for timer";
 
     vector<int> bufferForChart;
 
+    int max{0}, min{0};
+
     switch(indexOfHardware){
         case CPU:
+            max = cpuTemperaturesDeque.at(0);
+            min = cpuTemperaturesDeque.at(0);
+
             for(int i = 0; i < cpuTemperaturesDeque.size(); i++){
                 bufferForChart.push_back(cpuTemperaturesDeque.at(i));
+
+                if(cpuTemperaturesDeque.at(i) > max){
+                    max = cpuTemperaturesDeque.at(i);
+                }
+                if(cpuTemperaturesDeque.at(i) < min){
+                    max = cpuTemperaturesDeque.at(i);
+                }
             }
             break;
         case GPU:
+            max = gpuTemperaturesDeque.at(0);
+            min = gpuTemperaturesDeque.at(0);
+
             for(int i = 0; i < gpuTemperaturesDeque.size(); i++){
                 bufferForChart.push_back(gpuTemperaturesDeque.at(i));
+
+                if(gpuTemperaturesDeque.at(i) > max){
+                    max = gpuTemperaturesDeque.at(i);
+                }
+                if(gpuTemperaturesDeque.at(i) < min){
+                    max = gpuTemperaturesDeque.at(i);
+                }
             }
             break;
         case HDD1:
+            max = hddTemperaturesDequesVect.at(0).at(0);
+            min = hddTemperaturesDequesVect.at(0).at(0);
+
             for(int i = 0; i < hddTemperaturesDequesVect.at(0).size(); i++){
                 bufferForChart.push_back(hddTemperaturesDequesVect.at(0).at(i));
                 qDebug() << "hddTemperaturesDequesVect.at(0).at(i) = " << hddTemperaturesDequesVect.at(0).at(i);
+
+                if(hddTemperaturesDequesVect.at(0).at(0) > max){
+                    max = hddTemperaturesDequesVect.at(0).at(0);
+                }
+                if(hddTemperaturesDequesVect.at(0).at(0) < min){
+                    max = hddTemperaturesDequesVect.at(0).at(0);
+                }
             }
             break;
         case HDD2:
+            max = hddTemperaturesDequesVect.at(1).at(0);
+            min = hddTemperaturesDequesVect.at(1).at(0);
+
             for(int i = 0; i < hddTemperaturesDequesVect.at(1).size(); i++){
                 bufferForChart.push_back(hddTemperaturesDequesVect.at(1).at(i));
             }
+
+            if(hddTemperaturesDequesVect.at(1).at(0) > max){
+                max = hddTemperaturesDequesVect.at(1).at(0);
+            }
+            if(hddTemperaturesDequesVect.at(1).at(0) < min){
+                max = hddTemperaturesDequesVect.at(1).at(0);
+            }
             break;
         case HDD3:
+            max = hddTemperaturesDequesVect.at(2).at(0);
+            min = hddTemperaturesDequesVect.at(2).at(0);
+
             for(int i = 0; i < hddTemperaturesDequesVect.at(2).size(); i++){
                 bufferForChart.push_back(hddTemperaturesDequesVect.at(2).at(i));
             }
+
+            if(hddTemperaturesDequesVect.at(2).at(0) > max){
+                max = hddTemperaturesDequesVect.at(2).at(0);
+            }
+            if(hddTemperaturesDequesVect.at(2).at(0) < min){
+                max = hddTemperaturesDequesVect.at(2).at(0);
+            }
             break;
         case HDD4:
+            max = hddTemperaturesDequesVect.at(3).at(0);
+            min = hddTemperaturesDequesVect.at(3).at(0);
+
             for(int i = 0; i < hddTemperaturesDequesVect.at(3).size(); i++){
                 bufferForChart.push_back(hddTemperaturesDequesVect.at(3).at(i));
+            }
+
+            if(hddTemperaturesDequesVect.at(3).at(0) > max){
+                max = hddTemperaturesDequesVect.at(3).at(0);
+            }
+            if(hddTemperaturesDequesVect.at(3).at(0) < min){
+                max = hddTemperaturesDequesVect.at(3).at(0);
             }
             break;
     }
@@ -459,6 +511,9 @@ void MainWindow::DEBUG_outDeques(){
         *series << QPointF(j, bufferForChart.at(i));
         qDebug() << "QPointF, j = " << j << "bufferForChart.at(i) = " <<  bufferForChart.at(i);
     }
+
+    ui->maxLabel->setText(QString::number(max));
+    ui->minLabel->setText(QString::number(min));
 
 }
 
@@ -530,6 +585,7 @@ void MainWindow::getRAMLoadValue(int ramLoadValue){
 void MainWindow::changeHDDTemperatureLabel(int index){
     //qDebug() << "in slot " << index;
     ui->hddTemp_Label->setText(this->hddTempsFromFile[index] + "°C");
+    indexOfHardware = INDEX_OF_FIRST_HDD - 1 + ui->storageInfoComboBox->currentIndex() + 1;
 }
 
 //-------------------------------------END: SLOTS------------------------------
