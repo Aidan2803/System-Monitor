@@ -51,6 +51,8 @@ private:
     QChart *chart;
     QChartView *chartView;
 
+    QTimer *timer;
+
     std::deque<int> cpuTemperaturesDeque;
     std::deque<int> gpuTemperaturesDeque;
     std::vector<deque<int>> hddTemperaturesDequesVect;
@@ -76,9 +78,20 @@ private:
     long upTime_hours;
     long upTime_minutes;
     long upTime_seconds;
-    long upTime_milliseconds;   
+    long upTime_milliseconds;
+
+    enum HARDWAREINDEXES{
+      CPU,
+      GPU,
+      HDD1,
+      HDD2,
+      HDD3,
+      HDD4
+     };
 
     short activeIndexHdd;
+
+    short indexOfHardware;
 
     string gpuTempReserv;
     string hddTempReserv[MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD];
@@ -169,6 +182,10 @@ private slots:
     void on_storageInfoComboBox_currentIndexChanged(int index);
 
     void on_chartButton_cpu_clicked();
+
+    void on_chartButton_gpu_clicked();
+
+    void on_chartButton_hdd_clicked();
 
 public slots:
     void getMessage(QString infoString, bool fromCpu, bool mtGloval);

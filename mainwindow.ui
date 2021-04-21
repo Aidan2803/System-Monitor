@@ -726,7 +726,7 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
        <rect>
         <x>750</x>
         <y>180</y>
-        <width>81</width>
+        <width>51</width>
         <height>21</height>
        </rect>
       </property>
@@ -741,9 +741,9 @@ font: 14pt &quot;ГОСТ тип А&quot;;</string>
      <widget class="QPushButton" name="chartButton_cpu">
       <property name="geometry">
        <rect>
-        <x>850</x>
+        <x>820</x>
         <y>80</y>
-        <width>71</width>
+        <width>101</width>
         <height>21</height>
        </rect>
       </property>
@@ -770,9 +770,9 @@ border-style: none;
      <widget class="QPushButton" name="chartButton_gpu">
       <property name="geometry">
        <rect>
-        <x>850</x>
+        <x>820</x>
         <y>110</y>
-        <width>71</width>
+        <width>101</width>
         <height>21</height>
        </rect>
       </property>
@@ -799,9 +799,9 @@ border-style: none;
      <widget class="QPushButton" name="chartButton_hdd">
       <property name="geometry">
        <rect>
-        <x>850</x>
+        <x>820</x>
         <y>180</y>
-        <width>71</width>
+        <width>101</width>
         <height>21</height>
        </rect>
       </property>
@@ -823,6 +823,57 @@ border-style: none;
       </property>
       <property name="text">
        <string>Chart</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>320</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(72, 184, 41);
+font: 9pt &quot;ГОСТ тип А&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Temp Max</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>630</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(72, 184, 41);
+font: 9pt &quot;ГОСТ тип А&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Temp Min</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>830</x>
+        <y>620</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(72, 184, 41);
+font: 14pt &quot;ГОСТ тип А&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Time Max</string>
       </property>
      </widget>
     </widget>

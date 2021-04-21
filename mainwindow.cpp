@@ -57,7 +57,7 @@ MainWindow::~MainWindow()
 void MainWindow::initWindow(){
     //*********************BEGING:OVERVIEW**********************//
 
-    //--------BEGING:CHART SETTINGS-----------
+    //--------BEGIN:CHART SETTINGS-----------
     series = new QLineSeries();
 
     *series << QPointF(1, 50) << QPointF(2, 49) << QPointF(3, 45) << QPointF(4, 35)  << QPointF(5, 80)
@@ -77,7 +77,7 @@ void MainWindow::initWindow(){
     font.setPixelSize(18);
     chart->setTitleFont(font);
     chart->setTitleBrush(QBrush(Qt::white));
-    chart->setTitle("label load");
+    chart->setTitle("");
 
     chart->setBackgroundBrush(QColor(49,49,49));
     chart->setPlotAreaBackgroundBrush(QColor(49,49,49));
@@ -172,6 +172,11 @@ void MainWindow::initWindow(){
     for(int i = 0; i < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; ++i){
         hddTempReserv[i] = "0";
     }
+
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MainWindow::DEBUG_outDeques);
+    timer->setInterval(3000);
+    timer->start();
 
     startGetTemperaturesThread();
 
@@ -342,7 +347,6 @@ void MainWindow::startGetTemperaturesThread(){
                 gpuTempReserv = temperaturesForUiVect.at(INDEX_OF_FIRST_HDD - 1);
                 for(int i = INDEX_OF_FIRST_HDD, k = 0; i < temperaturesForUiVect.size(); ++i){                   
                     hddTempReserv[k] = temperaturesForUiVect.at(i);
-                    cout << "k = " << k << "hddTempReserv[k] = " << hddTempReserv[k] << endl;
                     k++;
                 }
             }
@@ -365,11 +369,12 @@ void MainWindow::startGetTemperaturesThread(){
 
             setHddTemps(giveHddTemps);
 
-            ui->hddTemp_Label->setText(hddTempsFromFile[activeIndexHdd] + "°C");
+            ui->hddTemp_Label->setText(hddTempsFromFile[activeIndexHdd]);
 
             cpuTemperaturesDeque.push_front(qTemperatureForUiCpu.toInt());
             if(cpuTemperaturesDeque.size() == 11){
-                cpuTemperaturesDeque.pop_front();
+                cpuTemperaturesDeque.pop_back();
+                qDebug() << "pop";
             }
 
             gpuTemperaturesDeque.push_front(qTemperatureForUiGpu.toInt());
@@ -400,14 +405,40 @@ void MainWindow::DEBUG_outDeques(){
         qDebug() << "cpu = " << cpuTemperaturesDeque.at(i);
     }
 
-    for(int i = 0; i < gpuTemperaturesDeque.size(); i++ ){
+    /*for(int i = 0; i < gpuTemperaturesDeque.size(); i++ ){
         qDebug() << "gpu = " << gpuTemperaturesDeque.at(i);
-    }
+    }*/
 
-    for(int j = 0; j < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; j++){
+    /*for(int j = 0; j < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; j++){
         for(int i = 0; i < hddTemperaturesDequesVect.at(j).size(); i++){
             qDebug() << "hdd = " << hddTemperaturesDequesVect.at(j).at(i) << " j = " << j;
         }
+    }*/
+
+    qDebug() << "func for timer";
+
+    vector<int> bufferForChart;
+
+    switch(indexOfHardware){
+        case CPU:
+        for(int i = 0; i < cpuTemperaturesDeque.size(); i++){
+            bufferForChart.push_back(cpuTemperaturesDeque.at(i));
+        }
+
+        series->clear();
+        qDebug() << "size = " << bufferForChart.size();
+        for(int i = bufferForChart.size() - 1; i > 0; i--){
+            qDebug() << "bufferForChart = " << bufferForChart.at(i) << "i = " << i;
+        }
+
+        for(int i = bufferForChart.size() - 1, j = 0; i > 0; i--, j++){
+            *series << QPointF(j, bufferForChart.at(i));
+        }
+
+        //chart->addSeries(series);
+
+
+        break;
     }
 
 }
@@ -526,10 +557,28 @@ void MainWindow::on_storageInfoComboBox_currentIndexChanged(int index)
 }
 
 void MainWindow::on_chartButton_cpu_clicked()
-{
-    DEBUG_outDeques();
+{   
+    chart->setTitle("CPU Temperature");
+
+    indexOfHardware = CPU;
+
 }
 
+
+void MainWindow::on_chartButton_gpu_clicked()
+{
+    chart->setTitle("GPU Temperature");
+
+    indexOfHardware = GPU;
+}
+
+void MainWindow::on_chartButton_hdd_clicked()
+{
+    chart->setTitle("HDD Temperature");
+
+    indexOfHardware = INDEX_OF_FIRST_HDD - 1 + ui->storageInfoComboBox->currentIndex() + 1;
+    qDebug() << "indexOfHardware = " << indexOfHardware;
+}
 
 //*********************END:OVERVIEW**********************//
 
@@ -1048,5 +1097,4 @@ void MainWindow::on_onScreenUpTimeCheckBox_clicked()
 }
 
 //*********************END:EXTERNAL DISPLAY TOOLS**********************//
-
 
