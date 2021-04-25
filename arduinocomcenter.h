@@ -9,7 +9,8 @@ class ArduinoComCenter
 public:
     ArduinoComCenter();
 
-    void getInfoForPackage();
+
+    void getInfoForPackage(int cpuLoad, int cpuTemp, int gpuTemp, int ramLoad, int hdd1Temp, int hdd2Temp, int hdd3Temp, int hdd4Temp);
 
 private:
 
@@ -45,7 +46,6 @@ private:
     int HDD3_Temp;
     int HDD4_Temp;
     int UpTimeArray[MAX_AMOUNT];
-
 
 
     void openComPort();

@@ -3,6 +3,7 @@
 
 static CountingCenter cc;
 static HardWareInformationCenter hc;
+static ArduinoComCenter acc;
 
 static std::thread *upTimeThread;
 static std::thread *printUpTimeThread;
@@ -177,6 +178,8 @@ void MainWindow::initWindow(){
     timer->start();
 
     startGetTemperaturesThread();
+
+  //  accgiveData_update();
 
     //*********************END:OVERVIEW**********************//
 
@@ -573,10 +576,12 @@ void MainWindow::getMessage(QString infoString, bool fromCpu, bool mtGlobal){
 
 void MainWindow::getCPULoadValue(int cpuLoadValue){
     ui->cpuProgressBar->setValue(cpuLoadValue);
+    cpuLoad = cpuLoadValue;
 }
 
 void MainWindow::getRAMLoadValue(int ramLoadValue){
     ui->ramProgressBar->setValue(ramLoadValue);
+    ramLoad = ramLoadValue;
 }
 
 void MainWindow::changeHDDTemperatureLabel(int index){
@@ -1031,6 +1036,10 @@ void MainWindow::on_monitorRamCheckBox_mtg_clicked()
 //*********************END:MONITORING TOOLS GLOBAL**********************//
 
 //*********************BEGING:EXTERNAL DISPLAY TOOLS**********************//
+
+void MainWindow::accgiveData_update(){    
+    acc.getInfoForPackage(cpuLoad, stoi(cpuTempReserv), stoi(gpuTempReserv), ramLoad, stoi(hddTempReserv[0]), stoi(hddTempReserv[1]), stoi(hddTempReserv[2]), stoi(hddTempReserv[3]));
+}
 
 //CPU TEMP CHECKBOX
 void MainWindow::on_onScreenCpuTempCheckBox_clicked()

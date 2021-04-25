@@ -19,6 +19,7 @@
 
 #include "countingcenter.h"
 #include "hardwareinformationcenter.h"
+#include "arduinocomcenter.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -94,8 +95,12 @@ private:
     short indexOfHardware;
     short amountOfHDDs;
 
+    string cpuTempReserv;
     string gpuTempReserv;
     string hddTempReserv[MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD];
+
+    int cpuLoad;
+    int ramLoad;
 
     QString *ramInfo;
     QString *storageInfo;
@@ -105,6 +110,8 @@ private:
     QString hddTempsFromFile[MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD];
 
     void initWindow();
+
+    void accgiveData_update();
 
     void chartDesigner();
 
