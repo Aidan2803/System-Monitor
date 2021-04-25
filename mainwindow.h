@@ -92,6 +92,7 @@ private:
     short activeIndexHdd;
 
     short indexOfHardware;
+    short amountOfHDDs;
 
     string gpuTempReserv;
     string hddTempReserv[MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD];
@@ -105,7 +106,7 @@ private:
 
     void initWindow();
 
-    void DEBUG_outDeques();
+    void chartDesigner();
 
     Ui::MainWindow *ui;
 
@@ -118,10 +119,6 @@ private slots:
     void on_onScreenRamLoadCheckBox_clicked();
 
     void on_onScreenGpuTempCheckBox_clicked();
-
-    void on_onScreenGpuLoadCheckBox_clicked();
-
-    void on_onScreenMotherboardTempCheckBox_clicked();
 
     void on_onScreenStorageTempCheckBox_clicked();
 

@@ -14,6 +14,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    arduinocomcenter.cpp \
     countingcenter.cpp \
     cpuusage.cpp \
     hardwareinformationcenter.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
     smarthandle.cpp
 
 HEADERS += \
+    arduinocomcenter.h \
     countingcenter.h \
     cpuusage.h \
     globalVariables.h \

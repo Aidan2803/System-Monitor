@@ -18,7 +18,7 @@ static int memoryRamAccaptableLoad = 10000;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow){
+    , ui(new Ui::MainWindow), amountOfHDDs{0}{
 
     ui->setupUi(this);
 
@@ -60,7 +60,7 @@ void MainWindow::initWindow(){
     //--------BEGIN:CHART SETTINGS-----------
     series = new QLineSeries();
 
-    *series << QPointF(1, 10) << QPointF(2, 30) << QPointF(3, 29) << QPointF(4, 15)  << QPointF(5, 30)
+    *series << QPointF(0, 0) << QPointF(2, 30) << QPointF(3, 29) << QPointF(4, 15)  << QPointF(5, 30)
             << QPointF(6, 80) << QPointF(7, 80) << QPointF(8, 35) << QPointF(9, 40) << QPointF(10, 100) ;//functionality of the chart
 
     chart = new QChart();
@@ -165,8 +165,6 @@ void MainWindow::initWindow(){
     ui->gpuTemp_Label->setText("Analyzing...");
     ui->hddTemp_Label->setText("Analyzing...");
 
-    qDebug() << "after threads";
-
     activeIndexHdd = 0;
 
     for(int i = 0; i < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; ++i){
@@ -174,7 +172,7 @@ void MainWindow::initWindow(){
     }
 
     timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &MainWindow::DEBUG_outDeques);
+    connect(timer, &QTimer::timeout, this, &MainWindow::chartDesigner);
     timer->setInterval(3000);
     timer->start();
 
@@ -349,6 +347,14 @@ void MainWindow::startGetTemperaturesThread(){
                     hddTempReserv[k] = temperaturesForUiVect.at(i);
                     k++;
                 }
+                if(getTemperaturesThreadFirstRun){
+                    for(int i = 0; i < MAX_AMOUNT_OF_TEMPERATURE_PARAMETERS - INDEX_OF_FIRST_HDD; i++){
+                        if(hddTempReserv[i] != "0"){
+                            amountOfHDDs++;
+                        }
+                    }
+                }
+                qDebug() << "amountOfHDDs = " << amountOfHDDs;
             }
             else{
                 cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
@@ -373,8 +379,7 @@ void MainWindow::startGetTemperaturesThread(){
 
             cpuTemperaturesDeque.push_front(qTemperatureForUiCpu.toInt());
             if(cpuTemperaturesDeque.size() == 11){
-                cpuTemperaturesDeque.pop_back();
-                qDebug() << "pop";
+                cpuTemperaturesDeque.pop_back();                
             }
 
             gpuTemperaturesDeque.push_front(qTemperatureForUiGpu.toInt());
@@ -400,13 +405,7 @@ void MainWindow::startGetTemperaturesThread(){
     });
 }
 
-void MainWindow::DEBUG_outDeques(){
-    for(int i = 0; i < cpuTemperaturesDeque.size(); i++ ){
-        qDebug() << "cpu = " << cpuTemperaturesDeque.at(i);
-    }
-
-    qDebug() << "func for timer";
-
+void MainWindow::chartDesigner(){
     vector<int> bufferForChart;
 
     int max{0}, min{0};
@@ -448,7 +447,6 @@ void MainWindow::DEBUG_outDeques(){
 
             for(int i = 0; i < hddTemperaturesDequesVect.at(0).size(); i++){
                 bufferForChart.push_back(hddTemperaturesDequesVect.at(0).at(i));
-                qDebug() << "hddTemperaturesDequesVect.at(0).at(i) = " << hddTemperaturesDequesVect.at(0).at(i);
 
                 if(hddTemperaturesDequesVect.at(0).at(0) > max){
                     max = hddTemperaturesDequesVect.at(0).at(0);
@@ -509,7 +507,6 @@ void MainWindow::DEBUG_outDeques(){
 
     for(int i = bufferForChart.size() - 1, j = 0; i > 0; i--, j++){
         *series << QPointF(j, bufferForChart.at(i));
-        qDebug() << "QPointF, j = " << j << "bufferForChart.at(i) = " <<  bufferForChart.at(i);
     }
 
     ui->maxLabel->setText(QString::number(max));
@@ -1103,46 +1100,16 @@ void MainWindow::on_onScreenGpuTempCheckBox_clicked()
     }
 }
 
-//GPU LOAD CHECKBOX
-void MainWindow::on_onScreenGpuLoadCheckBox_clicked()
-{
-    int i = 0;
-    if(ui->onScreenGpuLoadCheckBox->isChecked()){
-         ui->mainParamComboBox->addItem(ui->gpuLoadParam->text());
-    }
-    else{
-        for(i = 0; i < ui->mainParamComboBox->count(); i++){
-            if(ui->mainParamComboBox->itemText(i) == ui->gpuLoadParam->text()){
-                break;
-            }
-        }
-        ui->mainParamComboBox->removeItem(i);
-    }
-}
-
-//MOTHERBOARD TEMP CHECKBOX
-void MainWindow::on_onScreenMotherboardTempCheckBox_clicked()
-{
-    int i = 0;
-    if(ui->onScreenMotherboardTempCheckBox->isChecked()){
-         ui->mainParamComboBox->addItem(ui->motherboardTempParam->text());
-    }
-    else{
-        for(i = 0; i < ui->mainParamComboBox->count(); i++){
-            if(ui->mainParamComboBox->itemText(i) == ui->motherboardTempParam->text()){
-                break;
-            }
-        }
-        ui->mainParamComboBox->removeItem(i);
-    }
-}
-
 //STORAGE TEMP CHECKBOX
 void MainWindow::on_onScreenStorageTempCheckBox_clicked()
 {
     int i = 0;
     if(ui->onScreenStorageTempCheckBox->isChecked()){
-         ui->mainParamComboBox->addItem(ui->storageTempParam->text());
+         for(int i = 0; i < amountOfHDDs; i++){
+             QString qstr = "HDD";
+             qstr += QString::number(i + 1);
+             ui->mainParamComboBox->addItem(qstr);
+         }
     }
     else{
         for(i = 0; i < ui->mainParamComboBox->count(); i++){
