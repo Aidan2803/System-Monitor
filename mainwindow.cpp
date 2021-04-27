@@ -19,7 +19,7 @@ static int memoryRamAccaptableLoad = 10000;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow), amountOfHDDs{0}{
+    , ui(new Ui::MainWindow), amountOfHDDs{0}, cpuTempReserv{"0"}, gpuTempReserv{"0"}{
 
     ui->setupUi(this);
 
@@ -177,9 +177,15 @@ void MainWindow::initWindow(){
     timer->setInterval(3000);
     timer->start();
 
+
+    timerForArduino = new QTimer(this);
+    connect(timerForArduino, &QTimer::timeout, this, &MainWindow::accgiveData_update);
+    timerForArduino->setInterval(500);
+    timerForArduino->start();
+
     startGetTemperaturesThread();
 
-  //  accgiveData_update();
+    qDebug() << "why";
 
     //*********************END:OVERVIEW**********************//
 
@@ -341,7 +347,7 @@ void MainWindow::startGetTemperaturesThread(){
         vector<string> temperaturesForUiVect;
         temperatureProcessPID = hc.startProcessOfTemperatures();
 
-        while(this->isRunningGetRAMLoad){            
+        while(this->isRunningGetTemperature){
             Sleep(2050);
             temperaturesForUiVect = hc.readTemperaturesFromFile();            
             if(temperaturesForUiVect.size() > INDEX_OF_FIRST_HDD){                
@@ -365,6 +371,7 @@ void MainWindow::startGetTemperaturesThread(){
 
             QString qTemperatureForUiCpu = QString::fromStdString(temperaturesForUiVect.at(0));            
             ui->cpuTemp_Label->setText(qTemperatureForUiCpu + "°C");
+            cpuTempReserv = temperaturesForUiVect.at(0);
 
             QString qTemperatureForUiGpu = QString::fromStdString(gpuTempReserv);            
             ui->gpuTemp_Label->setText(qTemperatureForUiGpu + "°C");
@@ -1037,8 +1044,11 @@ void MainWindow::on_monitorRamCheckBox_mtg_clicked()
 
 //*********************BEGING:EXTERNAL DISPLAY TOOLS**********************//
 
-void MainWindow::accgiveData_update(){    
+void MainWindow::accgiveData_update(){
+    qDebug() << "enter";
+
     acc.getInfoForPackage(cpuLoad, stoi(cpuTempReserv), stoi(gpuTempReserv), ramLoad, stoi(hddTempReserv[0]), stoi(hddTempReserv[1]), stoi(hddTempReserv[2]), stoi(hddTempReserv[3]));
+    acc.startCommunication();
 }
 
 //CPU TEMP CHECKBOX

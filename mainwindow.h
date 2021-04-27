@@ -53,6 +53,7 @@ private:
     QChartView *chartView;
 
     QTimer *timer;
+    QTimer *timerForArduino;
 
     std::deque<int> cpuTemperaturesDeque;
     std::deque<int> gpuTemperaturesDeque;

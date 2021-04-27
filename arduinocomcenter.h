@@ -3,6 +3,7 @@
 
 #include <globalVariables.h>
 #include <windows.h>
+#include <QDebug>
 
 class ArduinoComCenter
 {
@@ -10,8 +11,9 @@ public:
     ArduinoComCenter();
 
 
-    void getInfoForPackage(int cpuLoad, int cpuTemp, int gpuTemp, int ramLoad, int hdd1Temp, int hdd2Temp, int hdd3Temp, int hdd4Temp);
+    bool getInfoForPackage(int cpuLoad, int cpuTemp, int gpuTemp, int ramLoad, int hdd1Temp, int hdd2Temp, int hdd3Temp, int hdd4Temp);
 
+    void startCommunication();
 private:
 
     enum PackageInfo{
@@ -33,9 +35,11 @@ private:
     };
 
 
-    char packageForTranser[PACKAGE_SIZE];
+    char packageForTransfer[PACKAGE_SIZE];
 
-    LPCTSTR m_comName;
+    LPCTSTR comName;
+    HANDLE hComPort;
+    bool comState;
 
     int CPU_Load;
     int CPU_Temp;
@@ -47,9 +51,11 @@ private:
     int HDD4_Temp;
     int UpTimeArray[MAX_AMOUNT];
 
+    bool send;
 
-    void openComPort();
+    bool openComPort();
     void writeToComPort();
+    void closeCom();
 
     void createPackege();
 };
