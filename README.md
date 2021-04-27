@@ -1,7 +1,7 @@
 # System-Monitor
 Utility that allows to monitor system and hardware information, such as temperatuge, CPU usage and so on
 
-#### На данный момент проект находится на стадии разработки, но вкладки Monitoring tools и Monitoring tools Global уже полностью функциональны
+#### На данный момент проект находится на стадии разработки, но вкладки Overview, Monitoring tools и Monitoring tools Global уже полностью функциональны
 
 ### Краткое описание проекта
 Проект являет собой ПО, позволяющее отслеживать состояние ресурсов компьютера. ПО состоит из трех частей: две программные и одна аппаратная.
