@@ -82,6 +82,8 @@ private:
     long upTime_seconds;
     long upTime_milliseconds;
 
+    int upTimeForArduino[3];
+
     enum HARDWAREINDEXES{
       CPU,
       GPU,

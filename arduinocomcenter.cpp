@@ -5,7 +5,9 @@ ArduinoComCenter::ArduinoComCenter() : send{false}, comName{L"COM3"}
 
 }
 
-bool ArduinoComCenter::getInfoForPackage(int cpuLoad, int cpuTemp, int gpuTemp, int ramLoad, int hdd1Temp, int hdd2Temp, int hdd3Temp, int hdd4Temp){
+bool ArduinoComCenter::getInfoForPackage(int cpuLoad, int cpuTemp, int gpuTemp, int ramLoad,
+                                         int hdd1Temp, int hdd2Temp, int hdd3Temp, int hdd4Temp,
+                                         int upTimeHours, int upTimeMinuters, int upTimeSeconds){
     qDebug() << "info for package";
     if(cpuLoad > 100 || cpuTemp <= 0){
         return 0;
@@ -19,8 +21,12 @@ bool ArduinoComCenter::getInfoForPackage(int cpuLoad, int cpuTemp, int gpuTemp, 
         this->HDD2_Temp = hdd2Temp;
         this->HDD3_Temp = hdd3Temp;
         this->HDD4_Temp = hdd4Temp;
+        this->UpTimeArray[HOURS] = upTimeHours;
+        this->UpTimeArray[MINUTES] = upTimeMinuters;
+        this->UpTimeArray[SECONDS] = upTimeSeconds;
+
         qDebug() << CPU_Load << " " << CPU_Temp << " " << GPU_Temp <<  " " << RAM_Load
-                 << " " << HDD1_Temp << " " << HDD2_Temp << " " << HDD3_Temp << " " << HDD4_Temp;
+                 << " " << HDD1_Temp << " " << HDD2_Temp << " " << HDD3_Temp << " " << HDD4_Temp << UpTimeArray[HOURS] << UpTimeArray[MINUTES] << UpTimeArray[SECONDS];
         send = true;
     }
 }

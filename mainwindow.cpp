@@ -307,10 +307,14 @@ void MainWindow::printUpTime(){
     while(isPrintUpTimeRunning){
         QString upTimeLabelString;
         upTimeLabelString += QString::number(upTime_hours);
+        upTimeForArduino[HOURS] = upTime_hours;
+        qDebug() << "upTimeForArduino[HOURS] = " << upTimeForArduino[HOURS];
         upTimeLabelString += ":";
         upTimeLabelString += QString::number(upTime_minutes);
+        upTimeForArduino[MINUTES] = upTime_minutes;
         upTimeLabelString += ":";
         upTimeLabelString += QString::number(upTime_seconds);
+        upTimeForArduino[SECONDS] = upTime_seconds;
         upTimeLabelString += ":";
         upTimeLabelString += QString::number(upTime_milliseconds);
 
@@ -1047,7 +1051,9 @@ void MainWindow::on_monitorRamCheckBox_mtg_clicked()
 void MainWindow::accgiveData_update(){
     qDebug() << "enter";
 
-    acc.getInfoForPackage(cpuLoad, stoi(cpuTempReserv), stoi(gpuTempReserv), ramLoad, stoi(hddTempReserv[0]), stoi(hddTempReserv[1]), stoi(hddTempReserv[2]), stoi(hddTempReserv[3]));
+    acc.getInfoForPackage(cpuLoad, stoi(cpuTempReserv), stoi(gpuTempReserv), ramLoad,
+                          stoi(hddTempReserv[0]), stoi(hddTempReserv[1]), stoi(hddTempReserv[2]), stoi(hddTempReserv[3]),
+                          upTimeForArduino[HOURS], upTimeForArduino[MINUTES], upTimeForArduino[SECONDS]);
     acc.startCommunication();
 }
 

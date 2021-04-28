@@ -11,7 +11,9 @@ public:
     ArduinoComCenter();
 
 
-    bool getInfoForPackage(int cpuLoad, int cpuTemp, int gpuTemp, int ramLoad, int hdd1Temp, int hdd2Temp, int hdd3Temp, int hdd4Temp);
+    bool getInfoForPackage(int cpuLoad, int cpuTemp, int gpuTemp, int ramLoad,
+                           int hdd1Temp, int hdd2Temp, int hdd3Temp, int hdd4Temp,
+                           int upTimeHours, int upTimeMinuters, int upTimeSeconds);
 
     void startCommunication();
 private:
