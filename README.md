@@ -1,8 +1,6 @@
 # System-Monitor
 Utility that allows to monitor system and hardware information, such as temperatuge, CPU usage and so on
 
-#### На данный момент проект находится на стадии разработки, но вкладки Overview, Monitoring tools и Monitoring tools Global уже полностью функциональны
-
 ### Краткое описание проекта
 Проект являет собой ПО, позволяющее отслеживать состояние ресурсов компьютера. ПО состоит из трех частей: две программные и одна аппаратная.
 1) Первая часть: основная программа(описаная в этом репозитории).
@@ -10,11 +8,10 @@ Utility that allows to monitor system and hardware information, such as temperat
 3) Третья часть: дисплей 1602 с интерфейсной шиной IIC/I2C, Arduino Uno/Arduino Nano
 
 ### Основная программа System Monitor
-Основная программа состоит из 4-х вкладок:
+Основная программа состоит из 3-х вкладок:
 1) Overview
 2) Monitoring tools
 3) Monitoring tool global
-4) External display tools
 
 Рассмотрим их подробней
 
@@ -202,7 +199,3 @@ Utility that allows to monitor system and hardware information, such as temperat
 <img src = "readMeImages/monitoringtoolsglobal5.png"><br>
   Рис. 3.5 Сообщение о превышении допустимой нагрузки
 </p>
-
-#### Вкладка External tools 
-
-//пока в разработке
